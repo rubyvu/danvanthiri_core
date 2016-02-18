@@ -1,0 +1,16 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: dhanvantri_dev
+  host: localhost
+  pool: 5
+  username: pg_user
+  password: pg_user
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: dhanvantri_test
+  host: localhost
+  pool: 5
+  username: pg_user
+  password: pg_user
