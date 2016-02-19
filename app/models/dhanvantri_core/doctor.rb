@@ -7,11 +7,10 @@ module DhanvantriCore
     has_many :educations, dependent: :destroy
     has_many :experiences, dependent: :destroy
 
-    # has_many :doctors_doctor_services, dependent: :destroy
-    # has_many :doctor_services, through: :doctors_doctor_services
-    # has_many :doctor_sub_categories, through: :doctor_services
-
-    # has_many :ratings, dependent: :destroy
+    has_many :doctors_services, dependent: :destroy
+    has_many :services, through: :doctors_services
+    has_many :branchs, through: :services
+    has_many :ratings, dependent: :destroy
 
     validates :first_name, :last_name, presence: true
 
@@ -54,7 +53,7 @@ module DhanvantriCore
     def available_week_day(week_day)
       availables.where(week_day: week_day)
     end
-    
+
     def name
       "#{first_name} #{last_name}"
     end
