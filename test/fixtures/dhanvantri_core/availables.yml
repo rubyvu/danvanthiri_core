@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doctor_id: 
+  week_day: 1
+  time_from: 1.5
+  time_to: 1.5
+
+two:
+  doctor_id: 
+  week_day: 1
+  time_from: 1.5
+  time_to: 1.5

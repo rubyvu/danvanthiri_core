@@ -1,7 +1,9 @@
 module DhanvantriCore
   class Doctor < ActiveRecord::Base
     enum gender: [:Female, :Male]
+    enum consultation_type: [:book, :call]
 
+    has_many :availables, dependent: :destroy
     has_many :educations, dependent: :destroy
     has_many :experiences, dependent: :destroy
 
@@ -40,9 +42,27 @@ module DhanvantriCore
       end
     end
 
+    #get info
+    def address
+      [addr_street, addr_area, addr_city, addr_state].compact.join(', ')
+    end
+
+    def available_today
+      availables.where(week_day: DateTime.now.wday)
+    end
+
+    def available_week_day(week_day)
+      availables.where(week_day: week_day)
+    end
+    
     def name
       "#{first_name} #{last_name}"
     end
+
+    def registrations
+      "#{registration_at}, #{registration_year}"
+    end
+
 
     # def services
     #   doctor_services.map(&:name).join(", ")
