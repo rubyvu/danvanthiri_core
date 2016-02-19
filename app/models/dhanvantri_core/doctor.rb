@@ -2,7 +2,7 @@ module DhanvantriCore
   class Doctor < ActiveRecord::Base
     enum gender: [:Female, :Male]
 
-    # has_many :educations, dependent: :destroy
+    has_many :educations, dependent: :destroy
     has_many :experiences, dependent: :destroy
 
     # has_many :doctors_doctor_services, dependent: :destroy
