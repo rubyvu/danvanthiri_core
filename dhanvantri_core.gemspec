@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = DhanvantriCore::VERSION
   s.authors     = ["Ngoc Vu"]
   s.email       = ["ngoc@digifutura.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of DhanvantriCore."
-  s.description = "TODO: Description of DhanvantriCore."
+  s.homepage    = "http://www.Dhanvantri.com"
+  s.summary     = "DhanvantriCore."
+  s.description = "DhanvantriCore."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

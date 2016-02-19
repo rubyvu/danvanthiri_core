@@ -5,7 +5,7 @@ module DhanvantriCore
     
     belongs_to :category
     has_many :services, dependent: :destroy
-    has_many :doctors, through: :services
+    has_many :doctors, -> { uniq }, through: :services
 
     accepts_nested_attributes_for :services, allow_destroy: true
 

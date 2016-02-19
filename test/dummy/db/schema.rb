@@ -11,10 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218080237) do
+ActiveRecord::Schema.define(version: 20160219034735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dhanvantri_core_availables", force: :cascade do |t|
+    t.integer  "dhanvantri_core_doctor_id"
+    t.integer  "week_day"
+    t.float    "time_from"
+    t.float    "time_to"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "dhanvantri_core_availables", ["dhanvantri_core_doctor_id"], name: "index_dhanvantri_core_availables_on_dhanvantri_core_doctor_id", using: :btree
+
+  create_table "dhanvantri_core_branches", force: :cascade do |t|
+    t.integer  "dhanvantri_core_category_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "slug"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "dhanvantri_core_branches", ["dhanvantri_core_category_id"], name: "index_dhanvantri_core_branches_on_dhanvantri_core_category_id", using: :btree
+
+  create_table "dhanvantri_core_categories", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "slug"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "dhanvantri_core_doctors", force: :cascade do |t|
     t.string   "first_name"
@@ -45,4 +75,52 @@ ActiveRecord::Schema.define(version: 20160218080237) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "dhanvantri_core_doctors_services", force: :cascade do |t|
+    t.integer  "dhanvantri_core_doctor_id"
+    t.integer  "dhanvantri_core_service_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "dhanvantri_core_educations", force: :cascade do |t|
+    t.integer  "dhanvantri_core_doctor_id"
+    t.string   "certification"
+    t.string   "college"
+    t.integer  "year"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "dhanvantri_core_educations", ["dhanvantri_core_doctor_id"], name: "index_dhanvantri_core_educations_on_dhanvantri_core_doctor_id", using: :btree
+
+  create_table "dhanvantri_core_experiences", force: :cascade do |t|
+    t.integer  "dhanvantri_core_doctor_id"
+    t.string   "position"
+    t.string   "company"
+    t.integer  "year_from"
+    t.integer  "year_to"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "dhanvantri_core_experiences", ["dhanvantri_core_doctor_id"], name: "index_dhanvantri_core_experiences_on_dhanvantri_core_doctor_id", using: :btree
+
+  create_table "dhanvantri_core_services", force: :cascade do |t|
+    t.integer  "dhanvantri_core_branch_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "slug"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "dhanvantri_core_services", ["dhanvantri_core_branch_id"], name: "index_dhanvantri_core_services_on_dhanvantri_core_branch_id", using: :btree
+
+  add_foreign_key "dhanvantri_core_availables", "dhanvantri_core_doctors"
+  add_foreign_key "dhanvantri_core_branches", "dhanvantri_core_categories"
+  add_foreign_key "dhanvantri_core_doctors_services", "dhanvantri_core_doctors"
+  add_foreign_key "dhanvantri_core_doctors_services", "dhanvantri_core_services"
+  add_foreign_key "dhanvantri_core_educations", "dhanvantri_core_doctors"
+  add_foreign_key "dhanvantri_core_experiences", "dhanvantri_core_doctors"
+  add_foreign_key "dhanvantri_core_services", "dhanvantri_core_branches"
 end

@@ -1,7 +1,7 @@
 class CreateDhanvantriCoreEducations < ActiveRecord::Migration
   def change
     create_table :dhanvantri_core_educations do |t|
-      t.belongs_to :doctor, index: true, foreign_key: true
+      t.belongs_to :dhanvantri_core_doctor, index: true, foreign_key: true
       t.string :certification
       t.string :college
       t.integer :year
