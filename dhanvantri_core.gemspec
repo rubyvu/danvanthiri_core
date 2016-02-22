@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.5.1"
   s.add_dependency "pg"
-  s.add_dependency "active_model_serializers"
+  s.add_dependency "devise"
   s.add_dependency "friendly_id"
 end

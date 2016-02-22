@@ -9,7 +9,7 @@ module DhanvantriCore
 
     has_many :doctors_services, dependent: :destroy, foreign_key: "doctor_id"
     has_many :services, through: :doctors_services
-    has_many :branchs, through: :services
+    has_many :branches, through: :services
     #has_many :ratings, dependent: :destroy, foreign_key: "doctor_id"
 
     validates :first_name, :last_name, presence: true
@@ -19,12 +19,12 @@ module DhanvantriCore
         results = self
         opt.each do |key,val|
           unless val.blank?
-            if key.to_s == 'doctor_service_id'
-              service = DoctorService.find val
+            if key.to_s == 'service_id'
+              service = DhanvantriCore::Service.find val
               results = by_service(service)
-            elsif key.to_s = 'doctor_sub_category_id'
-              sub_category = DoctorSubCategory.find val
-              results = by_sub_category(sub_category)
+            elsif key.to_s == 'branch_id'
+              branch = DhanvantriCore::Branch.find val
+              results = by_branch(branch)
             end
           end
         end
@@ -36,8 +36,8 @@ module DhanvantriCore
         service.doctors
       end
 
-      def by_sub_category(sub_category)
-        sub_category.doctors
+      def by_branch(branch)
+        branch.doctors
       end
     end
 
