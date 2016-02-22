@@ -3,14 +3,14 @@ module DhanvantriCore
     enum gender: [:Female, :Male]
     enum consultation_type: [:book, :call]
 
-    has_many :availables, dependent: :destroy
-    has_many :educations, dependent: :destroy
-    has_many :experiences, dependent: :destroy
+    has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :educations, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :experiences, dependent: :destroy, foreign_key: "doctor_id"
 
-    has_many :doctors_services, dependent: :destroy
+    has_many :doctors_services, dependent: :destroy, foreign_key: "doctor_id"
     has_many :services, through: :doctors_services
     has_many :branchs, through: :services
-    has_many :ratings, dependent: :destroy
+    #has_many :ratings, dependent: :destroy, foreign_key: "doctor_id"
 
     validates :first_name, :last_name, presence: true
 
@@ -43,7 +43,7 @@ module DhanvantriCore
 
     #get info
     def address
-      [addr_street, addr_area, addr_city, addr_state].compact.join(', ')
+      [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
     end
 
     def available_today
@@ -59,9 +59,16 @@ module DhanvantriCore
     end
 
     def registrations
-      "#{registration_at}, #{registration_year}"
+      [registration_at, registration_year].reject{|x| x.blank?}.join(", ")
     end
 
+    def service_names
+      services.map(&:name).join(", ")
+    end
+
+    # def update_rating!
+    #   update_column :rate, ratings.average(:value) 
+    # end
 
     # def services
     #   doctor_services.map(&:name).join(", ")
