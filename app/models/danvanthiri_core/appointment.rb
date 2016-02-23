@@ -11,6 +11,15 @@ module DanvanthiriCore
 
     before_validation :set_booking_time
 
+    def as_json(options = {})
+      options = options.merge(except: [:created_at, :updated_at])
+      super(options)
+    end
+
+    def details
+      as_json(include: {doctor: {only: [:id, :name]}, patient: {only: [:id, :name]} })
+    end 
+  
     def set_booking_time
       if self.date_str && self.time_str
         self.booktime = DateTime.parse "#{date_str} #{time_str}"
