@@ -4,6 +4,7 @@ module DanvanthiriCore
     enum consultation_type: [:book, :call]
 
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
     has_many :educations, dependent: :destroy, foreign_key: "doctor_id"
     has_many :experiences, dependent: :destroy, foreign_key: "doctor_id"
 

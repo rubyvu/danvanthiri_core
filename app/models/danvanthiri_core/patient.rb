@@ -1,5 +1,6 @@
 module DanvanthiriCore
   class Patient < ActiveRecord::Base
+    has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
 
     def generate_auth_token!
       begin
