@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: dhanvantri_dev
+  database: danvanthiri_dev
   host: localhost
   pool: 5
   username: pg_user
@@ -9,7 +9,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: dhanvantri_test
+  database: danvanthiri_test
   host: localhost
   pool: 5
   username: pg_user

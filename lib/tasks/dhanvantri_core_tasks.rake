@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :dhanvantri_core do
+# task :danvanthiri_core do
 #   # Task goes here
 # end

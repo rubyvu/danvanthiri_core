@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dhanvantri_core (0.0.1)
+    danvanthiri_core (0.0.1)
       devise
       friendly_id
       pg
@@ -122,8 +122,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  danvanthiri_core!
   devise
-  dhanvantri_core!
 
 BUNDLED WITH
    1.11.2
