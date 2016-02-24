@@ -5,12 +5,9 @@ module DanvanthiriCore
 
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
-    has_many :educations, dependent: :destroy, foreign_key: "doctor_id"
-    has_many :experiences, dependent: :destroy, foreign_key: "doctor_id"
 
-    has_many :doctors_services, dependent: :destroy, foreign_key: "doctor_id"
-    has_many :services, through: :doctors_services
-    has_many :branches, through: :services
+    has_many :branches_doctors, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :branches, through: :branches_doctors
     #has_many :ratings, dependent: :destroy, foreign_key: "doctor_id"
 
     validates :first_name, :last_name, presence: true
@@ -20,10 +17,7 @@ module DanvanthiriCore
         results = self
         opt.each do |key,val|
           unless val.blank?
-            if key.to_s == 'service_id'
-              service = DanvanthiriCore::Service.find val
-              results = by_service(service)
-            elsif key.to_s == 'branch_id'
+            if key.to_s == 'branch_id'
               branch = DanvanthiriCore::Branch.find val
               results = by_branch(branch)
             end
@@ -31,10 +25,6 @@ module DanvanthiriCore
         end
         sort = opt[:sort] || :first_name
         results.order(sort)
-      end
-
-      def by_service(service)
-        service.doctors
       end
 
       def by_branch(branch)
@@ -59,12 +49,8 @@ module DanvanthiriCore
       "#{first_name} #{last_name}"
     end
 
-    def registrations
-      [registration_at, registration_year].reject{|x| x.blank?}.join(", ")
-    end
-
-    def service_names
-      services.map(&:name).join(", ")
+    def branch_names
+      branches.map(&:name).join(", ")
     end
 
     # def update_rating!

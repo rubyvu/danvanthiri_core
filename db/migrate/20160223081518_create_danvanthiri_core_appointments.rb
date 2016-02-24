@@ -5,6 +5,7 @@ class CreateDanvanthiriCoreAppointments < ActiveRecord::Migration
       t.belongs_to :doctor, index: true
       t.datetime :booktime
       t.integer :status, default: 0;
+      t.integer :fee
 
       t.timestamps null: false
     end
