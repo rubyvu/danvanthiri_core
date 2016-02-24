@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20160223081518) do
     t.string   "addr_area"
     t.string   "addr_city"
     t.string   "addr_state"
-    t.string   "phone_number"
+    t.string   "mobile_number"
     t.text     "about"
     t.text     "certification"
     t.string   "registration"

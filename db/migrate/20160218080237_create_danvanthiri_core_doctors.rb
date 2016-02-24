@@ -12,7 +12,7 @@ class CreateDanvanthiriCoreDoctors < ActiveRecord::Migration
       t.string :addr_area
       t.string :addr_city
       t.string :addr_state
-      t.string :phone_number
+      t.string :mobile_number
 
       t.text :about
       t.text :certification
