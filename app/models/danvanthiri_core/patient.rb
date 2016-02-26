@@ -15,13 +15,6 @@ module DanvanthiriCore
       end while self.class.exists?(auth_token: auth_token)
     end
 
-    def login!
-      sign_in self, store: false
-      self.generate_auth_token!
-      self.save
-      self.auth_token
-    end
-
     def clear_auth_token!
       update_column :auth_token, nil
     end
