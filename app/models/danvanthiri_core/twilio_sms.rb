@@ -3,19 +3,19 @@ module DanvanthiriCore
   class TwilioSms
     def self.send(number, message)
       @client = Twilio::REST::Client.new ENV["account_sid"], ENV["auth_token"]
-      sent = false
+      result = {}
       begin
         @client.account.messages.create({
           from: ENV["number"], 
           to: number, 
           body: message  
         })
-        sent = true
+        result = {message: "otp was sent to #{number}"}
       rescue Exception => ex
         Rails.logger.error(ex.inspect)
-        sent = false
+        result = {errors: [ex.message]}
       end
-      sent
+      result
     end
   end
 end
