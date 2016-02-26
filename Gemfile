@@ -15,3 +15,4 @@ gemspec
 
 gem "devise"
 gem 'twilio-ruby'
+gem 'koala'

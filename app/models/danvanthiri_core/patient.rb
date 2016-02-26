@@ -1,6 +1,7 @@
 module DanvanthiriCore
   class Patient < ActiveRecord::Base
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
+    has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
 
     validates :first_name, :last_name, :mobile_number, presence: true
     validates :mobile_number, uniqueness: true
@@ -11,9 +12,16 @@ module DanvanthiriCore
       end while self.class.exists?(auth_token: auth_token)
     end
 
+    def login!
+      sign_in self, store: false
+      self.generate_auth_token!
+      self.save
+      self.auth_token
+    end
+
     def clear_auth_token!
       update_column :auth_token, nil
     end
-    
+  
   end
 end
