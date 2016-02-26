@@ -25,11 +25,13 @@ class DeviseCreateDanvanthiriCorePatients < ActiveRecord::Migration
       t.integer :gender
       t.datetime :date_of_birth
 
-      t.string :addr_street
-      t.string :addr_area
-      t.string :addr_city
-      t.string :addr_state
+      t.string :address_line_1
+      t.string :address_line_2
+      t.string :address_city
+      t.string :address_state
       
+      t.string :pin_code
+
       t.string :slug
       t.string :auth_token
 
