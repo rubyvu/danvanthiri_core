@@ -6,6 +6,9 @@ module DanvanthiriCore
     validates :first_name, :last_name, :mobile_number, presence: true
     validates :mobile_number, uniqueness: true
 
+    scope :active, -> {where otp: nil}
+    scope :inactive, -> {where.not otp: nil}
+
     def generate_auth_token!
       begin
         self.auth_token = Devise.friendly_token

@@ -10,12 +10,17 @@ module DanvanthiriCore
           to: number, 
           body: message  
         })
-        result = {message: "otp was sent to #{number}"}
+        result = {code: "SUCCESS", message: "otp was sent to #{format(number)}"}
       rescue Exception => ex
         Rails.logger.error(ex.inspect)
         result = {errors: [ex.message]}
       end
       result
+    end
+
+    def self.format_number(number)
+      number.slice!(0) if number[0]=='0' 
+      number = "+91#{number}"
     end
   end
 end

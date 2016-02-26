@@ -34,7 +34,8 @@ class DeviseCreateDanvanthiriCorePatients < ActiveRecord::Migration
 
       t.string :slug
       t.string :auth_token
-
+      t.string :otp
+      
       t.timestamps null: false
     end
 
