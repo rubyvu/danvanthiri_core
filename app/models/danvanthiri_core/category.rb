@@ -4,6 +4,7 @@ module DanvanthiriCore
     friendly_id :name, use: :slugged
 
     has_many :branches, dependent: :destroy, foreign_key: "category_id"
+    has_many :doctors, through: :branches
 
     accepts_nested_attributes_for :branches, allow_destroy: true
 
