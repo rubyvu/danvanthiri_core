@@ -47,6 +47,7 @@ module DanvanthiriCore
         end
 
       rescue Exception => e
+        logger.error e.message
         return "UN-AUTHOR", ["Invalid OAuth access token"]
       end
     end
