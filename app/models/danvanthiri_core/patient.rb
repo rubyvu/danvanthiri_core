@@ -41,7 +41,7 @@ module DanvanthiriCore
               gender: gender
             patient.password = password
             patient.password_confirmation = password 
-            patient.save
+            patient.save(validate: false)
           end
           sc.patient_id = patient.id if patient
           if sc.save
