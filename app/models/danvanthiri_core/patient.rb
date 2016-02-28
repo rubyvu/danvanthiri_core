@@ -2,7 +2,7 @@ module DanvanthiriCore
   class Patient < ActiveRecord::Base
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
-           
+
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
 
@@ -43,7 +43,7 @@ module DanvanthiriCore
             patient.password_confirmation = password 
             patient.save
           end
-          sc.patient_id = patient.if if patient
+          sc.patient_id = patient.id if patient
           if sc.save
             return 2, patient
           else
