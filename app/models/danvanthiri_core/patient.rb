@@ -19,11 +19,11 @@ module DanvanthiriCore
       update_column :auth_token, nil
     end
   
-    def connect_facebook(token)
+    def self.connect_facebook(token)
       begin
         @graph = Koala::Facebook::API.new(token)
         profile = @graph.get_object("me")
-        if sc = SocialCredential.find_by uid: profile["id"], provider: "Facebook"
+        if sc = SocialCredential.where(uid: profile["id"], provider: "Facebook").first
           patient = sc.patient
           return 1, patient
         else
