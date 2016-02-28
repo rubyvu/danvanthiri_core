@@ -37,10 +37,9 @@ module DanvanthiriCore
           else
             gender = profile["gender"].capitalize if profile["gender"]
             password = Devise.friendly_token.first(8)
+            email = profile["email"] || "#{profile['id']}@facebook.com"
             patient = Patient.new email: profile["email"], first_name: profile["first_name"], last_name: profile["last_name"],
-              gender: gender
-            patient.password = password
-            patient.password_confirmation = password 
+              gender: gender, patient.password: password, password_confirmation: password 
             patient.save(validate: false)
           end
           sc.patient_id = patient.id if patient
