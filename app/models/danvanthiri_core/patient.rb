@@ -13,6 +13,10 @@ module DanvanthiriCore
     scope :active, -> {where otp: nil}
     scope :inactive, -> {where.not otp: nil}
 
+    def name
+      [first_name, last_name].compact.join(" ")
+    end
+    
     def generate_auth_token!
       begin
         self.auth_token = Devise.friendly_token
