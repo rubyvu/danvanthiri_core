@@ -26,14 +26,18 @@ module DanvanthiriCore
       begin
         @graph = Koala::Facebook::API.new(token)
         profile = @graph.get_object("me")
+
         if sc = SocialCredential.where(uid: profile["id"], provider: "Facebook").first
           patient = sc.patient
           return 1, patient
         else
           sc = SocialCredential.new(uid: profile["id"], provider: "Facebook")
           patient = Patient.find_by_email profile["email"]
+
           if patient
             sc.patient_id = patient.id
+            sc.save
+            return 1, patient
           else
             gender = profile["gender"].capitalize if profile["gender"]
             password = Devise.friendly_token.first(8)
@@ -42,13 +46,15 @@ module DanvanthiriCore
               gender: gender, password: password, password_confirmation: password
             patient.otp = rand(10000..99999) 
             patient.save(validate: false)
+            sc.patient_id = patient.id if patient
+
+            if sc.save
+              return 2, patient
+            else
+              return "INV", sc.errors.full_messages
+            end
           end
-          sc.patient_id = patient.id if patient
-          if sc.save
-            return 2, patient
-          else
-            return "INV", sc.errors.full_messages
-          end
+          
         end
 
       rescue Exception => e
@@ -71,8 +77,11 @@ module DanvanthiriCore
           else
             sc = SocialCredential.new(uid: profile["id"], provider: "Google")
             patient = Patient.find_by_email profile["email"]
+
             if patient
               sc.patient_id = patient.id
+              sc.save
+              return 1, patient
             else
               gender = profile["gender"].capitalize if profile["gender"]
               password = Devise.friendly_token.first(8)
@@ -81,13 +90,15 @@ module DanvanthiriCore
                 gender: gender, password: password, password_confirmation: password
               patient.otp = rand(10000..99999) 
               patient.save(validate: false)
+              sc.patient_id = patient.id if patient
+              
+              if sc.save
+                return 2, patient
+              else
+                return "INV", sc.errors.full_messages
+              end
             end
-            sc.patient_id = patient.id if patient
-            if sc.save
-              return 2, patient
-            else
-              return "INV", sc.errors.full_messages
-            end
+            
           end
         end
       rescue Exception => e
