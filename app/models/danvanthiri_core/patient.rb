@@ -39,7 +39,8 @@ module DanvanthiriCore
             password = Devise.friendly_token.first(8)
             email = profile["email"] || "#{profile['id']}@facebook.com"
             patient = Patient.new email: email, first_name: profile["first_name"], last_name: profile["last_name"],
-              gender: gender, password: password, password_confirmation: password 
+              gender: gender, password: password, password_confirmation: password
+            patient.otp = rand(10000..99999) 
             patient.save(validate: false)
           end
           sc.patient_id = patient.id if patient
