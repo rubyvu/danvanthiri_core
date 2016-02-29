@@ -57,5 +57,44 @@ module DanvanthiriCore
       end
     end
 
+    def self.connect_google(token)
+      require 'open-uri'
+      begin
+        url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=#{token}"
+        profile = JSON.load(open(url))
+        if profile["error"]
+          return "UN-AUTHOR", ["Invalid OAuth access token"]
+        else
+          if sc = SocialCredential.where(uid: profile["id"], provider: "Google").first
+            patient = sc.patient
+            return 1, patient
+          else
+            sc = SocialCredential.new(uid: profile["id"], provider: "Google")
+            patient = Patient.find_by_email profile["email"]
+            if patient
+              sc.patient_id = patient.id
+            else
+              gender = profile["gender"].capitalize if profile["gender"]
+              password = Devise.friendly_token.first(8)
+              email = profile["email"] || "#{profile['id']}@google.com"
+              patient = Patient.new email: email, first_name: profile["given_name"], last_name: profile["family_name"],
+                gender: gender, password: password, password_confirmation: password
+              patient.otp = rand(10000..99999) 
+              patient.save(validate: false)
+            end
+            sc.patient_id = patient.id if patient
+            if sc.save
+              return 2, patient
+            else
+              return "INV", sc.errors.full_messages
+            end
+          end
+        end
+      rescue Exception => e
+        logger.error e.message
+        return "UN-AUTHOR", ["Invalid OAuth access token"]
+      end
+    end
+
   end
 end
