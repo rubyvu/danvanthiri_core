@@ -8,7 +8,7 @@ module DanvanthiriCore
 
     has_many :branches_doctors, dependent: :destroy, foreign_key: "doctor_id"
     has_many :branches, through: :branches_doctors
-    #has_many :ratings, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :reviews, dependent: :destroy, foreign_key: "doctor_id"
 
     validates :first_name, :last_name, presence: true
 
@@ -53,9 +53,9 @@ module DanvanthiriCore
       branches.map(&:name).join(", ")
     end
 
-    # def update_rating!
-    #   update_column :rate, ratings.average(:value) 
-    # end
+    def update_rating!
+      update_column :rate, reviews.average(:rate)
+    end
 
     # def services
     #   doctor_services.map(&:name).join(", ")

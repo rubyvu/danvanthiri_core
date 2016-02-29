@@ -5,7 +5,8 @@ module DanvanthiriCore
 
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
-
+    has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
+    
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
 
