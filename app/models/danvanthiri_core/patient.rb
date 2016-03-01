@@ -25,6 +25,17 @@ module DanvanthiriCore
       [first_name, last_name].compact.join(" ")
     end
     
+    def phone_with_country_code
+      unless mobile_number.blank?
+        code = country_code || "+91"
+        if code[0,2] == "00"
+          code = "+" + code[2..-1]
+        end
+        number = mobile_number.slice!(0) if number[0]=='0'
+        "#{code}#{phone_number}"
+      end
+    end
+
     def generate_auth_token!
       begin
         self.auth_token = Devise.friendly_token
