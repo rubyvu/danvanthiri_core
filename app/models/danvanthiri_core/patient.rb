@@ -18,7 +18,7 @@ module DanvanthiriCore
     end
 
     def address
-      [address_street_1, address_street_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
+      [address_line_1, address_line_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
     end
 
     def name
