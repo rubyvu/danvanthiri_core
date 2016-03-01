@@ -13,6 +13,14 @@ module DanvanthiriCore
     scope :active, -> {where otp: nil}
     scope :inactive, -> {where.not otp: nil}
 
+    def active?
+      otp.blank?
+    end
+
+    def address
+      [address_street_1, address_street_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
+    end
+
     def name
       [first_name, last_name].compact.join(" ")
     end
