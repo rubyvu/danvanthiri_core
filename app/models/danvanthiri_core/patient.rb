@@ -31,8 +31,9 @@ module DanvanthiriCore
         code = code[2..-1] if code[0,2] == "00"
         code = "+#{code}" if code[0]!= "+"
         end
-        number = mobile_number.slice!(0) if number[0]=='0'
-        "#{code}#{phone_number}"
+        number = mobile_number
+        number = number.slice!(0) if number[0]=='0'
+        "#{code}#{number}"
       end
     end
 
