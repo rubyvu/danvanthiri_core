@@ -31,7 +31,7 @@ module DanvanthiriCore
       if like = like_obj(obj)
         like.destroy
       else
-        liked_objects << obj
+        liked_doctors << obj
       end
     end
 
