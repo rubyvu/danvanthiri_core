@@ -9,6 +9,7 @@ module DanvanthiriCore
     has_many :branches_doctors, dependent: :destroy, foreign_key: "doctor_id"
     has_many :branches, through: :branches_doctors
     has_many :reviews, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :likes, as: :likeable, dependent: :destroy
 
     validates :first_name, :last_name, presence: true
 

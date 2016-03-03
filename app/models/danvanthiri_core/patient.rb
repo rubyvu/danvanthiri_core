@@ -4,6 +4,8 @@ module DanvanthiriCore
            :recoverable, :rememberable, :trackable, :validatable
 
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
+    has_many :likes, dependent: :destroy, foreign_key: "patient_id"
+    has_many :liked_objects, through: :likes, source: :likeable
     has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
     
@@ -15,6 +17,32 @@ module DanvanthiriCore
 
     def active?
       otp.blank?
+    end
+
+    def liked?(obj)
+      like_obj(obj).blank? ? false : true
+    end
+
+    def like_obj(obj)
+      likes.where(likeable: obj).first
+    end
+
+    def toggle_like!(obj)
+      if like = like_obj(obj)
+        like.destroy
+      else
+        liked_objects << obj
+      end
+    end
+
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
     end
 
     def address
@@ -36,16 +64,7 @@ module DanvanthiriCore
       end
     end
 
-    def generate_auth_token!
-      begin
-        self.auth_token = Devise.friendly_token
-      end while self.class.exists?(auth_token: auth_token)
-    end
-
-    def clear_auth_token!
-      update_column :auth_token, nil
-    end
-  
+      
     def self.connect_facebook(token)
       begin
         @graph = Koala::Facebook::API.new(token)
