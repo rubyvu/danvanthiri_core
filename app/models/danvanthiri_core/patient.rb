@@ -5,7 +5,7 @@ module DanvanthiriCore
 
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :likes, dependent: :destroy, foreign_key: "patient_id"
-    has_many :liked_objects, through: :likes, source: :likeable
+    has_many :liked_doctors, through: :likes, source_type: "Doctor"
     has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
     
