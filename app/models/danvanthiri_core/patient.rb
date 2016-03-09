@@ -12,13 +12,6 @@ module DanvanthiriCore
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
 
-    scope :active, -> {where otp: nil}
-    scope :inactive, -> {where.not otp: nil}
-
-    def active?
-      otp.blank?
-    end
-
     def liked?(obj)
       like_obj(obj).blank? ? false : true
     end
@@ -87,7 +80,6 @@ module DanvanthiriCore
             email = profile["email"] || "#{profile['id']}@facebook.com"
             patient = Patient.new email: email, first_name: profile["first_name"], last_name: profile["last_name"],
               gender: gender, password: password, password_confirmation: password
-            #patient.otp = rand(10000..99999) 
             patient.save(validate: false)
             sc.patient_id = patient.id if patient
 
@@ -131,7 +123,6 @@ module DanvanthiriCore
               email = profile["email"] || "#{profile['id']}@google.com"
               patient = Patient.new email: email, first_name: profile["given_name"], last_name: profile["family_name"],
                 gender: gender, password: password, password_confirmation: password
-              #patient.otp = rand(10000..99999) 
               patient.save(validate: false)
               sc.patient_id = patient.id if patient
 
