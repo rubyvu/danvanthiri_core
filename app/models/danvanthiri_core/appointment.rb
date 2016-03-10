@@ -9,6 +9,10 @@ module DanvanthiriCore
     attr_accessor :date_str, :time_str
 
     scope :pending, -> {where status: 0}
+    scope :accepted, -> {where status: 1}
+    scope :finished, -> {where status: 2}
+    scope :cancelled, -> {where status: 3}
+
 
     before_validation :set_booking_time
 
