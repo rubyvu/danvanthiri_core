@@ -1,5 +1,5 @@
 class AddIconToCategories < ActiveRecord::Migration
   def change
-    add_column :categories, :icon, :string
+    add_column :danvanthiri_core_categories, :icon, :string
   end
 end

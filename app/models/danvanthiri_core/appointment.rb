@@ -8,6 +8,7 @@ module DanvanthiriCore
 
     attr_accessor :date_str, :time_str
 
+    scope :pending, -> {where status: 0}
 
     before_validation :set_booking_time
 

@@ -20,6 +20,10 @@ module DanvanthiriCore
       likes.where(likeable: obj).first
     end
 
+    def pending_appointment?(doctor)
+      appointments(doctor).where(status: 0).any?
+    end
+
     def toggle_like!(obj)
       if like = like_obj(obj)
         like.destroy
@@ -57,6 +61,9 @@ module DanvanthiriCore
       end
     end
 
+    def appointments(doctor)
+      appointments.where(doctor: doctor)
+    end
       
     def self.connect_facebook(token)
       begin
