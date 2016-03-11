@@ -20,6 +20,10 @@ module DanvanthiriCore
       likes.where(likeable: obj).first
     end
 
+    def phone_verified?
+      otp == 1
+    end
+
     def toggle_like!(obj)
       if like = like_obj(obj)
         like.destroy
