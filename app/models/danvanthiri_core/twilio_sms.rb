@@ -13,7 +13,7 @@ module DanvanthiriCore
         result = {code: "SUCCESS", message: "otp was sent to #{number}"}
       rescue Exception => ex
         Rails.logger.error(ex.inspect)
-        result = {errors: [ex.message]}
+        result = {code: "ERR", errors: [ex.message]}
       end
       result
     end

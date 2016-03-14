@@ -21,7 +21,7 @@ module DanvanthiriCore
     end
 
     def phone_verified?
-      otp == 1
+      otp == "1"
     end
 
     def toggle_like!(obj)
