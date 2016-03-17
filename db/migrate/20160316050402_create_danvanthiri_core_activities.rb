@@ -4,7 +4,7 @@ class CreateDanvanthiriCoreActivities < ActiveRecord::Migration
       t.integer :owner_id
       t.string :owner_type
       t.string :log_type
-      t.integer :related_ojb_id
+      t.integer :related_obj_id
       t.string :related_obj_type
       t.integer :value
 
