@@ -23,7 +23,7 @@ module DanvanthiriCore
         end
       rescue Exception => e
         Rails.logger.error(e.inspect)
-        result = {code: "ERR", errors: [ex.message]}
+        result = {code: "ERR", errors: [e.message]}
       end
       result
     end
