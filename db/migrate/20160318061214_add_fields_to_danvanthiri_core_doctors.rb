@@ -1,5 +1,6 @@
 class AddFieldsToDanvanthiriCoreDoctors < ActiveRecord::Migration
   def change
+    add_column :danvanthiri_core_doctors, :clinic_name, :string
     add_column :danvanthiri_core_doctors, :category_id, :integer
     add_column :danvanthiri_core_doctors, :addr_pincode, :integer
     add_column :danvanthiri_core_doctors, :phone_number, :string
