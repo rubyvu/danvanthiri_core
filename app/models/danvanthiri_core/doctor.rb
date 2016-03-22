@@ -58,9 +58,10 @@ module DanvanthiriCore
       availables.where(week_day: DateTime.now.wday)
     end
 
-    def available_today_arr
-      available_today.order(:time_from).map{|a| "#{a.time_from} - #{a.time_to}".gsub(".",":")}
+    def available_ranges
+      available_today.order(:time_from).map(&:display_time)
     end
+
 
     def available_week_day(week_day)
       availables.where(week_day: week_day)
