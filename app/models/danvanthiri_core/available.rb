@@ -2,10 +2,10 @@ module DanvanthiriCore
   class Available < ActiveRecord::Base
     enum week_day: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
     belongs_to :doctor
-
+    validates :time_from, :time_to, :week_day, presence: true
     def f_to_hour(number)
       arr = number.to_s.split(".")
-      h = arr.first.length < 10 ? "0#{arr.first}" : arr.first
+      h = arr.first.length < 2 ? "0#{arr.first}" : arr.first
       m = arr.last.length < 2 ? "#{arr.last}0" : arr.last
       "#{h}:#{m}"
     end
