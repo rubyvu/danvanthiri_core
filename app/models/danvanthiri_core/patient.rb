@@ -13,6 +13,7 @@ module DanvanthiriCore
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
 
+
     def liked?(obj)
       like_obj(obj).blank? ? false : true
     end
@@ -23,6 +24,10 @@ module DanvanthiriCore
 
     def phone_verified?
       otp == "1"
+    end
+
+    def verify!
+      update_column :otp, "1"
     end
 
     def toggle_like!(obj)
@@ -45,6 +50,10 @@ module DanvanthiriCore
 
     def address
       [address_line_1, address_line_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
+    end
+
+    def display_otp
+      phone_verified? ? "" : otp
     end
 
     def name
