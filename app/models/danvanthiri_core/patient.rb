@@ -26,8 +26,9 @@ module DanvanthiriCore
       otp == "1"
     end
 
-    def verify!
-      update_column :otp, "1"
+    def toggle_verify_otp!
+      value = phone_verified? ? nil : "1"
+      update_column :otp, value
     end
 
     def toggle_like!(obj)
@@ -54,6 +55,14 @@ module DanvanthiriCore
 
     def display_otp
       phone_verified? ? "" : otp
+    end
+
+    def verify_text
+      phone_verified? ? "verified" : "non-verified"
+    end
+
+    def verify_action_text
+      phone_verified? ? "un-verify" : "verify"
     end
 
     def name
