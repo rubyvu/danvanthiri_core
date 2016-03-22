@@ -21,4 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "pg"
   s.add_dependency "devise"
   s.add_dependency "friendly_id"
+  s.add_dependency "elasticsearch-model"
+  s.add_dependency 'elasticsearch-rails'
+  s.add_dependency 'bonsai-elasticsearch-rails'
 end

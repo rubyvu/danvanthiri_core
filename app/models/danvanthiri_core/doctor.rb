@@ -1,5 +1,8 @@
+require 'elasticsearch/model'
 module DanvanthiriCore
   class Doctor < ActiveRecord::Base
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
     enum gender: [:Female, :Male]
     enum consultation_type: [:book, :call]
 
@@ -31,6 +34,19 @@ module DanvanthiriCore
       def by_branch(branch)
         branch.doctors
       end
+
+      def fulltext_search(term, options={})
+        sort = {first_name: {order: 'asc'}}
+        sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
+        self.search("*#{term}*", size: 2000, sort: sort)
+      end
+    end
+
+    def as_indexed_json(options={})
+      as_json(
+        only: [:id, :first_name, :last_name, :addr_street, :addr_area, :addr_city, :addr_state, :mobile_number, :phone_number,
+          :about, :certification, :registration, :email, :clinic_name, :consultation_fee]
+      )
     end
 
     #get info
