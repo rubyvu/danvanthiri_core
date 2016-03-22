@@ -4,7 +4,7 @@ module DanvanthiriCore
     belongs_to :doctor
 
     def f_to_hour(number)
-      arr = f.to_s.split(".")
+      arr = number.to_s.split(".")
       h = arr.first.length < 10 ? "0#{arr.first}" : arr.first
       m = arr.last.length < 2 ? "#{arr.last}0" : arr.last
       "#{h}:#{m}"
