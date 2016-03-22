@@ -11,7 +11,7 @@ module DanvanthiriCore
     end
 
     def display_time
-      "#{f_to_hour(time_form)} - #{f_to_hour(time_to)}"
+      "#{f_to_hour(time_from)} - #{f_to_hour(time_to)}"
     end    
   end
 end
