@@ -31,7 +31,7 @@ module DanvanthiriCore
         
         doctor = Doctor.find self.doctor_id
         time = self.time_str.gsub(":", ".").to_f
-        avail = doctor.availables.where(time_from: time, week_day: start_date.wday)
+        avail = doctor.availables.where(time_from: time, week_day: start_date.wday).first
         
         str_time = avail.time_to.to_s.gsub(".", ":") 
         str_date = start_date.strftime("%Y-%m-%d")
