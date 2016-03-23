@@ -14,10 +14,10 @@ module DanvanthiriCore
         h = h-12
       end
       h = h < 10 ? "0#{h}" : h
-      
+
       arr = number.to_s.split(".")
       m = arr.last.length < 2 ? "#{arr.last}0" : arr.last
-      ampm_format "#{h}:#{m} #{ampm}"
+      "#{h}:#{m} #{ampm}"
     end
 
     def display_time
