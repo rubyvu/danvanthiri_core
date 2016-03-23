@@ -26,8 +26,20 @@ module DanvanthiriCore
     end 
   
     def set_booking_time
-      if self.date_str && self.time_str
-        self.booktime = DateTime.parse "#{date_str} #{time_str}"
+      if self.date_str && self.time_str && self.doctor_id
+        start_date = DateTime.parse "#{date_str} #{time_str}"
+        
+        doctor = Doctor.find self.doctor_id
+        time = self.time_str.gsub(":", ".").to_f
+        avail = doctor.availables.where(time_from: time, week_day: start_date.wday)
+        
+        str_time = avail.time_to.to_s.gsub(".", ":") 
+        str_date = start_date.strftime("%Y-%m-%d")
+
+        end_date = DateTime.parse "#{str_date} #{str_time}"
+
+        self.booktime = start_date
+        self.endtime = end_date
       end
     end
 
