@@ -4,20 +4,25 @@ module DanvanthiriCore
     belongs_to :doctor
     validates :time_from, :time_to, :week_day, presence: true
 
-    def f_to_hour(number)
+    def f_to_hour(number, display_ampm=false)
      
       h = number.to_i
-      ampm = "pm"
-      if h < 12
-        ampm = "am"
-      elsif h > 12
-        h = h-12
+      if display_ampm
+        ampm = "pm"
+        if h < 12
+          ampm = "am"
+        elsif h > 12
+          h = h-12
+        end
       end
+
       h = h < 10 ? "0#{h}" : h
 
       arr = number.to_s.split(".")
       m = arr.last.length < 2 ? "#{arr.last}0" : arr.last
-      "#{h}:#{m} #{ampm}"
+      str = "#{h}:#{m}"
+      str += " #{ampm}" if display_ampm
+      str
     end
 
     def display_time
