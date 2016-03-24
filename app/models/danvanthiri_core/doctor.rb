@@ -54,12 +54,13 @@ module DanvanthiriCore
       [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
     end
 
-    def available_today
-      availables.where(week_day: DateTime.now.wday)
+    def available_by_date(date)
+      availables.where(week_day: date.wday)
     end
 
-    def available_ranges
-      available_today.order(:time_from).map(&:display_time)
+    def available_ranges(date=nil)
+      date ||= Date.today
+      available_by_date(date).order(:time_from).map(&:display_time)
     end
 
 
