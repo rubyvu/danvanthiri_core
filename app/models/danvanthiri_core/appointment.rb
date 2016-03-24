@@ -13,17 +13,10 @@ module DanvanthiriCore
     scope :finished, -> {where status: 2}
     scope :cancelled, -> {where status: 3}
 
+    scope :past, -> {where("booktime < ?", DateTime.now)}
+    scope :upcomming, -> {where("booktime > ?", DateTime.now)}
 
     before_validation :set_booking_time
-
-    def as_json(options = {})
-      options = options.merge(except: [:created_at, :updated_at])
-      super(options)
-    end
-
-    def details
-      as_json(include: {doctor: {only: [:id, :name]}, patient: {only: [:id, :name]} })
-    end 
   
     def set_booking_time
       if self.date_str && self.time_str && self.doctor_id
