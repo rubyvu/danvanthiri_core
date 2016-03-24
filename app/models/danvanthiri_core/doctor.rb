@@ -60,7 +60,12 @@ module DanvanthiriCore
 
     def available_ranges(date=nil)
       date ||= Date.today
-      available_by_date(date).order(:time_from).map(&:display_time)
+      avail_on_date = available_by_date(date)
+      morning = avail_on_date.where("time_from < 12.0").order(:time_from)
+      afternoon = avail_on_date.where("time_from >= 12.0 and time_from < 17.0").order(:time_from)
+      everning = avail_on_date.where("time_from >= 17.0").order(:time_from)
+
+      {morning: morning.map(&:display_time), afternoon: afternoon.map(&:display_time), everning: everning.map(&:display_time)}
     end
 
 
@@ -79,19 +84,5 @@ module DanvanthiriCore
     def update_rating!
       update_column :rate, reviews.average(:rate)
     end
-
-    # def services
-    #   doctor_services.map(&:name).join(", ")
-    # end
-
-    # def update_services(services)
-    #   self.doctor_services = services
-    #   self.doctor_category_id = services.first.doctor_category.id unless services.blank?
-    #   self.save
-    # end
-
-    # def update_rating!
-    #   update_column :rate, ratings.average(:value) 
-    # end
   end
 end
