@@ -22,14 +22,6 @@ module DanvanthiriCore
       likes.where(likeable: obj).first
     end
 
-    def phone_verified?
-      phone_verified == true
-    end
-
-    def in_blanklist?
-      blacklist == true
-    end
-
     def toggle_verify_otp!
       value = phone_verified? ? false : true
       update_column :phone_verified, value
