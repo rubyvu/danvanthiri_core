@@ -26,6 +26,10 @@ module DanvanthiriCore
       otp == "1"
     end
 
+    def in_blanklist?
+      blacklist == true
+    end
+
     def toggle_verify_otp!
       value = phone_verified? ? nil : "1"
       update_column :otp, value
@@ -47,6 +51,14 @@ module DanvanthiriCore
 
     def clear_auth_token!
       update_column :auth_token, nil
+    end
+
+    def add_blacklist!
+      update_column :blacklist, true
+    end
+
+    def remove_blacklist!
+      update_column :blacklist, false
     end
 
     def address
