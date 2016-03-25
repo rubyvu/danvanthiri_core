@@ -23,7 +23,7 @@ module DanvanthiriCore
     end
 
     def phone_verified?
-      otp == "1"
+      phone_verified == true
     end
 
     def in_blanklist?
@@ -31,8 +31,8 @@ module DanvanthiriCore
     end
 
     def toggle_verify_otp!
-      value = phone_verified? ? nil : "1"
-      update_column :otp, value
+      value = phone_verified? ? false : true
+      update_column :phone_verified, value
     end
 
     def toggle_like!(obj)
@@ -63,10 +63,6 @@ module DanvanthiriCore
 
     def address
       [address_line_1, address_line_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
-    end
-
-    def display_otp
-      phone_verified? ? "" : otp
     end
 
     def verify_text
