@@ -46,11 +46,11 @@ module DanvanthiriCore
     end
 
     def add_blacklist!
-      update_column blacklist: true, deactive_time: nil
+      update_column :blacklist, true
     end
 
     def remove_blacklist!
-      update_columns blacklist: false, 
+      update_columns blacklist: false, deactive_time: nil
     end
 
     def address
