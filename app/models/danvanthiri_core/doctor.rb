@@ -17,6 +17,8 @@ module DanvanthiriCore
 
     validates :first_name, :last_name, presence: true
 
+    accepts_nested_attributes_for :working_locations, allow_destroy: true
+
     class << self
       def custom_search(opt={})
         results = self
