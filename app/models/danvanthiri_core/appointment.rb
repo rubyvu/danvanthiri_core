@@ -5,7 +5,7 @@ module DanvanthiriCore
     belongs_to :doctor
     belongs_to :working_location
 
-    validates :booktime, presence: true
+    validates :booktime, :doctor_id, :working_location, presence: true
 
     attr_accessor :date_str, :time_str
 
