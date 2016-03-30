@@ -20,13 +20,13 @@ module DanvanthiriCore
     before_validation :set_booking_time
   
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id
+      if self.date_str && self.time_str && self.doctor_id && self.location_id
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           
           doctor = Doctor.find self.doctor_id
           time = self.time_str.gsub(":", ".").to_f
-          avail = doctor.availables.where(time_from: time, week_day: start_date.wday).first
+          avail = doctor.availables.where(time_from: time, week_day: start_date.wday, location_id: self.location_id).first
 
           end_date = DateTime.parse "#{date_str} #{avail.display_time_to}"
 
