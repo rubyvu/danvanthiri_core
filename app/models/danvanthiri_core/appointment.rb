@@ -3,6 +3,7 @@ module DanvanthiriCore
     enum status: [:pending, :accepted, :finished, :cancelled]
     belongs_to :patient
     belongs_to :doctor
+    belongs_to :working_location
 
     validates :booktime, presence: true
 
