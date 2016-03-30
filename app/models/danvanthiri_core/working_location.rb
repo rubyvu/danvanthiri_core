@@ -1,8 +1,8 @@
 module DanvanthiriCore
   class WorkingLocation < ActiveRecord::Base
     belongs_to :doctor
-    has_many :availables, foreign_key: "working_location_id"
-    has_many :appointments, foreign_key: "working_location_id"
+    has_many :availables, foreign_key: "working_location_id", dependent: :destroy
+    has_many :appointments, foreign_key: "working_location_id", dependent: :destroy
 
     validates :name, presence: true
 
