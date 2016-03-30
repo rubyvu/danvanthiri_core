@@ -29,8 +29,8 @@ module DanvanthiriCore
 
           end_date = DateTime.parse "#{date_str} #{avail.display_time_to}"
 
-          self.booktime = start_date
-          self.endtime = end_date
+          self.booktime = start_date - 5.5.hours
+          self.endtime = end_date - 5.5.hours
         rescue Exception => e
           puts e.message
         end
