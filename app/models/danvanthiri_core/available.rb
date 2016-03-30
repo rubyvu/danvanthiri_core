@@ -2,6 +2,7 @@ module DanvanthiriCore
   class Available < ActiveRecord::Base
     enum week_day: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
     belongs_to :doctor
+    belongs_to :working_location
     validates :time_from, :time_to, :week_day, presence: true
 
     def f_to_hour(number, display_ampm=false)
