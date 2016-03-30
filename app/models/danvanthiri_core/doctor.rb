@@ -60,7 +60,7 @@ module DanvanthiriCore
     def available_ranges(date=nil)
       arr = []
       working.locations.each do |loc|
-        arr << {location: {id: loc.id, name: loc.name, availables: loc.available_ranges(date)}
+        arr << {location: {id: loc.id, name: loc.name, availables: loc.available_ranges(date)}}
       end
       arr
     end
