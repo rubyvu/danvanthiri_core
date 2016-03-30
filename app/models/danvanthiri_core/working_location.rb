@@ -1,8 +1,8 @@
 module DanvanthiriCore
   class WorkingLocation < ActiveRecord::Base
     belongs_to :doctor
-    has_many :working_locations
-    
+    has_many :availables, foreign_key: "working_location_id"
+
     validates :name, presence: true
 
     def address
