@@ -5,6 +5,8 @@ module DanvanthiriCore
     belongs_to :working_location
     validates :time_from, :time_to, :week_day, presence: true
 
+    attr_accessor :from_hour, :from_min, :to_hour, :to_min
+
     def f_to_hour(number, display_ampm=false)
      
       h = number.to_i
@@ -38,5 +40,11 @@ module DanvanthiriCore
       f_to_hour(time_to)
     end
 
+    before_validation :set_time
+
+    def set_time
+      self.time_from = "#{self.from_hour}.#{self.from_min}" if self.from_hour && self.from_min
+      self.time_to = "#{self.from_hour}.#{self.from_min}" if self.to_hour && self.to_min
+    end
   end
 end
