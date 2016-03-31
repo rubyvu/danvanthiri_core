@@ -6,6 +6,8 @@ module DanvanthiriCore
 
     validates :name, presence: true
 
+    accepts_nested_attributes_for :availables, allow_destroy: true
+
     def available_ranges(date=nil)
       date ||= Date.today
       avail_on_date = availables.where(week_day: date.wday)
