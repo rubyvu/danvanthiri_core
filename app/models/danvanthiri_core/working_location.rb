@@ -19,7 +19,19 @@ module DanvanthiriCore
     end
 
     def address
-      [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
+      [self.addr_street, self.addr_area, self.addr_city, self.addr_state].reject{|x| x.blank?}.join(', ')
+    end
+
+    before_validation :update_location
+
+    def update_location
+      if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
+        g=Geokit::Geocoders::GoogleGeocoder.geocode address
+        glat = g.lat || 0
+        glng = g.lng || 0
+        self.lat = glat
+        self.lng = glng
+      end
     end
   end
 end

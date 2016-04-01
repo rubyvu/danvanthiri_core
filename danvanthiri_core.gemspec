@@ -24,4 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency "elasticsearch-model"
   s.add_dependency 'elasticsearch-rails'
   s.add_dependency 'bonsai-elasticsearch-rails'
+  s.add_dependency 'geokit'
+  s.add_dependency 'geokit-rails'
 end
