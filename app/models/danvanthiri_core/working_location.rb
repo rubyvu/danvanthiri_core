@@ -22,6 +22,22 @@ module DanvanthiriCore
       [self.addr_street, self.addr_area, self.addr_city, self.addr_state].reject{|x| x.blank?}.join(', ')
     end
 
+    def get_lat
+      unless lat
+        update_location
+        self.save
+      end
+      lat
+    end
+
+    def get_lng
+      unless lng
+        update_location
+        self.save
+      end
+      lng
+    end
+
     def update_location
       g=Geokit::Geocoders::GoogleGeocoder.geocode address
       glat = g.lat || 0
