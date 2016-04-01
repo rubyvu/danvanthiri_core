@@ -22,16 +22,18 @@ module DanvanthiriCore
       [self.addr_street, self.addr_area, self.addr_city, self.addr_state].reject{|x| x.blank?}.join(', ')
     end
 
-    before_validation :update_location
-
     def update_location
-      if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
-        g=Geokit::Geocoders::GoogleGeocoder.geocode address
-        glat = g.lat || 0
-        glng = g.lng || 0
-        self.lat = glat
-        self.lng = glng
-      end
+      g=Geokit::Geocoders::GoogleGeocoder.geocode address
+      glat = g.lat || 0
+      glng = g.lng || 0
+      self.lat = glat
+      self.lng = glng
+    end
+
+    before_validation :check_address_change
+    private
+    def check_address_change
+      update_location if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
     end
   end
 end
