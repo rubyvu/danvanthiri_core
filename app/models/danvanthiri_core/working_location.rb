@@ -38,6 +38,14 @@ module DanvanthiriCore
       lng
     end
 
+    def from_date
+      start_date.blank? ? 'unknown' : start_date.strftime("%B %Y")
+    end
+
+    def to_date
+      end_date.blank? ? 'present' : end_date.strftime("%B %Y")
+    end
+
     def update_location
       g=Geokit::Geocoders::GoogleGeocoder.geocode address
       glat = g.lat || 0
