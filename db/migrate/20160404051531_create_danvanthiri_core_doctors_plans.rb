@@ -6,6 +6,7 @@ class CreateDanvanthiriCoreDoctorsPlans < ActiveRecord::Migration
       t.integer :city_number, default: 1
       t.integer :area_number, default: 1
       t.integer :status
+      t.integer :price
       t.datetime :expired_date
 
       t.timestamps null: false
