@@ -20,6 +20,9 @@ module DanvanthiriCore
     has_many :working_locations, dependent: :destroy, foreign_key: "doctor_id"
     has_many :activities, as: :owner
 
+    has_one :doctors_plan, foreign_key: "doctor_id"
+    has_one :plan, through: :doctors_plan
+
     validates :first_name, :last_name, presence: true
 
     accepts_nested_attributes_for :working_locations, allow_destroy: true
