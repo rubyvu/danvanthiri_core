@@ -3,7 +3,7 @@ class CreateDanvanthiriCorePlans < ActiveRecord::Migration
     create_table :danvanthiri_core_plans do |t|
       t.string :name
       t.integer :unit_price
-      t.string :logo
+      t.string :image
       t.text :description
 
       t.timestamps null: false
