@@ -4,8 +4,7 @@ module DanvanthiriCore
     friendly_id :name, use: :slugged
     
     belongs_to :category
-    has_many :branches_doctors, foreign_key: "branch_id"
-    has_many :doctors, through: :branches_doctors
+    has_many :doctors, foreign_key: "branch_id"
 
     validates :name, presence: true
   end

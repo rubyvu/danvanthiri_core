@@ -23,6 +23,9 @@ module DanvanthiriCore
     has_one :doctors_plan, foreign_key: "doctor_id"
     has_one :plan, through: :doctors_plan
 
+    belongs_to :category
+    belongs_to :branch
+
     validates :first_name, :last_name, presence: true
 
     accepts_nested_attributes_for :working_locations, allow_destroy: true
@@ -82,8 +85,12 @@ module DanvanthiriCore
       "#{first_name} #{last_name}"
     end
 
-    def branch_names
-      branches.map(&:name).join(", ")
+    def category_name
+      category.name if category
+    end
+
+    def branch_name
+      branch.name if branch
     end
 
     def update_rating!
