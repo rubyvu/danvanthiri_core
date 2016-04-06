@@ -1,5 +1,7 @@
 module DanvanthiriCore
   class Patient < ActiveRecord::Base
+    enum gender: [:Female, :Male]
+    
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
 
