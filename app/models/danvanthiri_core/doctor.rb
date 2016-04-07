@@ -31,6 +31,8 @@ module DanvanthiriCore
 
     accepts_nested_attributes_for :working_locations, allow_destroy: true
 
+    scope :verified, -> {where verified: true}
+    
     class << self
       def custom_search(opt={})
         results = self
