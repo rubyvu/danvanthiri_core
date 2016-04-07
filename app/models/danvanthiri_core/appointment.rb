@@ -18,7 +18,7 @@ module DanvanthiriCore
     scope :upcomming, -> {where("booktime > ?", DateTime.now)}
 
     before_validation :set_booking_time
-  
+    after_create :set_status
     def set_booking_time
       if self.date_str && self.time_str && self.doctor_id && self.working_location_id
         begin
@@ -36,6 +36,10 @@ module DanvanthiriCore
           puts e.message
         end
       end
+    end
+
+    def set_status
+      accepted! if doctor.auto_accept_booking?
     end
 
     def patient_name

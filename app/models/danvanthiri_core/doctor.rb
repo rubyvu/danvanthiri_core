@@ -9,6 +9,7 @@ module DanvanthiriCore
     include Elasticsearch::Model::Callbacks
     enum gender: [:Female, :Male]
     enum consultation_type: [:book, :call]
+    enum payment_method: [:Online, :Offline, :ESC, :Cheque]
 
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
