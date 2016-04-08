@@ -11,9 +11,9 @@ module DanvanthiriCore
     def available_ranges(date=nil)
       date ||= Date.today
       avail_on_date = availables.where(week_day: date.wday)
-      morning = avail_on_date.where("time_from < 12.0").order(:time_from)
-      afternoon = avail_on_date.where("time_from >= 12.0 and time_from < 17.0").order(:time_from)
-      everning = avail_on_date.where("time_from >= 17.0").order(:time_from)
+      morning = avail_on_date.morning.order(:time_from)
+      afternoon = avail_on_date.afternoon.order(:time_from)
+      everning = avail_on_date.everning.order(:time_from)
 
       {morning: morning.map(&:display_time), afternoon: afternoon.map(&:display_time), everning: everning.map(&:display_time)}
     end
