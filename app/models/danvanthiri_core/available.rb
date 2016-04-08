@@ -45,6 +45,8 @@ module DanvanthiriCore
     def set_time
       self.time_from = "#{self.from_hour}.#{self.from_min}" if self.from_hour && self.from_min
       self.time_to = "#{self.from_hour}.#{self.from_min}" if self.to_hour && self.to_min
+      self.time_from = self.time_from.gsub(":",".") unless self.time_from.blank?
+      self.time_to = self.time_to.gsub(":",".") unless self.time_to.blank?
     end
   end
 end
