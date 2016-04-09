@@ -17,16 +17,32 @@ module DanvanthiriCore
       str
     end
 
+    def start_hour_str
+      add_zero(start_hour)
+    end
+
+    def start_min_str
+      add_zero(start_min)
+    end
+
+    def end_hour_str
+      add_zero(end_hour)
+    end
+
+    def end_min_str
+      add_zero(end_str)
+    end
+
     def display_time
       "#{display_start_time} - #{display_end_time}"
     end 
 
-    def display_end_time
-      "#{add_zero(start_hour)}:#{add_zero(start_min)}"
+    def display_start_time
+      "#{start_hour_str}:#{start_min_str}"
     end
 
-    def display_start_time
-      "#{add_zero(end_hour)}:#{add_zero(end_min)}"
+    def display_end_time
+      "#{end_hour_str}:#{end_min_str}"
     end
 
     before_validation :set_time
