@@ -25,13 +25,13 @@ module DanvanthiriCore
           start_date = DateTime.parse "#{date_str} #{time_str}"
           
           doctor = Doctor.find self.doctor_id
-          time = self.time_str.gsub(":", ".").to_f
-          avail = doctor.availables.where(time_from: time, week_day: start_date.wday, working_location_id: self.working_location_id).first
+          arr = self.time_str.split(":")
+          avail = doctor.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, week_day: start_date.wday, working_location_id: self.working_location_id).first
 
-          end_date = DateTime.parse "#{date_str} #{avail.display_time_to}"
+          end_date = DateTime.parse "#{date_str} #{avail.display_time_to}" if avail
 
           self.booktime = start_date - 5.5.hours
-          self.endtime = end_date - 5.5.hours
+          self.endtime = end_date - 5.5.hours if end_date
         rescue Exception => e
           puts e.message
         end
