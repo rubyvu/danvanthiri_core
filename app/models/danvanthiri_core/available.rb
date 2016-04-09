@@ -13,7 +13,7 @@ module DanvanthiriCore
     scope :everning, -> {where "start_hour >= 17"}
 
     def add_zero(number)
-      str = number < 0 : "0#{number}" : number
+      str = number < 0 ? "0#{number}" : number
       str
     end
 
