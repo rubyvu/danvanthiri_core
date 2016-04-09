@@ -51,7 +51,7 @@ module DanvanthiriCore
       unless self.start_time.blank?
         arr = self.start_time.split(":")
         self.start_hour = arr.first
-        self.end_min = arr.last
+        self.start_min = arr.last
       end
 
       unless self.end_time.blank?
