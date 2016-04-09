@@ -28,7 +28,7 @@ module DanvanthiriCore
           arr = self.time_str.split(":")
           avail = doctor.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, week_day: start_date.wday, working_location_id: self.working_location_id).first
 
-          end_date = DateTime.parse "#{date_str} #{avail.display_time_to}" if avail
+          end_date = DateTime.parse "#{date_str} #{avail.display_end_time}" if avail
 
           self.booktime = start_date - 5.5.hours
           self.endtime = end_date - 5.5.hours if end_date
