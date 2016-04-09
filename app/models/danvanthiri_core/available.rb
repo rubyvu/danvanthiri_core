@@ -30,7 +30,7 @@ module DanvanthiriCore
     end
 
     def end_min_str
-      add_zero(end_str)
+      add_zero(end_min)
     end
 
     def display_time
