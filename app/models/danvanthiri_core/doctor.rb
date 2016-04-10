@@ -10,6 +10,7 @@ module DanvanthiriCore
     enum gender: [:Female, :Male]
     enum consultation_type: [:book, :call]
     enum payment_method: [:Online, :Offline, :ESC, :Cheque]
+    enum payment_status: [:pending, :paid]
 
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
