@@ -109,5 +109,9 @@ module DanvanthiriCore
     def clear_auth_token!
       update_column :auth_token, nil
     end
+
+     def avatar_url
+      self.avatar.blank? ? "#{ActionMailer::Base.default_url_options[:host]}/assets/default-user.png" : avatar
+    end
   end
 end
