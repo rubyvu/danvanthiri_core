@@ -51,7 +51,7 @@ module DanvanthiriCore
     end
 
     def display_booktime
-      booktime.strftime("%d, %b %Y %I:%M %p") if booktime
+      booktime.strftime("%d, %b %Y %H:%M") if booktime
     end
 
     def display_date
