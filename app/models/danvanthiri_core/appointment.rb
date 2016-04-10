@@ -1,6 +1,6 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
-    enum status: [:pending, :accepted, :finished, :cancelled]
+    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor]
     belongs_to :patient
     belongs_to :doctor
     belongs_to :working_location
