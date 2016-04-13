@@ -55,6 +55,38 @@ module DanvanthiriCore
         branch.doctors
       end
 
+      def filter(term, filter={})
+        result = Doctor
+        result = Doctor.all if term.blank? && filter.blank?
+        unless filter.blank?
+          filter.each do |key, val|
+            unless val.blank?
+              result = result.where(key => val)
+            end
+          end
+        end
+
+        unless term.blank?
+          result = result.where("
+            LOWER(email) like ?
+            or CONCAT(LOWER(first_name), ' ', LOWER(last_name)) like ?
+            or mobile_number like ? 
+            or phone_number like ? 
+            or LOWER(certification) like ?
+            or LOWER(registration) like ?
+            or LOWER(clinic_name) like ?
+            or LOWER(addr_street) like ?
+            or LOWER(addr_area) like ?
+            or LOWER(addr_city) like ?
+            or LOWER(addr_state) like ?",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%")
+        end
+
+        result
+      end
+
       def fulltext_search(term, options={})
         sort = {first_name: {order: 'asc'}}
         sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
