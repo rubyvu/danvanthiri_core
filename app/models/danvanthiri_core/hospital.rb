@@ -3,6 +3,7 @@ module DanvanthiriCore
 
     has_many :doctors_hospitals, foreign_key: "hospital_id", dependent: :destroy
     has_many :doctors, through: :doctors_hospitals
+    has_many :activities, through: :doctors
 
     scope :active, -> {where active: true}
     scope :unactive, -> {where active: false}
