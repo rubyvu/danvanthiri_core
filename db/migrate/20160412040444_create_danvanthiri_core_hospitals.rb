@@ -9,7 +9,7 @@ class CreateDanvanthiriCoreHospitals < ActiveRecord::Migration
       t.string :addr_state
       t.string :phone_number
       t.float :lat
-      f.float :lng
+      t.float :lng
       t.boolean :active, deafult: false
 
       t.timestamps null: false
