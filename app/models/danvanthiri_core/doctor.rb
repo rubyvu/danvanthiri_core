@@ -20,7 +20,7 @@ module DanvanthiriCore
     has_many :reviews, dependent: :destroy, foreign_key: "doctor_id"
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :working_locations, dependent: :destroy, foreign_key: "doctor_id"
-    has_many :activities, as: :owner
+    has_many :activities, as: :owner, dependent: :destroy
     has_many :doctors_hospitals, foreign_key: "doctor_id", dependent: :destroy
     has_many :hospitals, through: :doctors_hospitals
 
