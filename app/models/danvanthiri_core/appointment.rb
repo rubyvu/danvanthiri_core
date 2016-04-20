@@ -17,8 +17,38 @@ module DanvanthiriCore
     scope :past, -> {where("booktime < ?", DateTime.now)}
     scope :upcomming, -> {where("booktime > ?", DateTime.now)}
 
+    class << self
+      def filter(term, filter={})
+        result = Appointment
+        result = Appointment.all if term.blank? && filter.blank?
+        unless filter.blank?
+          filter.each do |key, val|
+            unless val.blank?
+              if key == :book_date
+                date = Date.parse(val)
+                result = result.where(booktime: date.beginning_of_day..date.end_of_day)
+              else
+                result = result.where(key => val)
+              end
+            end
+          end
+        end
+
+        unless term.blank?
+          result = result.joins(:patient, :doctor).where("
+            CONCAT(LOWER(danvanthiri_core_doctors.first_name), ' ', LOWER(danvanthiri_core_doctors.last_name)) like ?
+            or CONCAT(LOWER(danvanthiri_core_patients.first_name), ' ', LOWER(danvanthiri_core_patients.last_name)) like ?",
+            "%#{term.downcase}%", "%#{term.downcase}%")
+        end
+
+        result
+      end
+    end
+
+
     before_validation :set_booking_time
     after_create :set_status
+
     def set_booking_time
       if self.date_str && self.time_str && self.doctor_id && self.working_location_id
         begin
