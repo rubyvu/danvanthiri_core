@@ -2,7 +2,7 @@ module DanvanthiriCore
   class Available < ActiveRecord::Base
     enum week_day: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
     belongs_to :doctor
-    belongs_to :owner, poplymorphic: true
+    belongs_to :owner, polymorphic: true
     validates :week_day, presence: true
     validate :check_time
 
