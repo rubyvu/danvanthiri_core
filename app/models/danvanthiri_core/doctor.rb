@@ -31,6 +31,7 @@ module DanvanthiriCore
     belongs_to :branch
 
     validates :first_name, :last_name, presence: true
+    validates :mobile_number, uniqueness: true, allow_nil: true
 
     accepts_nested_attributes_for :working_locations, allow_destroy: true
 
