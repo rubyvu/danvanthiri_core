@@ -56,7 +56,7 @@ module DanvanthiriCore
           
           doctor = Doctor.find self.doctor_id
           arr = self.time_str.split(":")
-          avail = doctor.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, week_day: start_date.wday, working_location_id: self.working_location_id).first
+          avail = doctor.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, week_day: start_date.wday, owner: self.working_location).first
 
           end_date = DateTime.parse "#{date_str} #{avail.display_end_time}" if avail
 
