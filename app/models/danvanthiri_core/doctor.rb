@@ -12,6 +12,8 @@ module DanvanthiriCore
     enum payment_method: [:Online, :Offline, :ESC, :Cheque]
     enum payment_status: [:pending, :paid]
 
+    mount_uploader :banner, ImageUploader
+
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
 
@@ -36,7 +38,7 @@ module DanvanthiriCore
     accepts_nested_attributes_for :working_locations, allow_destroy: true
 
     scope :verified, -> {where verified: true}
-    
+
     class << self
       def custom_search(opt={})
         results = self
@@ -71,8 +73,8 @@ module DanvanthiriCore
           result = result.where("
             LOWER(email) like ?
             or CONCAT(LOWER(first_name), ' ', LOWER(last_name)) like ?
-            or mobile_number like ? 
-            or phone_number like ? 
+            or mobile_number like ?
+            or phone_number like ?
             or LOWER(certification) like ?
             or LOWER(registration) like ?
             or LOWER(clinic_name) like ?
