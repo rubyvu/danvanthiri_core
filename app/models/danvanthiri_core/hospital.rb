@@ -1,6 +1,7 @@
 module DanvanthiriCore
   class Hospital < ActiveRecord::Base
-
+    mount_uploader :banner, ImageUploader
+    
     has_many :doctors_hospitals, foreign_key: "hospital_id", dependent: :destroy
     has_many :doctors, through: :doctors_hospitals
     has_many :appointments, through: :doctors
