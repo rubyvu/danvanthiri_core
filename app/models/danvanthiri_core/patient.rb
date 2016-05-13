@@ -26,6 +26,10 @@ module DanvanthiriCore
       ]
     end
 
+    def should_generate_new_friendly_id?
+      slug.blank? || first_name_changed? || last_name_changed?
+    end
+    
     def liked?(obj)
       like_obj(obj).blank? ? false : true
     end

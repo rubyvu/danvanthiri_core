@@ -24,6 +24,10 @@ module DanvanthiriCore
       ]
     end
 
+    def should_generate_new_friendly_id?
+      slug.blank? || first_name_changed? || last_name_changed?
+    end
+
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
 
