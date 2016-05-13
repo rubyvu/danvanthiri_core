@@ -16,6 +16,15 @@ module DanvanthiriCore
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
 
+    extend FriendlyId
+    friendly_id :slug_candidates, use: :slugged
+
+    def slug_candidates
+      [
+        [:first_name, :last_name],
+        [:first_name, :last_name, :id]
+      ]
+    end
 
     def liked?(obj)
       like_obj(obj).blank? ? false : true

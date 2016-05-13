@@ -14,6 +14,16 @@ module DanvanthiriCore
 
     mount_uploader :banner, ImageUploader
 
+    extend FriendlyId
+    friendly_id :slug_candidates, use: :slugged
+
+    def slug_candidates
+      [
+        [:first_name, :last_name],
+        [:first_name, :last_name, :id]
+      ]
+    end
+
     has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
 
