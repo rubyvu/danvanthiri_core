@@ -1,7 +1,7 @@
 module DanvanthiriCore
   class Patient < ActiveRecord::Base
     enum gender: [:Female, :Male]
-    
+
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
 
@@ -10,7 +10,8 @@ module DanvanthiriCore
     has_many :liked_doctors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Doctor"
     has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
-    has_many :activities, as: :owner
+    has_many :activities, as: :owner, dependent: :destroy
+    has_many :posts, as: :owner, dependent: :destroy
 
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
@@ -70,7 +71,7 @@ module DanvanthiriCore
     def name
       [first_name, last_name].compact.join(" ")
     end
-    
+
     def phone_with_country_code
       unless mobile_number.blank?
         code = country_code || "+91"
@@ -85,7 +86,7 @@ module DanvanthiriCore
     def appointments_by_doctor(doctor)
       appointments.where(doctor: doctor)
     end
-      
+
     def pending_appointments(doctor)
       appointments(doctor).where(status: 0)
     end
@@ -121,7 +122,7 @@ module DanvanthiriCore
               return "INV", sc.errors.full_messages
             end
           end
-          
+
         end
 
       rescue Exception => e
@@ -164,7 +165,7 @@ module DanvanthiriCore
                 return "INV", sc.errors.full_messages
               end
             end
-            
+
           end
         end
       rescue Exception => e
