@@ -6,7 +6,7 @@ module DanvanthiriCore
     has_many :ambulance_categories, through: :ambulance_services_categories
 
     validates :name, :area, :logo, presence: true
-    validates :mobile, presence: true,
+    validates :mobile, presence: true
     validates :mobile, length: { is: 10 }, allow_blank: true
 
   end
