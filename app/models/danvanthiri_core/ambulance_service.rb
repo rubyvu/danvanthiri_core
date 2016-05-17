@@ -1,5 +1,6 @@
 module DanvanthiriCore
   class AmbulanceService < ActiveRecord::Base
+    include CustomValidate
     mount_uploader :banner, ImageUploader
 
     has_many :ambulance_services_categories, foreign_key: "ambulance_service_id"
