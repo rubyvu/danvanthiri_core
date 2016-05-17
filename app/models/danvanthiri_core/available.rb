@@ -5,7 +5,8 @@ module DanvanthiriCore
     belongs_to :owner, polymorphic: true
     validates :week_day, presence: true
     validate :check_time
-
+    include CustomValidation
+    
     attr_accessor :start_time, :end_time
 
     scope :morning, -> {where "start_hour < 12"}
@@ -35,7 +36,7 @@ module DanvanthiriCore
 
     def display_time
       "#{display_start_time} - #{display_end_time}"
-    end 
+    end
 
     def display_start_time
       "#{start_hour_str}:#{start_min_str}"

@@ -15,7 +15,8 @@ module DanvanthiriCore
 
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
-
+    include CustomValidation
+    
     extend FriendlyId
     friendly_id :slug_candidates, use: :slugged
 
@@ -29,7 +30,7 @@ module DanvanthiriCore
     def should_generate_new_friendly_id?
       slug.blank? || first_name_changed? || last_name_changed?
     end
-    
+
     def liked?(obj)
       like_obj(obj).blank? ? false : true
     end

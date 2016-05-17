@@ -49,7 +49,8 @@ module DanvanthiriCore
 
     validates :first_name, :last_name, presence: true
     validates :mobile_number, uniqueness: true, allow_nil: true
-
+    include CustomValidation
+    
     accepts_nested_attributes_for :working_locations, allow_destroy: true
 
     scope :verified, -> {where verified: true}

@@ -5,7 +5,8 @@ module DanvanthiriCore
     has_many :appointments, foreign_key: "working_location_id", dependent: :destroy
 
     validates :name, presence: true
-
+    include CustomValidation
+    
     accepts_nested_attributes_for :availables, allow_destroy: true
 
     def available_ranges(date=nil)
