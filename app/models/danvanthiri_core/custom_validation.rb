@@ -3,10 +3,10 @@ module DanvanthiriCore
     extend ActiveSupport::Concern
 
     included do
-      validate :integer
+      validate :integer_field
     end
 
-    def special_chars
+    def integer_field
       self.class.columns.each do |column|
         value = self.send(column.name)
         if !value.blank? && column.type.to_s=="integer" && value > 2147483647
