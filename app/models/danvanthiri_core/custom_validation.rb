@@ -1,5 +1,5 @@
 module DanvanthiriCore
-  module CustomValidatin
+  module CustomValidation
     extend ActiveSupport::Concern
 
     included do
