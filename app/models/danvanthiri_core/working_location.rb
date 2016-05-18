@@ -62,7 +62,7 @@ module DanvanthiriCore
     before_validation :check_address_change
     private
     def check_address_change
-      update_location if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
+      update_location if address_changed?
     end
   end
 end
