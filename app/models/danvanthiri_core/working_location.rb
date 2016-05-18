@@ -19,7 +19,7 @@ module DanvanthiriCore
       {morning: morning.map(&:display_time), afternoon: afternoon.map(&:display_time), everning: everning.map(&:display_time)}
     end
 
-    def json_detail
+    def json_details(date=nil)
       {id: id, name: name, consultation_fee: consultation_fee, lat: get_lat, lng: get_lng, address: address, logo: logo, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
     end
 
