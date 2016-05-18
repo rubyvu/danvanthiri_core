@@ -7,8 +7,8 @@ module DanvanthiriCore
     end
 
     def format_start_date
-      end_date.blank? "Present" : end_date.strftime("%B %Y")
+      end_date.blank? ? "Present" : end_date.strftime("%B %Y")
     end
-    
+
   end
 end
