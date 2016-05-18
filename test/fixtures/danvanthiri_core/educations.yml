@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner_id: 1
+  owner_type: MyString
+  school_name: MyString
+  course: MyString
+  start_date: 2016-05-18 13:30:06
+  end_date: 2016-05-18 13:30:06
+
+two:
+  owner_id: 1
+  owner_type: MyString
+  school_name: MyString
+  course: MyString
+  start_date: 2016-05-18 13:30:06
+  end_date: 2016-05-18 13:30:06

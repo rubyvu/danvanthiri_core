@@ -40,6 +40,7 @@ module DanvanthiriCore
     has_many :doctors_hospitals, foreign_key: "doctor_id", dependent: :destroy
     has_many :hospitals, through: :doctors_hospitals
     has_many :posts, as: :owner, dependent: :destroy
+    has_many :educations, as: :owner, dependent: :destroy
 
     has_one :doctors_plan, foreign_key: "doctor_id", dependent: :destroy
     has_one :plan, through: :doctors_plan
@@ -52,6 +53,7 @@ module DanvanthiriCore
     include CustomValidation
 
     accepts_nested_attributes_for :working_locations, allow_destroy: true
+    accepts_nested_attributes_for :educations, allow_destroy: true
 
     scope :verified, -> {where verified: true}
 
