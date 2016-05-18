@@ -23,7 +23,7 @@ module DanvanthiriCore
       {id: id, name: name, consultation_fee: consultation_fee, lat: get_lat, lng: get_lng, address: address, logo: logo, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
     end
 
-    def address
+    def addr
       [self.addr_street, self.addr_area, self.addr_city, self.addr_state].reject{|x| x.blank?}.join(', ')
     end
 
