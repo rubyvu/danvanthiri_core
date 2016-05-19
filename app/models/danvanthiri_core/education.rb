@@ -6,7 +6,7 @@ module DanvanthiriCore
       start_date.strftime("%B %Y") if start_date
     end
 
-    def format_start_date
+    def format_end_date
       end_date.blank? ? "Present" : end_date.strftime("%B %Y")
     end
 
