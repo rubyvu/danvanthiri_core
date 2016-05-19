@@ -1,5 +1,5 @@
 module DanvanthiriCore
-  class Membership < ActiveRecord::Base
+  class Registration < ActiveRecord::Base
     belongs_to :owner, polymorphic: true
   end
 end
