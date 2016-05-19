@@ -103,8 +103,6 @@ module DanvanthiriCore
             or CONCAT(LOWER(first_name), ' ', LOWER(last_name)) like ?
             or mobile_number like ?
             or phone_number like ?
-            or LOWER(certification) like ?
-            or LOWER(registration) like ?
             or LOWER(clinic_name) like ?
             or LOWER(addr_street) like ?
             or LOWER(addr_area) like ?
@@ -128,7 +126,7 @@ module DanvanthiriCore
     def as_indexed_json(options={})
       as_json(
         only: [:id, :first_name, :last_name, :addr_street, :addr_area, :addr_city, :addr_state, :mobile_number, :phone_number,
-          :about, :certification, :registration, :email, :clinic_name, :consultation_fee]
+          :about, :email, :clinic_name, :consultation_fee]
       )
     end
 

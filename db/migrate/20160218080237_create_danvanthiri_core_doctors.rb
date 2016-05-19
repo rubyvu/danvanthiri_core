@@ -15,9 +15,6 @@ class CreateDanvanthiriCoreDoctors < ActiveRecord::Migration
       t.string :mobile_number
 
       t.text :about
-      t.text :certification
-      t.string :registration
-
       t.float :rate
 
       t.timestamps null: false
