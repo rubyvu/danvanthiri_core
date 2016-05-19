@@ -34,11 +34,11 @@ module DanvanthiriCore
       add_zero(end_min)
     end
 
-    def display_time(ampm=false)
+    def display_time(ampm=true)
       "#{display_start_time(ampm)} - #{display_end_time(ampm)}"
     end
 
-    def display_start_time(ampm=false)
+    def display_start_time(ampm=true)
       h = start_hour
       if ampm
         flag = h > 11 ? " PM" : " AM"
@@ -47,7 +47,7 @@ module DanvanthiriCore
       "#{add_zero(h)}:#{add_zero(start_min)}#{flag}"
     end
 
-    def display_end_time(ampm=false)
+    def display_end_time(ampm=true)
       h = end_hour
       if ampm
         flag = h > 11 ? " PM" : " AM"
