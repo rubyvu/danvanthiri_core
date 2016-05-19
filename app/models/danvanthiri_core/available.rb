@@ -6,7 +6,7 @@ module DanvanthiriCore
     validates :week_day, presence: true
     validate :check_time
     include CustomValidation
-    
+
     attr_accessor :start_time, :end_time
 
     scope :morning, -> {where "start_hour < 12"}
@@ -34,16 +34,26 @@ module DanvanthiriCore
       add_zero(end_min)
     end
 
-    def display_time
-      "#{display_start_time} - #{display_end_time}"
+    def display_time(ampm=false)
+      "#{display_start_time(ampm)} - #{display_end_time(ampm)}"
     end
 
-    def display_start_time
-      "#{start_hour_str}:#{start_min_str}"
+    def display_start_time(ampm=false)
+      h = start_hour
+      if ampm
+        flag = h > 11 ? " PM" : " AM"
+        h = h-12 if h > 12
+      end
+      "#{add_zero(h)}:#{add_zero(start_min)}#{flag}"
     end
 
-    def display_end_time
-      "#{end_hour_str}:#{end_min_str}"
+    def display_end_time(ampm=false)
+      h = end_hour
+      if ampm
+        flag = h > 11 ? " PM" : " AM"
+        h = h-12 if h > 12
+      end
+      "#{add_zero(h)}:#{add_zero(end_min)}#{flag}"
     end
 
     before_validation :set_time
