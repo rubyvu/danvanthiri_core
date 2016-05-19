@@ -41,6 +41,7 @@ module DanvanthiriCore
     has_many :hospitals, through: :doctors_hospitals
     has_many :posts, as: :owner, dependent: :destroy
     has_many :educations, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :specializations, -> { order(:created_at) }, as: :owner, dependent: :destroy
 
     has_one :doctors_plan, foreign_key: "doctor_id", dependent: :destroy
     has_one :plan, through: :doctors_plan
