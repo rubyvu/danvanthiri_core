@@ -108,8 +108,8 @@ module DanvanthiriCore
             or LOWER(addr_area) like ?
             or LOWER(addr_city) like ?
             or LOWER(addr_state) like ?",
-            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
-            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
             "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%")
         end
 
