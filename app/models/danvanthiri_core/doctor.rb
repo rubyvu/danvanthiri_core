@@ -40,7 +40,7 @@ module DanvanthiriCore
     has_many :doctors_hospitals, foreign_key: "doctor_id", dependent: :destroy
     has_many :hospitals, through: :doctors_hospitals
     has_many :posts, as: :owner, dependent: :destroy
-    has_many :educations, as: :owner, dependent: :destroy, order: :created_at
+    has_many :educations, as: :owner, dependent: :destroy, -> { order(:created_at) }
 
     has_one :doctors_plan, foreign_key: "doctor_id", dependent: :destroy
     has_one :plan, through: :doctors_plan
