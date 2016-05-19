@@ -43,6 +43,7 @@ module DanvanthiriCore
     has_many :educations, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :specializations, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :memberships, -> { order(:created_at) }, as: :owner, dependent: :destroy
 
     has_one :doctors_plan, foreign_key: "doctor_id", dependent: :destroy
     has_one :plan, through: :doctors_plan
@@ -58,6 +59,7 @@ module DanvanthiriCore
     accepts_nested_attributes_for :educations, allow_destroy: true
     accepts_nested_attributes_for :specializations, allow_destroy: true
     accepts_nested_attributes_for :certifications, allow_destroy: true
+    accepts_nested_attributes_for :memberships, allow_destroy: true
 
     scope :verified, -> {where verified: true}
 
