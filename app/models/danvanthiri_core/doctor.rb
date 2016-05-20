@@ -130,7 +130,7 @@ module DanvanthiriCore
 
     #get info
     def address
-      [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
+      working_locations.first.address if working_locations.first
     end
 
     def available_ranges(date=nil)
