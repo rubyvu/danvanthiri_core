@@ -39,21 +39,23 @@ module DanvanthiriCore
     end
 
     def display_start_time(ampm=true)
-      h = start_hour
-      if ampm
-        flag = h > 11 ? " PM" : " AM"
-        h = h-12 if h > 12
+      if h = start_hour
+        if ampm
+          flag = h > 11 ? " PM" : " AM"
+          h = h-12 if h > 12
+        end
+        "#{add_zero(h)}:#{add_zero(start_min)}#{flag}"
       end
-      "#{add_zero(h)}:#{add_zero(start_min)}#{flag}"
     end
 
     def display_end_time(ampm=true)
-      h = end_hour
-      if ampm
-        flag = h > 11 ? " PM" : " AM"
-        h = h-12 if h > 12
+      if h = end_hour
+        if ampm
+          flag = h > 11 ? " PM" : " AM"
+          h = h-12 if h > 12
+        end
+        "#{add_zero(h)}:#{add_zero(end_min)}#{flag}"
       end
-      "#{add_zero(h)}:#{add_zero(end_min)}#{flag}"
     end
 
     before_validation :set_time
