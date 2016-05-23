@@ -20,7 +20,7 @@ module DanvanthiriCore
     end
 
     def json_details(date=nil)
-      {id: id, name: name, consultation_fee: consultation_fee, lat: get_lat, lng: get_lng, address: address, logo: logo, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
+      {id: id, name: name, consultation_fee: consultation_fee, lat: get_lat, lng: get_lng, address: addr, addr_city: addr_city, logo: logo, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
     end
 
     def addr
@@ -62,7 +62,8 @@ module DanvanthiriCore
     before_validation :check_address_change
     private
     def check_address_change
-      update_location if address_changed?
+      #update_location if address_changed?
+      update_location if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
     end
   end
 end
