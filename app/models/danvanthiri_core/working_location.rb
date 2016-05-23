@@ -11,7 +11,7 @@ module DanvanthiriCore
 
     def available_ranges(date=nil)
       date ||= Date.today
-      avail_on_date = availables.where(week_day: date.wday)
+      avail_on_date = availables.where("week_day=7 OR week_day=?", date.wday)
       morning = avail_on_date.morning.order(:start_hour)
       afternoon = avail_on_date.afternoon.order(:start_hour)
       everning = avail_on_date.everning.order(:start_hour)
