@@ -1,6 +1,6 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
-    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor]
+    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
     belongs_to :patient
     belongs_to :doctor
     belongs_to :working_location
@@ -53,7 +53,7 @@ module DanvanthiriCore
       if self.date_str && self.time_str && self.doctor_id && self.working_location_id
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
-          
+
           doctor = Doctor.find self.doctor_id
           arr = self.time_str.split(":")
           avail = doctor.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, week_day: start_date.wday, owner: self.working_location).first
