@@ -20,6 +20,14 @@ module DanvanthiriCore
     scope :friday, -> {where friday: true}
     scope :saturday, -> {where saturday: true}
 
+    def json_details
+      {
+        start_hour: start_hour, start_min: start_min, end_hour: end_hour, end_min: end_min,
+        start_time: display_start_time, end_time: display_end_time,
+        sunday: sunday?, monday: monday?, tuesday: tuesday?, wednesday: wednesday?, thursday: thursday?, friday: friday?,
+        saturday: saturday?
+      }
+    end
 
     def add_zero(number)
       str = number && number < 10 ? "0#{number}" : number
