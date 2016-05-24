@@ -1,9 +1,9 @@
 module DanvanthiriCore
   class Available < ActiveRecord::Base
-    enum week_day: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :all_day]
+    #enum week_day: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :all_day]
     belongs_to :doctor
     belongs_to :owner, polymorphic: true
-    validates :week_day, presence: true
+    #validates :week_day, presence: true
     validate :check_time
     include CustomValidation
 
@@ -12,6 +12,14 @@ module DanvanthiriCore
     scope :morning, -> {where "start_hour < 12"}
     scope :afternoon, -> {where "start_hour >= 12 and start_hour < 17"}
     scope :everning, -> {where "start_hour >= 17"}
+    scope :sunday, -> {where sunday: true}
+    scope :monday, -> {where monday: true}
+    scope :tuesday, -> {where tuesday: true}
+    scope :wednesday, -> {where wednesday: true}
+    scope :thursday, -> {where thursday: true}
+    scope :friday, -> {where friday: true}
+    scope :saturday, -> {where saturday: true}
+
 
     def add_zero(number)
       str = number && number < 10 ? "0#{number}" : number
