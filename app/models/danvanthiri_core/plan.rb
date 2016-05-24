@@ -6,7 +6,13 @@ module DanvanthiriCore
 
     validates :name, presence: true
     validates :unit_price, presence: true
-    
+
     mount_uploader :image, ImageUploader
+
+    scope :fixed_price, -> {where fixed_price: true}
+
+    def price_by_locations_count(count)
+      return fixed_price==true ? unit_price : unit_price*count
+    end
   end
 end
