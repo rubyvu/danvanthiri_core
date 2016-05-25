@@ -136,7 +136,7 @@ module DanvanthiriCore
     def available_ranges(date=nil)
       arr = []
       working_locations.each do |loc|
-        arr << {working_location: loc.json_details}
+        arr << {working_location: loc.json_details(date)}
       end
       arr
     end
