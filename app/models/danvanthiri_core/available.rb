@@ -22,6 +22,7 @@ module DanvanthiriCore
 
     def json_details
       {
+        id: id,
         start_hour: start_hour, start_min: start_min, end_hour: end_hour, end_min: end_min,
         start_time: display_start_time, end_time: display_end_time,
         sunday: sunday?, monday: monday?, tuesday: tuesday?, wednesday: wednesday?, thursday: thursday?, friday: friday?,
