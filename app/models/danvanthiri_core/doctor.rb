@@ -13,6 +13,7 @@ module DanvanthiriCore
     enum payment_status: [:pending, :paid]
 
     mount_uploader :banner, ImageUploader
+    mount_uploader :avatar, ImageUploader
 
     extend FriendlyId
     friendly_id :slug_candidates, use: :slugged
