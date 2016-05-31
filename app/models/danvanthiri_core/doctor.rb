@@ -176,5 +176,13 @@ module DanvanthiriCore
     def avatar_url
       self.avatar.blank? ? "#{ActionMailer::Base.default_url_options[:host]}/assets/default-user.png" : avatar
     end
+
+    after_validation :set_verified
+
+    protected
+    def set_verified
+      self.verified = true if self.payment_method == "Online"
+    end
+
   end
 end
