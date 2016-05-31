@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 1
+  category: MyString
+  sub_category: MyString
+  blood_group: MyString
+  date_of_birth: 2016-05-31 15:04:10
+
+two:
+  patient_id: 1
+  category: MyString
+  sub_category: MyString
+  blood_group: MyString
+  date_of_birth: 2016-05-31 15:04:10
