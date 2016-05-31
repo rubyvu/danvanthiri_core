@@ -99,7 +99,8 @@ module DanvanthiriCore
         gcm_registration = patient.gcm_registration
         unless gcm_registration.blank?
           serv = GcmService.new
-          data = {appointment_id: id, status: self.status}
+          status = self.status=='cancelled_by_doctor' ? "cancelled" : self.status
+          data = {appointment_id: id, status: status, message: "Doctor #{doctor.name} has #{self.status} your appointment"}
           serv.notify(data, [gcm_registration])
         end
       end
