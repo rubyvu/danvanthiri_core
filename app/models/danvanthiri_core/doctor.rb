@@ -134,6 +134,11 @@ module DanvanthiriCore
       working_locations.first.address if working_locations.first
     end
 
+    def appointments_by_patient(term=nil)
+      return appointments if term.blank?
+      appointments.joins(:patient).where("CONCAT(LOWER(danvanthiri_core_patients.first_name), ' ', LOWER(danvanthiri_core_patients.last_name)) like ?", "%#{term.downcase}%")
+    end
+
     def available_ranges(date=nil)
       arr = []
       working_locations.each do |loc|
@@ -141,7 +146,6 @@ module DanvanthiriCore
       end
       arr
     end
-
 
     def available_week_day(week_day)
       availables.where(week_day: week_day)
