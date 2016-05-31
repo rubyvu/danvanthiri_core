@@ -95,7 +95,7 @@ module DanvanthiriCore
 
     after_validation :push_notification
     def push_notification!
-      if status_changed? && !new_record? && status != "cancelled_by_patient"
+      if errors.blank? && status_changed? && !new_record? && status != "cancelled_by_patient"
         gcm_registration = patient.gcm_registration
         unless gcm_registration.blank?
           serv = GcmService.new
