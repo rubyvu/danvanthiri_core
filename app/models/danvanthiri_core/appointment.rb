@@ -92,5 +92,19 @@ module DanvanthiriCore
     def display_time
       booktime.strftime("%H:%M")
     end
+
+    after_validation :push_notification
+    def push_notification!
+      if status_changed? && !new_record? && status != "cancelled_by_patient"
+        gcm_registration = patient.gcm_registration
+        unless gcm_registration.blank?
+          serv = GcmService.new
+          data = {appointment_id: id, status: self.status}
+          serv.notify(data, [gcm_registration])
+        end
+      end
+    end
+
   end
+
 end

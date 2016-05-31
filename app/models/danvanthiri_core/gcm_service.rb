@@ -18,12 +18,10 @@ module DanvanthiriCore
       response
     end
 
-    def notify(msg, reg_ids = nil)
+    def notify(data, reg_ids = nil)
       return if reg_ids.blank?
       options = {
-        data: {
-          message: msg
-        }
+        data: data
       }
       push_to_registration_ids(reg_ids, options)
     end
