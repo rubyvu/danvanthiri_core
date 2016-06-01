@@ -103,7 +103,7 @@ module DanvanthiriCore
           if status == "cancelled_by_patient"
             gcm_registration = doctor.gcm_registration
             message = "#{patient.name} has cancelled an appointment"
-          elsif status == "rescheduled"
+          elsif status == "pending"
             gcm_registration = doctor.gcm_registration
             message = "#{patient.name} has change booktime of an appointment"
           else
