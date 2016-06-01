@@ -20,8 +20,8 @@ module DanvanthiriCore
         ["AB-", "AB+", "B-", "B+", "A-", "A+", "O-", "O+"]
       end
     end
-    
-    before_validattion :set_sub_category
+
+    before_validation :set_sub_category
     def set_sub_category
       self.sub_category = self.blood_sub_category unless self.blood_sub_category.blank?
       self.sub_category = self.organ_sub_category unless self.organ_sub_category.blank?
