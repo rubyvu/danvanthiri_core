@@ -18,6 +18,19 @@ module DanvanthiriCore
       def blood_groups
         ["AB-", "AB+", "B-", "B+", "A-", "A+", "O-", "O+"]
       end
+
+      def filter(filter={})
+        result = Donor
+        unless filter.blank?
+          filter.each do |key, val|
+            unless val.blank?
+              result = result.where(key => val)
+            end
+          end
+        end
+
+        result
+      end
     end
   end
 end
