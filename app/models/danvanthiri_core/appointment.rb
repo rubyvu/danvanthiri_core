@@ -4,6 +4,7 @@ module DanvanthiriCore
     belongs_to :patient
     belongs_to :doctor
     belongs_to :working_location
+    has_many :notifications, as: :target
 
     validates :booktime, :doctor_id, :working_location, presence: true
 
@@ -91,33 +92,6 @@ module DanvanthiriCore
 
     def display_time
       booktime.strftime("%H:%M")
-    end
-
-    after_validation :push_notification
-    def push_notification
-      if errors.blank?
-        if new_record?
-          gcm_registration = doctor.gcm_registration
-          message = "#{patient.name} has booked an appointment with you"
-        elsif status_changed?
-          if status == "cancelled_by_patient"
-            gcm_registration = doctor.gcm_registration
-            message = "#{patient.name} has cancelled an appointment"
-          elsif status == "pending"
-            gcm_registration = doctor.gcm_registration
-            message = "#{patient.name} has change booktime of an appointment"
-          else
-            gcm_registration = patient.gcm_registration
-            act = self.status=='cancelled_by_doctor' ? "cancelled" : self.status
-            message = "Doctor #{doctor.name} has #{act} your appointment"
-          end
-        end
-        unless gcm_registration.blank?
-          serv = GcmService.new
-          data = {appointment_id: id, status: status, message: message}
-          serv.notify(data, [gcm_registration])
-        end
-      end
     end
 
   end

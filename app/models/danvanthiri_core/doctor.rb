@@ -45,6 +45,7 @@ module DanvanthiriCore
     has_many :memberships, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :registrations, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :recognitions, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :notification, as: :owner, dependent: :destroy
 
     has_one :doctors_plan, foreign_key: "doctor_id", dependent: :destroy
     has_one :plan, through: :doctors_plan
