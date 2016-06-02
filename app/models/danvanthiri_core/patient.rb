@@ -13,7 +13,7 @@ module DanvanthiriCore
     has_many :activities, as: :owner, dependent: :destroy
     has_many :posts, as: :owner, dependent: :destroy
     has_many :donors, dependent: :destroy, foreign_key: "patient_id"
-    has_many :notification, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
 
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
