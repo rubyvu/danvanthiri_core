@@ -43,8 +43,8 @@ module DanvanthiriCore
     end
 
     validates :category, inclusion: {in: categories}
-    validates :sub_category, inclusion: {in: blood_sub_categories}, if: blood_donor?
-    validates :sub_category, inclusion: {in: organ_sub_categories}, if: organ_donor?
+    validates :sub_category, inclusion: {in: blood_sub_categories}, if: Proc.new { |user| user.blood_donor? })
+    validates :sub_category, inclusion: {in: organ_sub_categories}, if: Proc.new { |user| user.organ_donor? })
     validates :blood_group, inclusion: {in: blood_groups}, allow_blank: true
   end
 end
