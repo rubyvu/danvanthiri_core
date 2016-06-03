@@ -47,5 +47,8 @@ module DanvanthiriCore
       end
     end
 
+    def read!
+      update_column :read, true
+    end
   end
 end
