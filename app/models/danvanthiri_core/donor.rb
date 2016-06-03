@@ -2,7 +2,7 @@ module DanvanthiriCore
   class Donor < ActiveRecord::Base
     belongs_to :patient
     validates :category, :sub_category, presence: true
-    validates :category, inclusion: {in: categories}
+    validates :category, inclusion: {in: Donor.categories}
     validates :sub_category, inclusion: {in: Donor.blood_sub_categories}, if: blood_donor?
     validates :sub_category, inclusion: {in: Donor.organ_sub_categories}, if: organ_donor?
     validates :blood_group, inclusion: {in: Donor.blood_groups}, allow_blank: true
