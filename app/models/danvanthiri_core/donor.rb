@@ -79,7 +79,7 @@ module DanvanthiriCore
     end
 
     def bmi_value
-      blood_group_hash[:value]
+      bmi_hash[:value]
     end
 
     validates :category, inclusion: {in: [0,1]}
