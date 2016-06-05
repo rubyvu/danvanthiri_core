@@ -59,7 +59,7 @@ module DanvanthiriCore
     end
 
     def sub_category_name
-      sub_category_name[:name]
+      sub_category_hash[:name]
     end
 
     def blood_group_hash
