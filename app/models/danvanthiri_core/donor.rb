@@ -47,17 +47,28 @@ module DanvanthiriCore
     end
 
     def category_hash
-      {id: category, name: Donor.categories[category]}
+      return category.blank? ? {} : {id: category, name: Donor.categories[category]}
+    end
+
+    def category_name
+      category_hash[:name]
     end
 
     def sub_category_hash
-      {id: sub_category, name: Donor.sub_categories[sub_category]}
+      return sub_category.blank? ? {} : {id: sub_category, name: Donor.sub_categories[sub_category]}
+    end
+
+    def sub_category_name
+      sub_category_name[:name]
     end
 
     def blood_group_hash
-      {id: blood_group, name: Donor.blood_groups[blood_group]}
+      return blood_group.blank? ? {} : {id: blood_group, name: Donor.blood_groups[blood_group]}
     end
 
+    def blood_group_name
+      blood_group_hash[:name]
+    end
     validates :category, inclusion: {in: [0,1]}
     validates :blood_group, inclusion: {in: (0..7).to_a}, allow_blank: true
   end
