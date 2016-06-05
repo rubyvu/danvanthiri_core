@@ -8,6 +8,10 @@ module DanvanthiriCore
         ["Blood Donor", "Organ Donor"]
       end
 
+      def sub_categories
+        ["Platellets", "Blood Cells"]
+      end
+      
       def blood_sub_categories
         ["Platellets", "Blood Cells"]
       end
@@ -40,6 +44,18 @@ module DanvanthiriCore
 
     def organ_donor?
       category=="Organ Donor"
+    end
+
+    def category_hash
+      {id: category, Donor.categories[category]}
+    end
+
+    def sub_category_hash
+      {id: sub_category, Donor.sub_categories[sub_category]}
+    end
+
+    def blood_group_hash
+      {id: blood_group, Donor.blood_groups[category]}
     end
 
     validates :category, inclusion: {in: categories}
