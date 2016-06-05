@@ -11,7 +11,7 @@ module DanvanthiriCore
       def sub_categories
         ["Platellets", "Blood Cells"]
       end
-      
+
       def blood_sub_categories
         ["Platellets", "Blood Cells"]
       end
@@ -47,15 +47,15 @@ module DanvanthiriCore
     end
 
     def category_hash
-      {id: category, Donor.categories[category]}
+      {id: category, name: Donor.categories[category]}
     end
 
     def sub_category_hash
-      {id: sub_category, Donor.sub_categories[sub_category]}
+      {id: sub_category, name: Donor.sub_categories[sub_category]}
     end
 
     def blood_group_hash
-      {id: blood_group, Donor.blood_groups[category]}
+      {id: blood_group, name: Donor.blood_groups[blood_group]}
     end
 
     validates :category, inclusion: {in: categories}
