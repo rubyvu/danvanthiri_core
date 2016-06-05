@@ -58,9 +58,7 @@ module DanvanthiriCore
       {id: blood_group, name: Donor.blood_groups[blood_group]}
     end
 
-    validates :category, inclusion: {in: categories}
-    validates :sub_category, inclusion: {in: blood_sub_categories}, if: Proc.new { |donor| donor.blood_donor? }
-    validates :sub_category, inclusion: {in: organ_sub_categories}, if: Proc.new { |donor| donor.organ_donor? }
-    validates :blood_group, inclusion: {in: blood_groups}, allow_blank: true
+    validates :category, inclusion: {in: [0,1]}
+    validates :blood_group, inclusion: {in: (0..7).to_a}, allow_blank: true
   end
 end
