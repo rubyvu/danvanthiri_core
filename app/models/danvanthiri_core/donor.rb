@@ -24,6 +24,10 @@ module DanvanthiriCore
         ["AB-", "AB+", "B-", "B+", "A-", "A+", "O-", "O+"]
       end
 
+      def bmis
+        ["1-10", "10-20", "30 & above"]
+      end
+
       def filter(filter={})
         result = Donor
         unless filter.blank?
@@ -69,6 +73,15 @@ module DanvanthiriCore
     def blood_group_name
       blood_group_hash[:name]
     end
+
+    def bmi_hash
+      return bmi.blank? ? {} : {id: bmi, value: Donor.bmis[bmi]}
+    end
+
+    def bmi_value
+      blood_group_hash[:value]
+    end
+
     validates :category, inclusion: {in: [0,1]}
     validates :blood_group, inclusion: {in: (0..7).to_a}, allow_blank: true
   end
