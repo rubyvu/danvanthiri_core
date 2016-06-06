@@ -5,6 +5,7 @@ module DanvanthiriCore
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
 
+    has_many :pharmacy_categories, dependent: :destroy, foreign_key: "patient_id"       
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :likes, dependent: :destroy, foreign_key: "patient_id"
     has_many :liked_doctors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Doctor"
