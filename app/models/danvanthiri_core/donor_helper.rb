@@ -3,9 +3,10 @@ module DanvanthiriCore
     extend ActiveSupport::Concern
 
     included do
-      validates :category, :sub_category, presence: true
-      validates :category, inclusion: {in: [0,1]}, allow_blank: true
-      validates :sub_category, inclusion: {in: [0,1]}, allow_blank: true
+      belongs_to :donor_category
+      belongs_to :donor_sub_category
+
+      validates :donor_category_id, :donor_sub_category_id, presence: true
       validates :blood_group, inclusion: {in: (0..7).to_a}, allow_blank: true
     end
 
@@ -37,28 +38,20 @@ module DanvanthiriCore
     end
 
     module InstanceMethods
-      def blood_donor?
-        category=="Blood Donor"
+      def donor_category_hash
+        {id: donor_category_id, name: donor_category_name}
       end
 
-      def organ_donor?
-        category=="Organ Donor"
-      end
-
-      def category_hash
-        return category.blank? ? {} : {id: category, name: Donor.categories[category]}
-      end
-
-      def category_name
-        category_hash[:name]
+      def donor_category_name
+        donor_category.name if donor_category
       end
 
       def sub_category_hash
-        return sub_category.blank? ? {} : {id: sub_category, name: Donor.sub_categories[sub_category]}
+        {id: donor_sub_category_id, name: donor_sub_category_name}
       end
 
       def sub_category_name
-        sub_category_hash[:name]
+        sub_category.name if sub_category
       end
 
       def blood_group_hash
@@ -69,7 +62,7 @@ module DanvanthiriCore
         blood_group_hash[:name]
       end
     end
-    
+
     def self.included(receiver)
       receiver.extend         ClassMethods
       receiver.send :include, InstanceMethods

@@ -3,7 +3,7 @@ module DanvanthiriCore
     include CustomValidation
     include DonorHelper
     belongs_to :patient
-    validates :category, :sub_category, presence: true
+    belongs_to :mbi
 
     class << self
       def filter(filter={})
@@ -22,11 +22,11 @@ module DanvanthiriCore
 
 
     def bmi_hash
-      return bmi.blank? ? {} : {id: bmi, value: Donor.bmis[bmi]}
+      {id: bmi_id, value: bmi_value}
     end
 
     def bmi_value
-      bmi_hash[:value]
+      bmi.value if bmi
     end
 
   end
