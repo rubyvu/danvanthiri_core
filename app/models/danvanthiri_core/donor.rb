@@ -3,7 +3,7 @@ module DanvanthiriCore
     include CustomValidation
     include DonorHelper
     belongs_to :patient
-    belongs_to :mbi
+    belongs_to :bmi
 
     class << self
       def filter(filter={})
