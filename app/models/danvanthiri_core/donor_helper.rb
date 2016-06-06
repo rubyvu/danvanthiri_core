@@ -38,20 +38,20 @@ module DanvanthiriCore
     end
 
     module InstanceMethods
-      def donor_category_hash
-        {id: donor_category_id, name: donor_category_name}
+      def category_hash
+        {id: donor_category_id, name: category_name}
       end
 
-      def donor_category_name
+      def category_name
         donor_category.name if donor_category
       end
 
       def sub_category_hash
-        {id: donor_sub_category_id, name: donor_sub_category_name}
+        {id: donor_sub_category_id, name: sub_category_name}
       end
 
       def sub_category_name
-        sub_category.name if sub_category
+        donor_sub_category.name if sub_category
       end
 
       def blood_group_hash
