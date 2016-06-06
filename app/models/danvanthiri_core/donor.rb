@@ -7,7 +7,7 @@ module DanvanthiriCore
 
     class << self
       def filter(filter={})
-        result = Donor
+        result = where("1=1")
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
