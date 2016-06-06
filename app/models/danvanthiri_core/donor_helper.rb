@@ -51,7 +51,7 @@ module DanvanthiriCore
       end
 
       def sub_category_name
-        donor_sub_category.name if sub_category
+        donor_sub_category.name if donor_sub_category
       end
 
       def blood_group_hash
