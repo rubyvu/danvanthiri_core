@@ -4,7 +4,7 @@ module DanvanthiriCore
     belongs_to :patient
     belongs_to :doctor
     belongs_to :working_location
-    has_many :notifications, as: :target
+    has_many :notifications, as: :target, dependent: :destroy
 
     validates :booktime, :doctor_id, :working_location, presence: true
 
