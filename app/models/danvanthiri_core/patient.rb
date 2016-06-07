@@ -20,6 +20,7 @@ module DanvanthiriCore
     validates :mobile_number, presence: true, uniqueness: true, on: :update
     include CustomValidation
 
+    mount_uploader :avatar, ImageUploader
     extend FriendlyId
     friendly_id :slug_candidates, use: :slugged
 
