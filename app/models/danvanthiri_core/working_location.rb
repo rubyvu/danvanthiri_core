@@ -6,6 +6,7 @@ module DanvanthiriCore
 
     validates :name, presence: true
     include CustomValidation
+    mount_uploader :logo, ImageUploader
 
     accepts_nested_attributes_for :availables, allow_destroy: true
 
@@ -56,7 +57,7 @@ module DanvanthiriCore
     end
 
     def update_location
-      g=Geokit::Geocoders::GoogleGeocoder.geocode address
+      g=Geokit::Geocoders::GoogleGeocoder.geocode addr
       glat = g.lat || 0
       glng = g.lng || 0
       self.lat = glat
