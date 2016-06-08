@@ -1,7 +1,6 @@
 module DanvanthiriCore
   class Pharmacy < ActiveRecord::Base
-    has_many :pharmacy_category_pharmacies, foreign_key: "pharmacy_id"
-    has_many :pharmacy_categories, through: :pharmacy_category_pharmacies
+    has_and_belongs_to_many :pharmacy_categoies, foreign_key: "pharmacy_id"
     validates :name, presence: true, uniqueness: true
   end
 end
