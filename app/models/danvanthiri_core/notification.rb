@@ -20,7 +20,7 @@ module DanvanthiriCore
       update_column :message, message
       unless doctor.gcm_registration.blank?
         serv = GcmService.new
-        data = {notification_id: id, appointment_id: id, status: target.status, message: message}
+        data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
         serv.notify(data, [doctor.gcm_registration])
       end
     end
@@ -42,7 +42,7 @@ module DanvanthiriCore
       update_column :message, message
       unless patient.gcm_registration.blank?
         serv = GcmService.new
-        data = {notification_id: id, appointment_id: id, status: target.status, message: message}
+        data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
         serv.notify(data, [patient.gcm_registration])
       end
     end
