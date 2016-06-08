@@ -25,7 +25,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    "/assets/fallback/#{mounted_as}/default.png"
+    "#{ActionMailer::Base.default_url_options[:host]}/assets/fallback/#{mounted_as}/default.png"
   end
 
   # Process files as they are uploaded:
