@@ -55,7 +55,11 @@ module DanvanthiriCore
       if like = like_obj(obj)
         like.destroy
       else
-        liked_doctors << obj
+        if obj.is_a?(DanvanthiriCore::Doctor)
+          liked_doctors << obj
+        elsif obj.is_a?(DanvanthiriCore::Pharmacy)
+          liked_pharmacies << obj
+        end
       end
     end
 

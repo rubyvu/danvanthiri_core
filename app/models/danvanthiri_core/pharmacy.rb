@@ -8,7 +8,7 @@ module DanvanthiriCore
     validates :name, presence: true, uniqueness: true
 
     def update_rating!
-      update_column :rating, ratings.average(:rate)
+      update_column :rate, ratings.average(:rate)
     end
   end
 end
