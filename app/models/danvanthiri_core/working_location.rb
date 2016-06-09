@@ -10,6 +10,8 @@ module DanvanthiriCore
 
     accepts_nested_attributes_for :availables, allow_destroy: true
 
+    attr_accessor :update_location_field
+
     def available_ranges(date=nil)
       avail_on_date = availables
       if date
@@ -34,7 +36,7 @@ module DanvanthiriCore
 
     def get_lat
       unless lat
-        update_location
+        update_location_by_address
         self.save
       end
       lat
@@ -42,7 +44,7 @@ module DanvanthiriCore
 
     def get_lng
       unless lng
-        update_location
+        update_location_by_address
         self.save
       end
       lng
@@ -56,7 +58,7 @@ module DanvanthiriCore
       end_date.blank? ? 'present' : end_date.strftime("%B %Y")
     end
 
-    def update_location
+    def update_location_by_address
       g=Geokit::Geocoders::GoogleGeocoder.geocode addr
       glat = g.lat || 0
       glng = g.lng || 0
@@ -64,11 +66,25 @@ module DanvanthiriCore
       self.lng = glng
     end
 
+    def update_location_by_latlng
+      g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
+      self.street = g.street_name
+      self.area = g.district
+      self.city = g.city
+      self.state = g.state_name
+    end
+
+
+
     before_validation :check_address_change
     private
     def check_address_change
       #update_location if address_changed?
-      update_location if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
+      if self.update_location_field=='lat-lng'
+        update_location_by_latlng
+      else
+        update_location_by_address if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
+      end
     end
   end
 end
