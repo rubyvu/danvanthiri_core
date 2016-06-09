@@ -68,10 +68,10 @@ module DanvanthiriCore
 
     def update_location_by_latlng
       g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
-      self.street = g.street_name
-      self.area = g.district
-      self.city = g.city
-      self.state = g.state_name
+      self.addr_street = g.street_name
+      self.addr_area = g.district
+      self.addr_city = g.city
+      self.addr_state = g.state_name
     end
 
 
