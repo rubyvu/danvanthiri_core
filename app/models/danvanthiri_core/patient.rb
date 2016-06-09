@@ -8,8 +8,11 @@ module DanvanthiriCore
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :likes, dependent: :destroy, foreign_key: "patient_id"
     has_many :liked_doctors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Doctor"
-    has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
+    has_many :liked_pharmacies, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Pharmacy"
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
+    has_many :ratings, as: :owner, dependent: :destroy
+
+    has_many :social_credentials, dependent: :destroy, foreign_key: "patient_id"
     has_many :activities, as: :owner, dependent: :destroy
     has_many :posts, as: :owner, dependent: :destroy
     has_many :donors, dependent: :destroy, foreign_key: "patient_id"
