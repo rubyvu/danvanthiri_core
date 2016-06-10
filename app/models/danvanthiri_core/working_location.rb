@@ -63,10 +63,8 @@ module DanvanthiriCore
 
     def update_location_by_address
       g=Geokit::Geocoders::GoogleGeocoder.geocode addr
-      glat = g.lat || 0
-      glng = g.lng || 0
-      self.lat = glat
-      self.lng = glng
+      self.lat = g.lat
+      self.lng = g.lng
     end
 
     def update_location_by_latlng
