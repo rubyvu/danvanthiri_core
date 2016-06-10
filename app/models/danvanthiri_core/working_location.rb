@@ -90,7 +90,7 @@ module DanvanthiriCore
 
     def address_validate
       if (addr_street.blank? || addr_city.blank? || addr_state.blank?) && (lat.blank? & lng.blank?)
-        errors.add :base, "Either address or latitude-longitude must be provided"
+        errors.add :address, "or latitude-longitude must be provided"
       end
     end
   end
