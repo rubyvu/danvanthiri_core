@@ -5,6 +5,9 @@ module DanvanthiriCore
     has_many :appointments, foreign_key: "working_location_id", dependent: :destroy
 
     validates :name, presence: true
+    validates :availables, presence: true
+    validate :address_validate
+
     include CustomValidation
     mount_uploader :logo, ImageUploader
 
@@ -84,6 +87,12 @@ module DanvanthiriCore
         update_location_by_latlng
       else
         update_location_by_address if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
+      end
+    end
+
+    def address_validate
+      if (addr_street.blank? || addr_city.blank? || addr_state.blank?) && (lat.blank? & lng.blank?)
+        errors.add :base, "Either address or latitude-longitude must be provided"
       end
     end
   end
