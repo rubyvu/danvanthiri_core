@@ -1,13 +1,13 @@
 module DanvanthiriCore
   class Pharmacy < ActiveRecord::Base
-    has_many :pharmacy_category_pharmacies, foreign_key: "pharmacy_id"
-    has_many :pharmacy_categories, through: :pharmacy_category_pharmacies
+    belongs_to :pharmacy_category
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
 
     has_many :availables, as: :owner, dependent: :destroy
 
     validates :name, presence: true, uniqueness: true
+    validates :email, :mobile_number, :pharmacy_category_id, :certification, :license, presence: true
     validate :address_validate
 
     mount_uploader :logo, ImageUploader

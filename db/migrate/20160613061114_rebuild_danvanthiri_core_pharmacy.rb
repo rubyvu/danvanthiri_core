@@ -1,6 +1,7 @@
 class RebuildDanvanthiriCorePharmacy < ActiveRecord::Migration
   def change
     drop_table :danvanthiri_core_pharmacies
+    drop_table :danvanthiri_core_pharmacy_category_pharmacies
     create_table :danvanthiri_core_pharmacies do |t|
       t.string :name
       t.string :email
