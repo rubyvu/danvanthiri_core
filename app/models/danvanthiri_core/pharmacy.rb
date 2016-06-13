@@ -14,6 +14,38 @@ module DanvanthiriCore
 
     attr_accessor :update_location_field
 
+    class << self
+
+      def filter(term, filter={})
+        result = Pharmacy
+        result = Pharmacy.all if term.blank? && filter.blank?
+        unless filter.blank?
+          filter.each do |key, val|
+            unless val.blank?
+              result = result.where(key => val)
+            end
+          end
+        end
+
+        unless term.blank?
+          result = result.where("
+            LOWER(email) like ?
+            or mobile_number like ?
+            or name like ?
+            or LOWER(addr_street) like ?
+            or LOWER(addr_area) like ?
+            or LOWER(addr_city) like ?
+            or LOWER(addr_state) like ?",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%", "%#{term.downcase}%", "%#{term.downcase}%",
+            "%#{term.downcase}%")
+        end
+
+        result
+      end
+
+    end
+
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
