@@ -11,9 +11,11 @@ module DanvanthiriCore
     validate :address_validate
 
     mount_uploader :logo, ImageUploader
+    mount_uploader :banner, ImageUploader
 
     attr_accessor :update_location_field
 
+    scope :banner_status, -> {where banner_status: true}
     class << self
 
       def filter(term, filter={})
