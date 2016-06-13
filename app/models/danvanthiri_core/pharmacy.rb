@@ -31,7 +31,7 @@ module DanvanthiriCore
           result = result.where("
             LOWER(email) like ?
             or mobile_number like ?
-            or name like ?
+            or LOWER(name) like ?
             or LOWER(addr_street) like ?
             or LOWER(addr_area) like ?
             or LOWER(addr_city) like ?
