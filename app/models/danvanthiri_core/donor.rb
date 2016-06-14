@@ -2,6 +2,7 @@ module DanvanthiriCore
   class Donor < ActiveRecord::Base
     include CustomValidation
     include DonorHelper
+    validates :donor_sub_category_id, presence: true
     belongs_to :patient
     belongs_to :bmi
 
