@@ -10,6 +10,8 @@ module DanvanthiriCore
     validates :email, :mobile_number, :pharmacy_category_id, :certification, :license, presence: true
     validate :address_validate
 
+    accepts_nested_attributes_for :availables, allow_destroy: true
+
     mount_uploader :logo, ImageUploader
     mount_uploader :banner, ImageUploader
 
