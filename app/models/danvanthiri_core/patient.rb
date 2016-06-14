@@ -18,6 +18,7 @@ module DanvanthiriCore
     has_many :donors, dependent: :destroy, foreign_key: "patient_id"
     has_many :donor_requests, as: :owner, dependent: :destroy
     has_many :notifications, as: :owner, dependent: :destroy
+    has_many :quotations, as: :owner, dependent: :destroy
 
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update

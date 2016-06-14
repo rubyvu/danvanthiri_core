@@ -3,8 +3,8 @@ module DanvanthiriCore
     belongs_to :pharmacy_category
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
-
     has_many :availables, as: :owner, dependent: :destroy
+    has_many :quotations, dependent: :destroy, foreign_key: "pharmacy_id"
 
     validates :name, presence: true, uniqueness: true
     validates :email, :mobile_number, :pharmacy_category_id, :certification, :license, presence: true
