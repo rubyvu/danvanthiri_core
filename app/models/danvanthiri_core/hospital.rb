@@ -13,6 +13,10 @@ module DanvanthiriCore
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
 
+    has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :registrations, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :availables, as: :owner, dependent: :destroy
+
     accepts_nested_attributes_for :departments, allow_destroy: true
 
     scope :active, -> {where active: true}
@@ -47,8 +51,22 @@ module DanvanthiriCore
       update_column :active, false
     end
 
+    def available_ranges(date=nil)
+      avail_on_date = availables
+      if date
+        wday = date.strftime("%A").downcase
+        avail_on_date = availables.send(wday)
+      end
+      availables.map(&:json_details)
+    end
+    
     def address
       [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
+    end
+
+    def year_ago
+      return 0 unless built_year
+      Date.today.year - built_year
     end
 
     def update_rating!
