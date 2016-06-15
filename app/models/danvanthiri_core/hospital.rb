@@ -18,6 +18,9 @@ module DanvanthiriCore
     has_many :availables, as: :owner, dependent: :destroy
 
     accepts_nested_attributes_for :departments, allow_destroy: true
+    accepts_nested_attributes_for :certifications, allow_destroy: true
+    accepts_nested_attributes_for :registrations, allow_destroy: true
+    accepts_nested_attributes_for :availables, allow_destroy: true
 
     scope :active, -> {where active: true}
     scope :unactive, -> {where active: false}
@@ -59,7 +62,7 @@ module DanvanthiriCore
       end
       availables.map(&:json_details)
     end
-    
+
     def address
       [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
     end
