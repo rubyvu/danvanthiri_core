@@ -7,6 +7,7 @@ module DanvanthiriCore
 
     has_many :appointments, dependent: :destroy, foreign_key: "patient_id"
     has_many :likes, dependent: :destroy, foreign_key: "patient_id"
+    has_many :liked_hospitals, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Hospital"
     has_many :liked_doctors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Doctor"
     has_many :liked_pharmacies, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Pharmacy"
     has_many :liked_ambulance_services, through: :likes, source: :likeable, source_type: "DanvanthiriCore::AmbulanceService"
@@ -63,6 +64,8 @@ module DanvanthiriCore
           liked_pharmacies << obj
         elsif obj.is_a?(DanvanthiriCore::AmbulanceService)
           liked_ambulance_services << obj
+        elsif obj.is_a?(DanvanthiriCore::Hospital)
+          liked_hospitals << obj
         end
       end
     end
