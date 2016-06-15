@@ -10,10 +10,14 @@ module DanvanthiriCore
     has_many :hospitals_hospital_categories, foreign_key: "hospital_id", dependent: :destroy
     has_many :hospital_categories, through: :hospitals_hospital_categories
 
+    has_many :likes, as: :likeable, dependent: :destroy
+    has_many :ratings, as: :rateable, dependent: :destroy
+
     accepts_nested_attributes_for :departments, allow_destroy: true
 
     scope :active, -> {where active: true}
     scope :unactive, -> {where active: false}
+    scope :premium, -> {where premium: true}
 
     validates :name, presence: true
     class << self
@@ -48,4 +52,9 @@ module DanvanthiriCore
     end
 
   end
+
+  def update_rating!
+    update_column :rate, ratings.average(:rate)
+  end
+  
 end
