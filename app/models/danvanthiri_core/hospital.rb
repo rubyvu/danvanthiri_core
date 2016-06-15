@@ -16,6 +16,24 @@ module DanvanthiriCore
     scope :unactive, -> {where active: false}
 
     validates :name, presence: true
+    class << self
+      def filter(filter={})
+        result = where("1=1")
+        unless filter.blank?
+          filter.each do |key, val|
+            unless val.blank?
+              if key.to_s=='city'
+                result = result.where("LOWER(addr_city) like ?", "%#{val.downcase}%")
+              else
+                result = result.where(key => val)
+              end
+            end
+          end
+        end
+
+        result
+      end
+    end
 
     def active!
       update_column :active, true
