@@ -51,10 +51,9 @@ module DanvanthiriCore
       [addr_street, addr_area, addr_city, addr_state].reject{|x| x.blank?}.join(', ')
     end
 
+    def update_rating!
+      update_column :rate, ratings.average(:rate)
+    end
   end
 
-  def update_rating!
-    update_column :rate, ratings.average(:rate)
-  end
-  
 end
