@@ -1,7 +1,6 @@
 module DanvanthiriCore
   class AmbulanceService < ActiveRecord::Base
     include CustomValidation
-    mount_uploader :banner, ImageUploader
     mount_uploader :logo, ImageUploader
 
     has_many :likes, as: :likeable, dependent: :destroy
