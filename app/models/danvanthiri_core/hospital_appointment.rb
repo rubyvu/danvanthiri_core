@@ -1,12 +1,13 @@
 module DanvanthiriCore
-  class Appointment < ActiveRecord::Base
-    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
+  class HospitalAppointment < ActiveRecord::Base
+    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_hospital, :rejected]
     belongs_to :patient
-    belongs_to :doctor
-    belongs_to :working_location
+    belongs_to :hospital
+    belongs_to :bookable, polymorphic: true
+
     has_many :notifications, as: :target, dependent: :destroy
 
-    validates :booktime, :doctor_id, :working_location, presence: true
+    validates :booktime, :patient, :hospital, :bookable, presence: true
 
     attr_accessor :date_str, :time_str
 
@@ -20,8 +21,7 @@ module DanvanthiriCore
 
     class << self
       def filter(term, filter={})
-        result = Appointment
-        result = Appointment.all if term.blank? && filter.blank?
+        result = where("1=1")
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
@@ -36,8 +36,8 @@ module DanvanthiriCore
         end
 
         unless term.blank?
-          result = result.joins(:patient, :doctor).where("
-            CONCAT(LOWER(danvanthiri_core_doctors.first_name), ' ', LOWER(danvanthiri_core_doctors.last_name)) like ?
+          result = result.joins(:patient, :hospital).where("
+            LOWER(danvanthiri_core_hospitals.name) like ?
             or CONCAT(LOWER(danvanthiri_core_patients.first_name), ' ', LOWER(danvanthiri_core_patients.last_name)) like ?",
             "%#{term.downcase}%", "%#{term.downcase}%")
         end
@@ -48,16 +48,15 @@ module DanvanthiriCore
 
 
     before_validation :set_booking_time
-    after_create :set_status
 
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id && self.working_location_id
+      if self.date_str && self.time_str && self.doctor_id && self.hospital_id
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase
 
           arr = self.time_str.split(":")
-          avail = self.working_location.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, wday.to_sym => true).first
+          avail = self.hospital.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, wday.to_sym => true).first
 
           end_date = DateTime.parse "#{date_str} #{avail.display_end_time}" if avail
 
@@ -69,16 +68,12 @@ module DanvanthiriCore
       end
     end
 
-    def set_status
-      accepted! if doctor.auto_accept_booking?
-    end
-
     def patient_name
       patient.name if patient
     end
 
-    def doctor_name
-      doctor.name if doctor
+    def hospital_name
+      hospital.name if hospital
     end
 
     def display_booktime
@@ -94,5 +89,4 @@ module DanvanthiriCore
     end
 
   end
-
 end
