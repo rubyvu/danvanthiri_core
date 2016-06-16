@@ -50,7 +50,10 @@ module DanvanthiriCore
     before_validation :set_booking_time
 
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id && self.hospital_id
+      unless self.bookable_type.blank?
+        self.bookable_type = "DanvanthiriCore::#{self.bookable_type.captitalize}" unless self.bookable_type.include?("DanvanthiriCore")
+      end
+      if self.date_str && self.time_str && self.bookable_id && self.hospital_id
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase
