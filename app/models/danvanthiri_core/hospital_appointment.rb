@@ -51,7 +51,7 @@ module DanvanthiriCore
 
     def set_booking_time
       unless self.bookable_type.blank?
-        self.bookable_type = "DanvanthiriCore::#{self.bookable_type.captitalize}" unless self.bookable_type.include?("DanvanthiriCore")
+        self.bookable_type = "DanvanthiriCore::#{self.bookable_type.capitalize}" unless self.bookable_type.include?("DanvanthiriCore")
       end
       if self.date_str && self.time_str && self.bookable_id && self.hospital_id
         begin
