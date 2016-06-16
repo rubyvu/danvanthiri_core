@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 1
+  hospital_id: 1
+  bookable_id: 1
+  bookable_type: MyString
+  booktime: 2016-06-16 10:50:27
+  endtime: 2016-06-16 10:50:27
+  status: 1
+  fee: 1
+
+two:
+  patient_id: 1
+  hospital_id: 1
+  bookable_id: 1
+  bookable_type: MyString
+  booktime: 2016-06-16 10:50:27
+  endtime: 2016-06-16 10:50:27
+  status: 1
+  fee: 1

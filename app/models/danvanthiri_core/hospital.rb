@@ -5,6 +5,7 @@ module DanvanthiriCore
     has_many :doctors_hospitals, foreign_key: "hospital_id", dependent: :destroy
     has_many :doctors, through: :doctors_hospitals
     has_many :appointments, through: :doctors
+    has_many :hospital_appointments, dependent: :destroy, foreign_key: "hospital_id"
     has_many :activities, through: :doctors
     has_many :departments, foreign_key: "hospital_id", dependent: :destroy
     has_many :hospitals_hospital_categories, foreign_key: "hospital_id", dependent: :destroy
