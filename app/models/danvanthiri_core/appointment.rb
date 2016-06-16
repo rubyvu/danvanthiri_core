@@ -13,7 +13,7 @@ module DanvanthiriCore
     scope :pending, -> {where status: 0}
     scope :accepted, -> {where status: 1}
     scope :finished, -> {where status: 2}
-    scope :cancelled, -> {where status: 3}
+    scope :cancelled, -> {where status: [5,6]}
 
     scope :past, -> {where("booktime < ?", DateTime.now)}
     scope :upcomming, -> {where("booktime > ?", DateTime.now)}
