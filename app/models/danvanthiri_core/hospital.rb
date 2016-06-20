@@ -37,7 +37,7 @@ module DanvanthiriCore
               if key.to_s == "multiple_categories"
                 if val=="true"
                   joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
-                elsif value=="false"
+                elsif val=="false"
                   joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
                 end
               elsif key.to_s=='city'
