@@ -34,9 +34,16 @@ module DanvanthiriCore
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
-              if key.to_s=='city'
-                result = result.where("LOWER(addr_city) like ?", "%#{val.downcase}%")
+              if key.to_s == "multiple_categories"
+                if val=="true"
+                  joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
+                elsif value=="false"
+                  joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
+                end
+              elsif key.to_s=='city'
+                  result = result.where("LOWER(danvanthiri_core_hospitals.addr_city) like ?", "%#{val.downcase}%")
               else
+                key = "danvanthiri_core_hospitals.#{key.to_s}"
                 result = result.where(key => val)
               end
             end
