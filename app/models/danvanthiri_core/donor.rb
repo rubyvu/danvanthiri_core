@@ -2,9 +2,15 @@ module DanvanthiriCore
   class Donor < ActiveRecord::Base
     include CustomValidation
     include DonorHelper
-    validates :donor_sub_category_id, presence: true
+
     belongs_to :patient
     belongs_to :bmi
+    belongs_to :donor_category
+    has_many :donors_donor_sub_categories, dependent: :destroy, foreign_key: "donor_id"
+    has_many :donor_sub_categories, through: :donors_donor_sub_categories
+
+    validates :donor_sub_categories, presence: true
+
 
     class << self
       def filter(filter={})
