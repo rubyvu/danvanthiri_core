@@ -36,9 +36,9 @@ module DanvanthiriCore
             unless val.blank?
               if key.to_s == "multiple_categories"
                 if val=="true"
-                  joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
+                  result = result.joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
                 elsif val=="false"
-                  joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)>1")
+                  result = result.joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)=1")
                 end
               elsif key.to_s=='city'
                   result = result.where("LOWER(danvanthiri_core_hospitals.addr_city) like ?", "%#{val.downcase}%")
