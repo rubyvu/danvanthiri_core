@@ -4,8 +4,6 @@ module DanvanthiriCore
 
     included do
       belongs_to :donor_category
-      belongs_to :donor_sub_category
-
       validates :donor_category_id, presence: true
       validates :blood_group, inclusion: {in: (0..7).to_a}, allow_blank: true
     end
@@ -47,11 +45,11 @@ module DanvanthiriCore
       end
 
       def sub_category_hash
-        {id: donor_sub_category_id, name: sub_category_name}
+        donor_sub_categories.map{|c| {id: c.id, name: c.name}}
       end
 
-      def sub_category_name
-        donor_sub_category.name if donor_sub_category
+      def sub_categories_name
+        donor_sub_categories.map(&:name).join(", ")
       end
 
       def blood_group_hash

@@ -4,7 +4,7 @@ module DanvanthiriCore
     include DonorHelper
 
     belongs_to :owner, polymorphic: true
-    belongs_to :donor_category
+
     has_many :donor_requests_donor_sub_categories, dependent: :destroy, foreign_key: "donor_request_id"
     has_many :donor_sub_categories, through: :donor_requests_donor_sub_categories
 
