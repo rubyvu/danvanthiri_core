@@ -18,6 +18,8 @@ module DanvanthiriCore
     has_many :registrations, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :availables, as: :owner, dependent: :destroy
 
+    has_many :quotations, as: :quoteable, dependent: :destroy
+    
     accepts_nested_attributes_for :departments, allow_destroy: true
     accepts_nested_attributes_for :certifications, allow_destroy: true
     accepts_nested_attributes_for :registrations, allow_destroy: true
