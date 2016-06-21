@@ -28,7 +28,7 @@ module DanvanthiriCore
 
       def match_request(request)
         filter({location: request.location, donor_category_id: request.donor_category_id})
-        .joins(:donors_donor_sub_categories).where("donor_id in(?)", request.donor_sub_categories.map(&:id))
+        .joins(:donors_donor_sub_categories).where("donor_sub_category_id in(?)", request.donor_sub_categories.map(&:id))
       end
     end
 
