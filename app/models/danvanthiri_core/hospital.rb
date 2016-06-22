@@ -4,8 +4,7 @@ module DanvanthiriCore
 
     has_many :doctors_hospitals, foreign_key: "hospital_id", dependent: :destroy
     has_many :doctors, through: :doctors_hospitals
-    has_many :appointments, through: :doctors
-    has_many :hospital_appointments, dependent: :destroy, foreign_key: "hospital_id"
+    has_many :appointments, foreign_key: "hospital_id", dependent: :destroy
     has_many :activities, through: :doctors
     has_many :departments, foreign_key: "hospital_id", dependent: :destroy
     has_many :hospitals_hospital_categories, foreign_key: "hospital_id", dependent: :destroy
@@ -16,10 +15,9 @@ module DanvanthiriCore
 
     has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :registrations, -> { order(:created_at) }, as: :owner, dependent: :destroy
-    has_many :availables, as: :owner, dependent: :destroy
 
     has_many :quotations, as: :quoteable, dependent: :destroy
-    
+
     accepts_nested_attributes_for :departments, allow_destroy: true
     accepts_nested_attributes_for :certifications, allow_destroy: true
     accepts_nested_attributes_for :registrations, allow_destroy: true
@@ -62,15 +60,6 @@ module DanvanthiriCore
 
     def de_active!
       update_column :active, false
-    end
-
-    def available_ranges(date=nil)
-      avail_on_date = availables
-      if date
-        wday = date.strftime("%A").downcase
-        avail_on_date = availables.send(wday)
-      end
-      availables.map(&:json_details)
     end
 
     def address

@@ -8,7 +8,6 @@ module DanvanthiriCore
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
     enum gender: [:Female, :Male]
-    enum consultation_type: [:book, :call]
     enum payment_method: [:Online, :Offline, :ESC, :Cheque]
     enum payment_status: [:pending, :paid]
 
@@ -29,7 +28,7 @@ module DanvanthiriCore
       slug.blank? || first_name_changed? || last_name_changed?
     end
 
-    has_many :availables, dependent: :destroy, foreign_key: "doctor_id"
+    has_many :availables, as: :owner, dependent: :destroy
     has_many :appointments, dependent: :destroy, foreign_key: "doctor_id"
 
     has_many :reviews, dependent: :destroy, foreign_key: "doctor_id"
@@ -52,11 +51,13 @@ module DanvanthiriCore
 
     belongs_to :category
     belongs_to :branch
+    belongs_to :department
 
     validates :first_name, :last_name, presence: true
     validates :mobile_number, uniqueness: true, allow_nil: true
     include CustomValidation
 
+    accepts_nested_attributes_for :availables, allow_destroy: true
     accepts_nested_attributes_for :working_locations, allow_destroy: true
     accepts_nested_attributes_for :educations, allow_destroy: true
     accepts_nested_attributes_for :specializations, allow_destroy: true
@@ -141,15 +142,20 @@ module DanvanthiriCore
     end
 
     def available_ranges(date=nil)
+      avail_on_date = availables
+      if date
+        wday = date.strftime("%A").downcase
+        avail_on_date = availables.send(wday)
+      end
+      availables.map(&:json_details)
+    end
+
+    def locations_array(date=nil)
       arr = []
       working_locations.each do |loc|
         arr << {working_location: loc.json_details(date)}
       end
       arr
-    end
-
-    def available_week_day(week_day)
-      availables.where(week_day: week_day)
     end
 
     def name

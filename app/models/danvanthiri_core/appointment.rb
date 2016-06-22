@@ -1,18 +1,21 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
+    enum book_type: [:doctor_booking, :department_booking, :hospital_booking]
     belongs_to :patient
     belongs_to :doctor
     belongs_to :working_location
+    belongs_to :hospital
+    belongs_to :department
+    
     has_many :notifications, as: :target, dependent: :destroy
 
-    validates :booktime, :doctor_id, :working_location, presence: true
-
+    validates :booktime, presence: true
+    validates :working_location, presence: true if doctor_booking?
+    validates :doctor_id, presence: true if doctor_booking?
+    validates :hospital_id, presence: true if hospital_booking?
     attr_accessor :date_str, :time_str
 
-    scope :pending, -> {where status: 0}
-    scope :accepted, -> {where status: 1}
-    scope :finished, -> {where status: 2}
     scope :cancelled, -> {where status: [5,6]}
 
     scope :past, -> {where("booktime < ?", DateTime.now)}
@@ -51,13 +54,13 @@ module DanvanthiriCore
     after_create :set_status
 
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id && self.working_location_id
+      if self.date_str && self.time_str && self.doctor_id && (self.working_location_id || !self.doctor_booking?)
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase
-
+          availables = self.working_location ? self.working_location : self.doctor
           arr = self.time_str.split(":")
-          avail = self.working_location.availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, wday.to_sym => true).first
+          avail = availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, wday.to_sym => true).first
 
           end_date = DateTime.parse "#{date_str} #{avail.display_end_time}" if avail
 
@@ -70,7 +73,7 @@ module DanvanthiriCore
     end
 
     def set_status
-      accepted! if doctor.auto_accept_booking?
+      accepted! if doctor && doctor.auto_accept_booking?
     end
 
     def patient_name

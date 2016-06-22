@@ -21,11 +21,6 @@ module DanvanthiriCore
         wday = date.strftime("%A").downcase
         avail_on_date = availables.send(wday)
       end
-      # morning = avail_on_date.morning.order(:start_hour)
-      # afternoon = avail_on_date.afternoon.order(:start_hour)
-      # everning = avail_on_date.everning.order(:start_hour)
-      #
-      # {morning: morning.map(&:display_time), afternoon: afternoon.map(&:display_time), everning: everning.map(&:display_time)}
       availables.map(&:json_details)
     end
 
