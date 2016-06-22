@@ -4,6 +4,5 @@ class AlterTableDanvanthiriCoreQuotations < ActiveRecord::Migration
     add_column :danvanthiri_core_quotations, :quoteable_type, :string
     add_column :danvanthiri_core_quotations, :total_price, :integer
     add_column :danvanthiri_core_quote_items, :price, :integer
-    add_column :danvanthiri_core_quote_items, :total_price, :integer
   end
 end

@@ -1,5 +1,6 @@
 module DanvanthiriCore
   class Quotation < ActiveRecord::Base
+    enum status: [:pending, :accepted]
     belongs_to :owner, polymorphic: true
     belongs_to :quoteable, polymorphic: true
     has_many :quote_items, dependent: :destroy, foreign_key: "quotation_id"
@@ -8,5 +9,9 @@ module DanvanthiriCore
     validates :quote_items, presence: true
 
     mount_uploader :photo, ImageUploader
+
+    def update_price!
+      update_column :total_price, quote_items.sum(:price)
+    end
   end
 end
