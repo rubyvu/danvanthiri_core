@@ -7,6 +7,6 @@ module DanvanthiriCore
 
     accepts_nested_attributes_for :medicine_order_items, allow_destroy: true
 
-    validates :orderable, :order_items, :addr_line_1, :addr_city, :addr_state, presence: true
+    validates :orderable, :medicine_order_items, :addr_line_1, :addr_city, :addr_state, presence: true
   end
 end
