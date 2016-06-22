@@ -27,7 +27,6 @@ module DanvanthiriCore
 
     def push_patient(act, obj_type="Appointment")
       if obj_type=="Appointment"
-        patient = target.patient
         doctor = target.doctor
         case act
         when "accepted"
@@ -37,13 +36,13 @@ module DanvanthiriCore
         when "rejected"
           message = "Your appointment with #{doctor.name} has been rejected."
         when "finished"
-          message = "Your appointment with #{patient.name} has been finished."
+          message = "Your appointment with #{doctor.name} has been finished."
         end
         update_column :message, message
-        unless patient.gcm_registration.blank?
+        unless owner.gcm_registration.blank?
           serv = GcmService.new
           data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
-          serv.notify(data, [patient.gcm_registration])
+          serv.notify(data, [owner.gcm_registration])
         end
       elsif obj_type=="Quotation"
         case act
@@ -53,10 +52,10 @@ module DanvanthiriCore
         end
 
         update_column :message, message
-        unless patient.gcm_registration.blank?
+        unless owner.gcm_registration.blank?
           serv = GcmService.new
           data = {notification_id: id, quotation_id: target_id, status: target.status, message: message}
-          serv.notify(data, [patient.gcm_registration])
+          serv.notify(data, [owner.gcm_registration])
         end
       end
 
