@@ -5,7 +5,8 @@ module DanvanthiriCore
     has_many :ratings, as: :rateable, dependent: :destroy
     has_many :availables, as: :owner, dependent: :destroy
     has_many :quotations, as: :quoteable, dependent: :destroy
-
+    has_many :medicine_orders, as: :orderable, dependent: :destroy
+    
     validates :name, presence: true, uniqueness: true
     validates :email, :mobile_number, :pharmacy_category_id, :certification, :license, presence: true
     validate :address_validate

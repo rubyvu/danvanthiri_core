@@ -23,7 +23,8 @@ module DanvanthiriCore
     has_many :donor_requests, as: :owner, dependent: :destroy
     has_many :notifications, as: :owner, dependent: :destroy
     has_many :quotations, as: :owner, dependent: :destroy
-
+    has_many :medicine_orders, as: :owner, dependent: :destroy
+    
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
     include CustomValidation

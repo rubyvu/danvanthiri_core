@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner_id: 1
+  owner_type: MyString
+  orderable_id: 1
+  orderable_type: MyString
+  first_name: MyString
+  last_name: MyString
+  addr_line_1: MyString
+  addr_line_2: MyString
+  addr_city: MyString
+  addr_state: MyString
+  addr_pin: MyString
+  phone_number: MyString
+  status: 1
+
+two:
+  owner_id: 1
+  owner_type: MyString
+  orderable_id: 1
+  orderable_type: MyString
+  first_name: MyString
+  last_name: MyString
+  addr_line_1: MyString
+  addr_line_2: MyString
+  addr_city: MyString
+  addr_state: MyString
+  addr_pin: MyString
+  phone_number: MyString
+  status: 1
