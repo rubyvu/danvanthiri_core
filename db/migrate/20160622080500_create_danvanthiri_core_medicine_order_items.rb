@@ -1,4 +1,4 @@
-class CreateDanvanthiriCoreOrderItems < ActiveRecord::Migration
+class CreateDanvanthiriCoreMedicineOrderItems < ActiveRecord::Migration
   def change
     create_table :danvanthiri_core_medicine_order_items do |t|
       t.integer :medicine_order_id
