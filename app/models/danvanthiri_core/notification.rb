@@ -26,7 +26,7 @@ module DanvanthiriCore
     end
 
     def push_patient(act, obj_type="Appointment")
-      if obj_typet=="Appointment"
+      if obj_type=="Appointment"
         patient = target.patient
         doctor = target.doctor
         case act
