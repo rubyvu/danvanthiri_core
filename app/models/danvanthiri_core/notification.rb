@@ -25,8 +25,8 @@ module DanvanthiriCore
       end
     end
 
-    def push_patient(act, target="Appointment")
-      if target=="Appointment"
+    def push_patient(act, obj_type="Appointment")
+      if obj_typet=="Appointment"
         patient = target.patient
         doctor = target.doctor
         case act
@@ -45,7 +45,7 @@ module DanvanthiriCore
           data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
           serv.notify(data, [patient.gcm_registration])
         end
-      elsif target=="Quotation"
+      elsif obj_type=="Quotation"
         case act
         when "response-quote"
           quoteable = target.quoteable
