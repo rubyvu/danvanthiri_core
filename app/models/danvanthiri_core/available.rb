@@ -19,6 +19,11 @@ module DanvanthiriCore
     scope :friday, -> {where friday: true}
     scope :saturday, -> {where saturday: true}
 
+    def self.by_date(date)
+      wday = date.strftime("%A").downcase
+      send(wday)
+    end
+
     def json_details
       {
         id: id,
