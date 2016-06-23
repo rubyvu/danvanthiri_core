@@ -74,6 +74,18 @@ module DanvanthiriCore
       end
     end
 
+    def week_days
+      arr = []
+      arr << "Sunday" if sunday?
+      arr << "Monday" if monday?
+      arr << "Tuesday" if tuesday?
+      arr << "Wednesday" if wednesday?
+      arr << "Thursday" if thursday?
+      arr << "Friday" if friday?
+      arr << "Saturday" if saturday?
+      arr.join ", "
+    end
+
     before_validation :set_time
 
     def set_time
