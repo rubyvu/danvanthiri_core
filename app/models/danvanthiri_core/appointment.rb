@@ -13,7 +13,7 @@ module DanvanthiriCore
     validates :booktime, presence: true
     validates :working_location, presence: true, if: :doctor_booking?
     validates :doctor_id, presence: true, if: :doctor_booking?
-    validates :hospital_id, presence: true, if: :hospital_booking?
+    validates :hospital_id, presence: true, unless: :doctor_booking?
     attr_accessor :date_str, :time_str
 
     scope :cancelled, -> {where status: [5,6]}
@@ -58,7 +58,7 @@ module DanvanthiriCore
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase
-          availables = self.working_location ? self.working_location : self.doctor
+          availables = self.working_location ? self.working_location.availables : self.doctor.availables
           arr = self.time_str.split(":")
           avail = availables.where(start_hour: arr.first.to_i, start_min: arr.last.to_i, wday.to_sym => true).first
 
