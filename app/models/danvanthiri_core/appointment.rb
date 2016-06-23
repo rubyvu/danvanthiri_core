@@ -7,8 +7,16 @@ module DanvanthiriCore
     belongs_to :working_location
     belongs_to :hospital
     belongs_to :department
-    
+
     has_many :notifications, as: :target, dependent: :destroy
+
+    def doctor_booking?
+      book_type == 0
+    end
+
+    def hospital_booking?
+      book_type == 2
+    end
 
     validates :booktime, presence: true
     validates :working_location, presence: true if doctor_booking?
