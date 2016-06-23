@@ -21,7 +21,6 @@ module DanvanthiriCore
     accepts_nested_attributes_for :departments, allow_destroy: true
     accepts_nested_attributes_for :certifications, allow_destroy: true
     accepts_nested_attributes_for :registrations, allow_destroy: true
-    accepts_nested_attributes_for :availables, allow_destroy: true
 
     scope :active, -> {where active: true}
     scope :unactive, -> {where active: false}
