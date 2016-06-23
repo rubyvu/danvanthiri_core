@@ -10,18 +10,10 @@ module DanvanthiriCore
 
     has_many :notifications, as: :target, dependent: :destroy
 
-    def doctor_booking?
-      book_type == 0
-    end
-
-    def hospital_booking?
-      book_type == 2
-    end
-
     validates :booktime, presence: true
-    validates :working_location, presence: true if doctor_booking?
-    validates :doctor_id, presence: true if doctor_booking?
-    validates :hospital_id, presence: true if hospital_booking?
+    validates :working_location, presence: true, if: :doctor_booking?
+    validates :doctor_id, presence: true, if: :doctor_booking?
+    validates :hospital_id, presence: true, if: :hospital_booking?
     attr_accessor :date_str, :time_str
 
     scope :cancelled, -> {where status: [5,6]}
