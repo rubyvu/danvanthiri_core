@@ -27,16 +27,21 @@ module DanvanthiriCore
 
     def push_patient(act, obj_type="Appointment")
       if obj_type=="Appointment"
-        doctor = target.doctor
+        if target.doctor_booking?
+          name = target.doctor.name
+        else
+          name = target.hospital.name
+          name = "#{name} - #{target.department.name}" if target.department 
+        end
         case act
         when "accepted"
-          message = "Your appointment with #{doctor.name} has been accepted."
+          message = "Your appointment with #{name} has been accepted."
         when "cancelled", "cancelled_by_doctor"
-          message = "Your appointment with #{doctor.name} has been cancelled."
+          message = "Your appointment with #{name} has been cancelled."
         when "rejected"
-          message = "Your appointment with #{doctor.name} has been rejected."
+          message = "Your appointment with #{name} has been rejected."
         when "finished"
-          message = "Your appointment with #{doctor.name} has been finished."
+          message = "Your appointment with #{name} has been finished."
         end
         update_column :message, message
         unless owner.gcm_registration.blank?
