@@ -13,6 +13,7 @@ module DanvanthiriCore
     has_many :liked_doctors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Doctor"
     has_many :liked_pharmacies, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Pharmacy"
     has_many :liked_ambulance_services, through: :likes, source: :likeable, source_type: "DanvanthiriCore::AmbulanceService"
+    has_many :liked_patient_coordinators, through: :likes, source: :likeable, source_type: "DanvanthiriCore::PatientCoordinator"
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
     has_many :ratings, as: :owner, dependent: :destroy
 
@@ -24,7 +25,7 @@ module DanvanthiriCore
     has_many :notifications, as: :owner, dependent: :destroy
     has_many :quotations, as: :owner, dependent: :destroy
     has_many :medicine_orders, as: :owner, dependent: :destroy
-    
+
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
     include CustomValidation
@@ -69,6 +70,8 @@ module DanvanthiriCore
           liked_ambulance_services << obj
         elsif obj.is_a?(DanvanthiriCore::Hospital)
           liked_hospitals << obj
+        elsif obj.is_a?(DanvanthiriCore::PatientCoordinator)
+          liked_patient_coordinators << obj  
         end
       end
     end
