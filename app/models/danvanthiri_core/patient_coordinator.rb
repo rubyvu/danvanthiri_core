@@ -5,7 +5,7 @@ module DanvanthiriCore
     has_many :ratings, as: :rateable, dependent: :destroy
 
     def update_rating!
-      update_column :rate, ratings.average(:true)
+      update_column :rate, ratings.average(:rate)
     end
   end
 end
