@@ -31,7 +31,7 @@ module DanvanthiriCore
           name = target.doctor.name
         else
           name = target.hospital.name
-          name = "#{name} - #{target.department.name}" if target.department 
+          name = "#{name} - #{target.department.name}" if target.department
         end
         case act
         when "accepted"
@@ -46,7 +46,7 @@ module DanvanthiriCore
         update_column :message, message
         unless owner.gcm_registration.blank?
           serv = GcmService.new
-          data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+          data = {notification_id: id, book_type: target.book_type, appointment_id: target_id, status: target.status, message: message}
           serv.notify(data, [owner.gcm_registration])
         end
       elsif obj_type=="Quotation"
