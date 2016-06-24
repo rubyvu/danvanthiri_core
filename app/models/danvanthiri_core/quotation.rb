@@ -30,7 +30,7 @@ module DanvanthiriCore
       if pharmacy_quote?
         update_column :total_price, quote_items.sum(:price)
       elsif hospital_quote?
-        update_column :total_price, trackables.sum(:price)
+        update_column :total_price, treatments.sum(:price)
       end
     end
   end

@@ -18,8 +18,8 @@ module DanvanthiriCore
 
     scope :cancelled, -> {where status: [5,6]}
 
-    scope :past, -> {where("booktime < ?", DateTime.now)}
-    scope :upcoming, -> {where("booktime > ?", DateTime.now)}
+    scope :history, -> {where("danvanthiri_core_appointments.status = 2 or danvanthiri_core_appointments.booktime < ?", DateTime.now)}
+    scope :upcoming, -> {where("danvanthiri_core_appointments.status IN (0,1) AND booktime > ?", DateTime.now)}
 
     class << self
       def filter(term, filter={})
