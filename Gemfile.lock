@@ -166,6 +166,3 @@ DEPENDENCIES
   devise
   koala
   twilio-ruby
-
-BUNDLED WITH
-   1.11.2
