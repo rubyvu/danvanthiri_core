@@ -19,7 +19,7 @@ module DanvanthiriCore
     scope :cancelled, -> {where status: [5,6]}
 
     scope :past, -> {where("booktime < ?", DateTime.now)}
-    scope :upcomming, -> {where("booktime > ?", DateTime.now)}
+    scope :upcoming, -> {where("booktime > ?", DateTime.now)}
 
     class << self
       def filter(term, filter={})
