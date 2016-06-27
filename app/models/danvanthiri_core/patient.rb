@@ -25,6 +25,7 @@ module DanvanthiriCore
     has_many :notifications, as: :owner, dependent: :destroy
     has_many :quotations, as: :owner, dependent: :destroy
     has_many :medicine_orders, as: :owner, dependent: :destroy
+    has_many :emergencies, dependent: :destroy, foreign_key: "patient_id"
 
     validates :first_name, presence: true
     validates :mobile_number, presence: true, uniqueness: true, on: :update
@@ -71,7 +72,7 @@ module DanvanthiriCore
         elsif obj.is_a?(DanvanthiriCore::Hospital)
           liked_hospitals << obj
         elsif obj.is_a?(DanvanthiriCore::PatientCoordinator)
-          liked_patient_coordinators << obj  
+          liked_patient_coordinators << obj
         end
       end
     end
