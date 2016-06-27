@@ -14,7 +14,8 @@ module DanvanthiriCore
     validates :booktime, presence: true
     validates :working_location, presence: true, if: :doctor_booking?
     validates :doctor_id, presence: true, if: :doctor_booking?
-    validates :hospital_id, presence: true, unless: :doctor_booking?
+    validates :hospital_id, presence: true, if: :hospital_booking?
+    validates :patient_coordinator_id, presence: true, if: :patient_coordinator_booking?
     attr_accessor :date_str, :time_str
 
     scope :cancelled, -> {where status: [5,6]}
