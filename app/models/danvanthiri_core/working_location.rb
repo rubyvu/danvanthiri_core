@@ -1,6 +1,6 @@
 module DanvanthiriCore
   class WorkingLocation < ActiveRecord::Base
-    belongs_to :doctor
+    belongs_to :owner, polymorphic: true
     has_many :availables, as: :owner, dependent: :destroy
     has_many :appointments, foreign_key: "working_location_id", dependent: :destroy
 
