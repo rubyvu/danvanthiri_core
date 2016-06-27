@@ -1,6 +1,6 @@
 module DanvanthiriCore
   class MedicineOrder < ActiveRecord::Base
-    enum status: [:pending, :processing, :finished]
+    enum status: [:pending, :accepted, :finished, :cancelled_by_patient, :cancelled_by_pharmacy, :rejected]
     belongs_to :owner, polymorphic: true
     belongs_to :orderable, polymorphic: true
     has_many :medicine_order_items, dependent: :destroy, foreign_key: "medicine_order_id"
