@@ -9,3 +9,5 @@ test/dummy/.sass-cache
 test/dummy/config/database.yml
 # Ignore application configuration
 /config/application.yml
+.idea/
+/.idea
