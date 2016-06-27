@@ -4,6 +4,7 @@ module DanvanthiriCore
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking]
     belongs_to :patient
     belongs_to :doctor
+    belongs_to :patient_coordinator
     belongs_to :working_location
     belongs_to :hospital
     belongs_to :department
