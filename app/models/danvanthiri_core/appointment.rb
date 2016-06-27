@@ -56,7 +56,7 @@ module DanvanthiriCore
     after_create :set_status
 
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id && (self.working_location_id || !self.doctor_booking?)
+      if self.date_str && self.time_str && (self.doctor_id || self.patient_coordinator_id) && (self.working_location_id || !self.doctor_booking?)
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase
