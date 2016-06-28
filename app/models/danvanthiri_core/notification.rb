@@ -81,6 +81,7 @@ module DanvanthiriCore
           data = {notification_id: id, medicine_order_id: target_id, status: target.status, message: message}
           serv.notify(data, [owner.gcm_registration])
         end
+
       end
     end
 
