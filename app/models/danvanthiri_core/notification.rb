@@ -55,7 +55,7 @@ module DanvanthiriCore
             quoteable = target.quoteable
             message = "#{quoteable.name} has responded to your quotation request"
           when "response-quotes"
-            sample = quotations.last
+            sample = target.quotations.last
             type = sample.quoteable_type.split('::').last
             quotes = target.quotetations.responded
             if quotes.blank?
