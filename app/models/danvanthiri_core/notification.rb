@@ -54,6 +54,19 @@ module DanvanthiriCore
           when "response-quote"
             quoteable = target.quoteable
             message = "#{quoteable.name} has responded to your quotation request"
+          when "response-quotes"
+            sample = quotations.last
+            type = sample.quoteable_type.split('::').last
+            quotes = target.quotetations.responded
+            if quotes.blank?
+              message = "No #{type.downcase} respond to your quotation"
+            elsif quotes.count == 1
+              message = "#{type} #{sample.name} have responded to your quote request"
+            else
+              others = quotes.count-1
+              service_name = others == 1 ? type.downcase : "#{type.downcase}s"
+              message = "#{type} #{sample.name} and #{others} other #{service_name} have responded to your quote request"
+            end
         end
 
         update_column :message, message
