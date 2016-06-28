@@ -3,6 +3,7 @@ module DanvanthiriCore
     enum status: [:pending, :responded]
     belongs_to :owner, polymorphic: true
     belongs_to :quoteable, polymorphic: true
+    belongs_to :quote_thread
     has_many :quote_items, dependent: :destroy, foreign_key: "quotation_id"
     has_many :treatments, dependent: :destroy, foreign_key: "quotation_id"
     has_one :case_history, dependent: :destroy, foreign_key: "quotation_id"
