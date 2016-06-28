@@ -9,12 +9,12 @@ module DanvanthiriCore
       patient = target.patient
       doctor = target.doctor
       case act
-      when "book"
-        message = "#{patient.name} requested you for new appointment."
-      when "cancelled", "cancelled_by_patient"
-        message = "Your appointment with #{patient.name} has been cancelled."
-      when "update"
-        message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
+        when "book"
+          message = "#{patient.name} requested you for new appointment."
+        when "cancelled", "cancelled_by_patient"
+          message = "Your appointment with #{patient.name} has been cancelled."
+        when "update"
+          message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
       end
 
       update_column :message, message
@@ -34,14 +34,14 @@ module DanvanthiriCore
           name = "#{name} - #{target.department.name}" if target.department
         end
         case act
-        when "accepted"
-          message = "Your appointment with #{name} has been accepted."
-        when "cancelled", "cancelled_by_doctor"
-          message = "Your appointment with #{name} has been cancelled."
-        when "rejected"
-          message = "Your appointment with #{name} has been rejected."
-        when "finished"
-          message = "Your appointment with #{name} has been finished."
+          when "accepted"
+            message = "Your appointment with #{name} has been accepted."
+          when "cancelled", "cancelled_by_doctor"
+            message = "Your appointment with #{name} has been cancelled."
+          when "rejected"
+            message = "Your appointment with #{name} has been rejected."
+          when "finished"
+            message = "Your appointment with #{name} has been finished."
         end
         update_column :message, message
         unless owner.gcm_registration.blank?
@@ -51,9 +51,9 @@ module DanvanthiriCore
         end
       elsif obj_type=="Quotation"
         case act
-        when "response-quote"
-          quoteable = target.quoteable
-          message = "#{quoteable.name} has responded to your quotation request"
+          when "response-quote"
+            quoteable = target.quoteable
+            message = "#{quoteable.name} has responded to your quotation request"
         end
 
         update_column :message, message
@@ -62,8 +62,26 @@ module DanvanthiriCore
           data = {notification_id: id, quotation_id: target_id, status: target.status, message: message}
           serv.notify(data, [owner.gcm_registration])
         end
+      elsif obj_type=="MedicineOrder"
+        name = "#{target.orderable_type.split("::").last}"
+        name = "#{name} - #{target.orderable.name}" if target.orderable
+        case act
+          when "accepted"
+            message = "Your MedicineOrder with #{name} has been accepted."
+          when "cancelled", "cancelled_by_doctor"
+            message = "Your MedicineOrder with #{name} has been cancelled."
+          when "rejected"
+            message = "Your MedicineOrder with #{name} has been rejected."
+          when "finished"
+            message = "Your MedicineOrder with #{name} has been finished."
+        end
+        update_column :message, message
+        unless owner.gcm_registration.blank?
+          serv = GcmService.new
+          data = {notification_id: id, medicine_order_id: target_id, status: target.status, message: message}
+          serv.notify(data, [owner.gcm_registration])
+        end
       end
-
     end
 
     def read!
