@@ -8,8 +8,10 @@ module DanvanthiriCore
     has_many :medicine_orders, as: :orderable, dependent: :destroy
     
     validates :name, presence: true, uniqueness: true
-    validates :email, :mobile_number, :pharmacy_category_id, :certification, :license, presence: true
+    validates :email, :mobile_number, :pharmacy_category_id, :firstname, :lastname, :lng, :lat, presence: true
     validate :address_validate
+
+    validates :license, :certification, presence: true, if: :published_on_patient_app?
 
     accepts_nested_attributes_for :availables, allow_destroy: true
 
@@ -111,6 +113,10 @@ module DanvanthiriCore
       if (addr_street.blank? || addr_city.blank? || addr_state.blank?) && (lat.blank? & lng.blank?)
         errors.add :address, "or latitude-longitude must be provided"
       end
+    end
+
+    def published_on_patient_app?
+      published_on_patient_app == true
     end
   end
 end
