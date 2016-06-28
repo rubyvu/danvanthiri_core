@@ -14,7 +14,8 @@ module DanvanthiriCore
     validates :booktime, presence: true
     validates :working_location, presence: true, if: :doctor_booking?
     validates :doctor_id, presence: true, if: :doctor_booking?
-    validates :hospital_id, presence: true, unless: :doctor_booking?
+    validates :hospital_id, presence: true, if: :hospital_booking?
+    validates :patient_coordinator_id, presence: true, if: :patient_coordinator_booking?
     attr_accessor :date_str, :time_str
 
     scope :cancelled, -> {where status: [5,6]}
@@ -55,7 +56,7 @@ module DanvanthiriCore
     after_create :set_status
 
     def set_booking_time
-      if self.date_str && self.time_str && self.doctor_id && (self.working_location_id || !self.doctor_booking?)
+      if self.date_str && self.time_str && (self.doctor_id || self.patient_coordinator_id) && (self.working_location_id || !self.doctor_booking?)
         begin
           start_date = DateTime.parse "#{date_str} #{time_str}"
           wday = start_date.strftime("%A").downcase

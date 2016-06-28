@@ -11,5 +11,13 @@ module DanvanthiriCore
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
+
+    def locations_array(date=nil)
+      arr = []
+      working_locations.each do |loc|
+        arr << {working_location: loc.json_details(date)}
+      end
+      arr
+    end
   end
 end
