@@ -112,7 +112,7 @@ module DanvanthiriCore
     def check_address_change
       if self.update_location_field=='lat-lng'
         update_location_by_latlng
-      else
+      elsif self.update_location_field=='addr'
         update_location_by_address if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
       end
     end
