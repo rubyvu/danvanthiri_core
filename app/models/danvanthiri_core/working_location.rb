@@ -57,17 +57,24 @@ module DanvanthiriCore
     end
 
     def update_location_by_address
-      g=Geokit::Geocoders::GoogleGeocoder.geocode addr
-      self.lat = g.lat
-      self.lng = g.lng
+      begin
+        g=Geokit::Geocoders::GoogleGeocoder.geocode addr
+        self.lat = g.lat
+        self.lng = g.lng
+      rescue
+        
+      end
     end
 
     def update_location_by_latlng
-      g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
-      self.addr_street = g.street_name
-      self.addr_area = g.district
-      self.addr_city = g.city
-      self.addr_state = g.state_name
+      begin
+        g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
+        self.addr_street = g.street_name
+        self.addr_area = g.district
+        self.addr_city = g.city
+        self.addr_state = g.state_name
+      rescues
+      end
     end
 
 
