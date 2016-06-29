@@ -10,7 +10,7 @@ module DanvanthiriCore
     validates :delivery_time, presence: true, if: :status_is_accepted?
 
     def status_is_accepted?
-      accepted?
+      owner.accepted?
     end
 
   end
