@@ -25,7 +25,7 @@ module DanvanthiriCore
     end
 
     def json_details(date=nil)
-      {id: id, name: name, consultation_fee: consultation_fee, lat: get_lat, lng: get_lng, address: addr, addr_city: addr_city, logo: logo.url, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
+      {id: id, name: name, consultation_fee: consultation_fee, lat: lat, lng: lng, address: addr, addr_city: addr_city, logo: logo.url, start_date: start_date, end_date: end_date, availables: available_ranges(date)}
     end
 
     def addr
