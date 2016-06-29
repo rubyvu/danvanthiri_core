@@ -57,7 +57,7 @@ module DanvanthiriCore
           when "response-quotes"
             sample = target.quotations.last
             type = sample.quoteable_type.split('::').last
-            quotes = target.quotetations.responded
+            quotes = target.quotations.responded
             if quotes.blank?
               message = "No #{type.downcase} respond to your quotation"
             elsif quotes.count == 1
