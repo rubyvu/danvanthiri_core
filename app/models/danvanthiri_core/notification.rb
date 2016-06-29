@@ -61,11 +61,11 @@ module DanvanthiriCore
             if quotes.blank?
               message = "No #{type.downcase} respond to your quotation"
             elsif quotes.count == 1
-              message = "#{type} #{sample.name} have responded to your quote request"
+              message = "#{type} #{sample.quoteable.name} have responded to your quote request"
             else
               others = quotes.count-1
               service_name = others == 1 ? type.downcase : "#{type.downcase}s"
-              message = "#{type} #{sample.name} and #{others} other #{service_name} have responded to your quote request"
+              message = "#{type} #{sample.quoteable.name} and #{others} other #{service_name} have responded to your quote request"
             end
         end
 
