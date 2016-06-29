@@ -99,6 +99,10 @@ module DanvanthiriCore
       [address_line_1, address_line_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
     end
 
+    def blood_group_name
+      Donor.blood_groups[blood_group]
+    end
+
     def verify_text
       phone_verified? ? "verified" : "non-verified"
     end
