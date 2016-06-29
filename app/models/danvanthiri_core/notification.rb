@@ -29,6 +29,8 @@ module DanvanthiriCore
       if obj_type=="Appointment"
         if target.doctor_booking?
           name = target.doctor.name
+        elsif target.medicine_booking?
+          name = target.medicine_order.orderable.name
         else
           name = target.hospital.name
           name = "#{name} - #{target.department.name}" if target.department
@@ -80,26 +82,6 @@ module DanvanthiriCore
           serv = GcmService.new
           serv.notify(data, [owner.gcm_registration])
         end
-      elsif obj_type=="MedicineOrder"
-        name = "#{target.orderable_type.split("::").last}"
-        name = "#{name} - #{target.orderable.name}" if target.orderable
-        case act
-          when "accepted"
-            message = "Your MedicineOrder with #{name} has been accepted."
-          when "cancelled", "cancelled_by_doctor"
-            message = "Your MedicineOrder with #{name} has been cancelled."
-          when "rejected"
-            message = "Your MedicineOrder with #{name} has been rejected."
-          when "finished"
-            message = "Your MedicineOrder with #{name} has been finished."
-        end
-        update_column :message, message
-        unless owner.gcm_registration.blank?
-          serv = GcmService.new
-          data = {notification_id: id, book_type: "medicine_booking", appointment_id: target.owner_id, status: target.owner.status, message: message}
-          serv.notify(data, [owner.gcm_registration])
-        end
-
       end
     end
 
