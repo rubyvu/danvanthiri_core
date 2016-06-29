@@ -100,7 +100,7 @@ module DanvanthiriCore
     end
 
     def blood_group_name
-      Donor.blood_groups[blood_group]
+      Donor.blood_groups[blood_group] unless blood_group.blank?
     end
 
     def verify_text
