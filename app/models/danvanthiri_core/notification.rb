@@ -96,7 +96,7 @@ module DanvanthiriCore
         update_column :message, message
         unless owner.gcm_registration.blank?
           serv = GcmService.new
-          data = {notification_id: id, medicine_order_id: target_id, status: target.status, message: message}
+          data = {notification_id: id, book_type: "medicine_booking", appointment_id: target.owner_id, status: target.owner.status, message: message}
           serv.notify(data, [owner.gcm_registration])
         end
 
