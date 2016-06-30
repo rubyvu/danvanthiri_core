@@ -17,8 +17,7 @@ module DanvanthiriCore
 
     class << self
       def filter(term, filter={})
-        result = Pharmacy
-        result = Pharmacy.all if term.blank? && filter.blank?
+        result = where("1=1")
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
