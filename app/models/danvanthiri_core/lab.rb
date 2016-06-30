@@ -1,17 +1,19 @@
 module DanvanthiriCore
   class Lab < ActiveRecord::Base
-    included DanvanthiriCore::Rateable
     mount_uploader :banner, ImageUploader
     mount_uploader :logo, ImageUploader
 
     belongs_to :lab_category
     has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
+    has_many :likes, as: :likeable, dependent: :destroy
+    has_many :ratings, as: :rateable, dependent: :destroy
 
     accepts_nested_attributes_for :certifications, allow_destroy: true
 
     scope :premium, -> {where premium: true}
     scope :by_wday, -> wday {where "#{wday}" => true}
     scope :by_date, -> date {where "#{date.strftime("%A").downcase}" => true}
+    scope :verified, -> {where verified: true}
 
     validates :name, :phone_number, :lab_category_id, presence: true
 
@@ -54,5 +56,8 @@ module DanvanthiriCore
       Date.today.year - built_year
     end
 
+    def update_rating!
+      update_column :rate, ratings.average(:rate)
+    end
   end
 end
