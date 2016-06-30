@@ -4,7 +4,5 @@ module DanvanthiriCore
     validates :name, uniqueness: true
     has_many :hospitals_hospital_categories, foreign_key: "hospital_category_id", dependent: :destroy
     has_many :hospitals, through: :hospitals_hospital_categories
-
-    validates :name, presence: true
   end
 end

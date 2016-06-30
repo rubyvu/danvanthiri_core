@@ -1,7 +1,7 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
-    enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking]
+    enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking]
     belongs_to :patient
     belongs_to :doctor
     belongs_to :patient_coordinator
@@ -9,12 +9,18 @@ module DanvanthiriCore
     belongs_to :hospital
     belongs_to :department
 
+    has_one :medicine_order, as: :owner, dependent: :destroy
+
     has_many :notifications, as: :target, dependent: :destroy
 
-    validates :booktime, presence: true
+    accepts_nested_attributes_for :medicine_order, allow_destroy: true
+
+    validates :booktime, presence: true, unless: :medicine_booking?
     validates :working_location, presence: true, if: :doctor_booking?
     validates :doctor_id, presence: true, if: :doctor_booking?
     validates :hospital_id, presence: true, if: :hospital_booking?
+    validates :hospital_id, presence: true, if: :department_booking?
+
     validates :patient_coordinator_id, presence: true, if: :patient_coordinator_booking?
     attr_accessor :date_str, :time_str
 
@@ -98,6 +104,13 @@ module DanvanthiriCore
       booktime.strftime("%H:%M")
     end
 
+    def cancelled_by_pharmacy?
+      cancelled_by_doctor?
+    end
+
+    def cancelled_by_pharmacy!
+      cancelled_by_doctor!
+    end
   end
 
 end

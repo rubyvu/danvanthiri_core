@@ -24,7 +24,6 @@ module DanvanthiriCore
     has_many :donor_requests, as: :owner, dependent: :destroy
     has_many :notifications, as: :owner, dependent: :destroy
     has_many :quotations, as: :owner, dependent: :destroy
-    has_many :medicine_orders, as: :owner, dependent: :destroy
     has_many :emergencies, dependent: :destroy, foreign_key: "patient_id"
 
     validates :first_name, presence: true
@@ -97,6 +96,10 @@ module DanvanthiriCore
 
     def address
       [address_line_1, address_line_2, address_city, address_state].reject{|x| x.blank?}.join(', ')
+    end
+
+    def blood_group_name
+      Donor.blood_groups[blood_group] unless blood_group.blank?
     end
 
     def verify_text

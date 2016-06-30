@@ -87,17 +87,24 @@ module DanvanthiriCore
     end
 
     def update_location_by_address
-      g=Geokit::Geocoders::GoogleGeocoder.geocode addr
-      self.lat = g.lat
-      self.lng = g.lng
+      begin
+        g=Geokit::Geocoders::GoogleGeocoder.geocode addr
+        self.lat = g.lat
+        self.lng = g.lng
+      rescue
+
+      end
     end
 
     def update_location_by_latlng
-      g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
-      self.addr_street = g.street_name
-      self.addr_area = g.district
-      self.addr_city = g.city
-      self.addr_state = g.state_name
+      begin
+        g=Geokit::Geocoders::GoogleGeocoder.geocode "#{self.lat},#{self.lng}"
+        self.addr_street = g.street_name
+        self.addr_area = g.district
+        self.addr_city = g.city
+        self.addr_state = g.state_name
+      rescue
+      end
     end
 
     before_validation :check_address_change
@@ -105,7 +112,7 @@ module DanvanthiriCore
     def check_address_change
       if self.update_location_field=='lat-lng'
         update_location_by_latlng
-      else
+      elsif self.update_location_field=='addr'
         update_location_by_address if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
       end
     end
