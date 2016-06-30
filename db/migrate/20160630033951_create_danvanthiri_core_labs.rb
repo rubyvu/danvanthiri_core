@@ -7,15 +7,15 @@ class CreateDanvanthiriCoreLabs < ActiveRecord::Migration
       t.string :phone_number
       t.string :logo
       t.integer :lab_category_id
-      t.boolean :premium
-      t.string :banner, default: false
+      t.boolean :premium, default: false
+      t.string :banner
       t.boolean :home_collection
       t.string :licence_number
       t.string :addr_street
       t.string :addr_area
       t.string :addr_city
       t.string :addr_state
-      t.floar :lat
+      t.float :lat
       t.float :lng
       t.integer :rate
       t.integer  :built_year

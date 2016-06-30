@@ -1,6 +1,6 @@
 module DanvanthiriCore
   class Lab < ActiveRecord::Base
-    included Rateable
+    included DanvanthiriCore::Rateable
     mount_uploader :banner, ImageUploader
     mount_uploader :logo, ImageUploader
 
@@ -13,7 +13,7 @@ module DanvanthiriCore
     scope :by_wday, -> wday {where "#{wday}" => true}
     scope :by_date, -> date {where "#{date.strftime("%A").downcase}" => true}
 
-    validates :name, :phone_number, presence: true
+    validates :name, :phone_number, :lab_category_id, presence: true
 
     class << self
       def filter(term, filter={})
