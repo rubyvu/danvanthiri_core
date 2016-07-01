@@ -42,11 +42,7 @@ module DanvanthiriCore
     mount_uploader :photo, ImageUploader
 
     def update_price!
-      if pharmacy_quote?
-        update_column :total_price, quote_items.sum(:price)
-      elsif hospital_quote?
-        update_column :total_price, treatments.sum(:price)
-      end
+      update_column :total_price, quote_items.sum(:price)
     end
   end
 end
