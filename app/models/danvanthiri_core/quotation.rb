@@ -5,7 +5,6 @@ module DanvanthiriCore
     belongs_to :quoteable, polymorphic: true
     belongs_to :quote_thread
     has_many :quote_items, dependent: :destroy, foreign_key: "quotation_id"
-    has_many :treatments, dependent: :destroy, foreign_key: "quotation_id"
     has_one :case_history, dependent: :destroy, foreign_key: "quotation_id"
 
     has_many :notifications, as: :target
@@ -39,8 +38,8 @@ module DanvanthiriCore
     def lab_quote?
       self.quoteable_type.include?("Lab")
     end
-    validates :quote_items, presence: true, if: :pharmacy_quote?
-    validates :treatments, presence: true, if: :hospital_quote?
+
+    validates :quote_items, presence: true
 
     mount_uploader :photo, ImageUploader
 
