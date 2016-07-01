@@ -1,13 +1,14 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
-    enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking]
+    enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
     belongs_to :patient
     belongs_to :doctor
     belongs_to :patient_coordinator
     belongs_to :working_location
     belongs_to :hospital
     belongs_to :department
+    belongs_to :bookable, polymorphic: true
 
     has_one :medicine_order, as: :owner, dependent: :destroy
 

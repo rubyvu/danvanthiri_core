@@ -7,6 +7,7 @@ module DanvanthiriCore
     has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
+    has_many :appointments, as: :bookable, dependent: :destroy
 
     accepts_nested_attributes_for :certifications, allow_destroy: true
 
