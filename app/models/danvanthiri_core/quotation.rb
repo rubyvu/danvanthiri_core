@@ -14,6 +14,20 @@ module DanvanthiriCore
     accepts_nested_attributes_for :treatments, allow_destroy: true
     accepts_nested_attributes_for :case_history, allow_destroy: true
 
+    class << self
+      def for_hospital
+        where(quoteable_type: "DanvanthiriCore::Hospital")
+      end
+
+      def for_pharmacy
+        where(quoteable_type: "DanvanthiriCore::Pharmacy")
+      end
+
+      def for_lab
+        where(quoteable_type: "DanvanthiriCore::Lab")
+      end
+    end
+
     def pharmacy_quote?
       self.quoteable_type.include?("Pharmacy")
     end
