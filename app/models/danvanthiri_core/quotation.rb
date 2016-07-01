@@ -10,7 +10,6 @@ module DanvanthiriCore
     has_many :notifications, as: :target
 
     accepts_nested_attributes_for :quote_items, allow_destroy: true
-    accepts_nested_attributes_for :treatments, allow_destroy: true
     accepts_nested_attributes_for :case_history, allow_destroy: true
 
     class << self
