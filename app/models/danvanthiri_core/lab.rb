@@ -23,7 +23,11 @@ module DanvanthiriCore
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
-              result = result.where(key => val)
+              if key.to_s=='city'
+                result = result.where("LOWER(danvanthiri_core_labs.addr_city) like ?", "%#{val.downcase}%")
+              else
+                result = result.where(key => val)
+              end
             end
           end
         end
