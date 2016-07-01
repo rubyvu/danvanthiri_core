@@ -7,7 +7,7 @@ module DanvanthiriCore
     has_many :quote_items, dependent: :destroy, foreign_key: "quotation_id"
     has_one :case_history, dependent: :destroy, foreign_key: "quotation_id"
 
-    has_many :notifications, as: :target
+    has_many :notifications, as: :target, dependent: :destroy
 
     accepts_nested_attributes_for :quote_items, allow_destroy: true
     accepts_nested_attributes_for :case_history, allow_destroy: true
