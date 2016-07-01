@@ -36,7 +36,7 @@ class AddDeviseToDanvanthiriCorePatientCoordinators < ActiveRecord::Migration
     end
 
     # add_index :danvanthiri_core_patient_coordinators, :email,                unique: true
-    add_index :danvanthiri_core_patient_coordinators, :reset_password_token, unique: true
+    # add_index :danvanthiri_core_patient_coordinators, :reset_password_token, unique: true
     # add_index :danvanthiri_core_patient_coordinators, :confirmation_token,   unique: true
     # add_index :danvanthiri_core_patient_coordinators, :unlock_token,         unique: true
   end
