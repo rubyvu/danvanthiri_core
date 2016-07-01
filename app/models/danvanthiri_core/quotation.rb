@@ -36,6 +36,9 @@ module DanvanthiriCore
       self.quoteable_type.include?("Hospital")
     end
 
+    def lab_quote?
+      self.quoteable_type.include?("Lab")
+    end
     validates :quote_items, presence: true, if: :pharmacy_quote?
     validates :treatments, presence: true, if: :hospital_quote?
 
