@@ -13,8 +13,12 @@ module DanvanthiriCore
     has_many :working_locations, as: :owner, dependent: :destroy
     has_many :appointments, dependent: :destroy, foreign_key: "patient_coordinator_id"
     has_many :availables, as: :owner, dependent: :destroy
+
     has_one :patient_coordinators_pcplan, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_one :pcplan, through: :patient_coordinators_pcplan
+
+    validates :first_name, :last_name, presence: true
+    validates :mobile_number, uniqueness: true, allow_blank: true
 
     def update_rating!
       update_column :rate, ratings.average(:rate)
