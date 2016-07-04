@@ -13,7 +13,8 @@ module DanvanthiriCore
     has_many :working_locations, as: :owner, dependent: :destroy
     has_many :appointments, dependent: :destroy, foreign_key: "patient_coordinator_id"
     has_many :availables, as: :owner, dependent: :destroy
-
+    has_one :patient_coordinators_pc_plan, foreign_key: "patient_coordinator_id", dependent: :destroy
+    has_one :pc_plan, through: :patient_coordinators_pc_plan
 
     def update_rating!
       update_column :rate, ratings.average(:rate)
