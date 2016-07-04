@@ -1,5 +1,5 @@
 module DanvanthiriCore
-  class PcPlan < ActiveRecord::Base
+  class Pcplan < ActiveRecord::Base
     has_many :patient_coordinators_pcplans, foreign_key: "pcplan_id"
     has_many :patient_coordinators, through: :patient_coordinators_pcplans
     include CustomValidation
