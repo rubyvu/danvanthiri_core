@@ -31,6 +31,8 @@ module DanvanthiriCore
           name = target.doctor.name
         elsif target.medicine_booking?
           name = target.medicine_order.orderable.name
+        elsif target.lab_booking?
+          name = target.bookable.name
         else
           name = target.hospital.name
           name = "#{name} - #{target.department.name}" if target.department

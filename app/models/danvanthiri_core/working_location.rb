@@ -6,7 +6,6 @@ module DanvanthiriCore
 
     validates :name, presence: true
     validates :availables, presence: true
-    validate :address_validate
 
     include CustomValidation
     mount_uploader :logo, ImageUploader
@@ -62,7 +61,7 @@ module DanvanthiriCore
         self.lat = g.lat
         self.lng = g.lng
       rescue
-        
+
       end
     end
 
@@ -90,10 +89,5 @@ module DanvanthiriCore
       end
     end
 
-    def address_validate
-      if (addr_street.blank? || addr_city.blank? || addr_state.blank?) && (lat.blank? & lng.blank?)
-        errors.add :address, "or latitude-longitude must be provided"
-      end
-    end
   end
 end

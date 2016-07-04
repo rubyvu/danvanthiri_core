@@ -5,7 +5,7 @@ module DanvanthiriCore
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
     mount_uploader :avatar, ImageUploader
-    
+
     has_many :patient_coordinator_categories_coordinators, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_many :patient_coordinator_categories, through: :patient_coordinator_categories_coordinators
     has_many :ratings, as: :rateable, dependent: :destroy
@@ -26,5 +26,16 @@ module DanvanthiriCore
       end
       arr
     end
+
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
+    end
+
   end
 end
