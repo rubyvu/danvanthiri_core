@@ -10,7 +10,7 @@ module DanvanthiriCore
     has_many :ambulance_categories, through: :ambulance_services_categories
 
     validates :name, :area, presence: true
-    validates :mobile_number, uniqueness: true, allow_blank: true
+    validates :mobile, uniqueness: true, allow_blank: true
     #validates :mobile, length: { is: 10 }, allow_blank: true
 
     def update_rating!

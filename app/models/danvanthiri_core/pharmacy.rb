@@ -6,12 +6,10 @@ module DanvanthiriCore
     has_many :availables, as: :owner, dependent: :destroy
     has_many :quotations, as: :quoteable, dependent: :destroy
     has_many :medicine_orders, as: :orderable, dependent: :destroy
-    
-    validates :name, presence: true, uniqueness: true
-    validates :email, :mobile_number, :pharmacy_category_id, :firstname, :lastname, :lng, :lat, presence: true
-    validate :address_validate
 
-    validates :license, :certification, presence: true, if: :published_on_patient_app?
+    validates :name, presence: true, uniqueness: true
+    validates :email, :pharmacy_category_id, presence: true
+    validates :mobile_number, uniqueness: true, allow_blank: true
 
     accepts_nested_attributes_for :availables, allow_destroy: true
 
@@ -114,11 +112,6 @@ module DanvanthiriCore
         update_location_by_latlng
       elsif self.update_location_field=='addr'
         update_location_by_address if addr_street_changed? || addr_area_changed? || addr_city_changed? || addr_state_changed?
-      end
-    end
-    def address_validate
-      if (addr_street.blank? || addr_city.blank? || addr_state.blank?) && (lat.blank? & lng.blank?)
-        errors.add :address, "or latitude-longitude must be provided"
       end
     end
 
