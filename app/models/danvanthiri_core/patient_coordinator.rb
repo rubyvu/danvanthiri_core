@@ -18,6 +18,7 @@ module DanvanthiriCore
     has_many :working_locations, as: :owner, dependent: :destroy
     has_many :appointments, dependent: :destroy, foreign_key: "patient_coordinator_id"
     has_many :availables, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
 
     has_one :patient_coordinators_pcplan, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_one :pcplan, through: :patient_coordinators_pcplan
@@ -46,7 +47,7 @@ module DanvanthiriCore
     def clear_auth_token!
       update_column :auth_token, nil
     end
-    
+
     def name
       "#{first_name} #{last_name}"
     end
