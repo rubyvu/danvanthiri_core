@@ -5,7 +5,7 @@ module DanvanthiriCore
     validates :email, uniqueness: true
     validates :invoice_items, presence: true
 
-    enum status [:pending, :completed, :failed]
+    enum status: [:pending, :completed, :failed]
 
     def mark_complete
       self.status = :completed
