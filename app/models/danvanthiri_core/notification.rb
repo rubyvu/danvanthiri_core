@@ -24,7 +24,7 @@ module DanvanthiriCore
         serv.notify(data, [doctor.gcm_registration])
       end
 
-      push_ios("doctor", doctor.ios_device_token, data) unless doctor.ios_device_token.blank?
+      push_ios(data) unless doctor.ios_device_token.blank?
     end
 
     def push_patient(act, obj_type="Appointment")
@@ -85,29 +85,27 @@ module DanvanthiriCore
         serv = GcmService.new
         serv.notify(data, [owner.gcm_registration])
       end
-      push_ios("patient", owner.ios_device_token, data) unless owner.ios_device_token.blank?
+      push_ios(data) unless owner.ios_device_token.blank?
     end
 
     def read!
       update_column :read, true
     end
 
-    class << self
-      def push_ios(owner, token, data)
-
-        client = Houston::Client.development
-        if owner == 'doctor'
-          client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
-        else
-          client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
-        end
-
-        notification = Houston::Notification.new(device: token)
-        notification.alert = data[:message]
-        notification.custom_data = data
-
-        client.push(notification)
+    def push_ios(data)
+      token = owner.ios_device_token
+      client = Houston::Client.development
+      if owner_type.include?("Doctor")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
+      else
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
       end
+
+      notification = Houston::Notification.new(device: token)
+      notification.alert = data[:message]
+      notification.custom_data = data
+
+      client.push(notification)
     end
   end
 end
