@@ -5,6 +5,8 @@ module DanvanthiriCore
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
     mount_uploader :avatar, ImageUploader
+    enum payment_method: [:Online, :Offline]
+    enum payment_status: [:pending, :paid]
 
     has_many :patient_coordinator_categories_coordinators, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_many :patient_coordinator_categories, through: :patient_coordinator_categories_coordinators
