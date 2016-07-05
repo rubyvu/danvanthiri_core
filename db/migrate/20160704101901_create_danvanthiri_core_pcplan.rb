@@ -1,6 +1,6 @@
-class CreateDanvanthiriCorePcPlans < ActiveRecord::Migration
+class CreateDanvanthiriCorePcplan < ActiveRecord::Migration
   def change
-    create_table :danvanthiri_core_pc_plans do |t|
+    create_table :danvanthiri_core_pcplans do |t|
       t.string :name
       t.integer :unit_price
       t.string :image
