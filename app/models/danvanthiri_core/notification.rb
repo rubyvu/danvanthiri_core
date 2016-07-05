@@ -98,7 +98,7 @@ module DanvanthiriCore
       if owner_type.include?("Doctor")
         client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-production.pem")
       else
-        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-prouduction.pem")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-production.pem")
       end
 
       notification = Houston::Notification.new(device: token)
