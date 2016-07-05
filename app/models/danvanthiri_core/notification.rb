@@ -80,7 +80,7 @@ module DanvanthiriCore
         update_column :message, message
         data[:message] = message
       end
-      
+
       unless owner.gcm_registration.blank?
         serv = GcmService.new
         serv.notify(data, [owner.gcm_registration])
@@ -95,18 +95,18 @@ module DanvanthiriCore
     class << self
       def push_ios(owner, token, data)
 
-        APN = Houston::Client.development
+        client = Houston::Client.development
         if owner == 'doctor'
-          APN.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
+          client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
         else
-          APN.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
+          client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
         end
 
         notification = Houston::Notification.new(device: token)
         notification.alert = data[:message]
         notification.custom_data = data
 
-        APN.push(notification)
+        client.push(notification)
       end
     end
   end
