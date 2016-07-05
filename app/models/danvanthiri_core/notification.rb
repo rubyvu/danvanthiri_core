@@ -27,6 +27,23 @@ module DanvanthiriCore
       push_ios(data) unless doctor.ios_device_token.blank?
     end
 
+    def push_pc(act)
+      patient = target.patient
+      
+      case act
+        when "book"
+          message = "#{patient.name} requested you for new appointment."
+        when "cancelled", "cancelled_by_patient"
+          message = "Your appointment with #{patient.name} has been cancelled."
+        when "update"
+          message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
+      end
+
+      update_column :message, message
+      data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+    end
+
+
     def push_patient(act, obj_type="Appointment")
       data = {}
       if obj_type=="Appointment"
