@@ -18,19 +18,24 @@ module DanvanthiriCore
       end
 
       update_column :message, message
+      data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
       unless doctor.gcm_registration.blank?
         serv = GcmService.new
-        data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
         serv.notify(data, [doctor.gcm_registration])
       end
+
+      push_ios(data) unless doctor.ios_device_token.blank?
     end
 
     def push_patient(act, obj_type="Appointment")
+      data = {}
       if obj_type=="Appointment"
         if target.doctor_booking?
           name = target.doctor.name
         elsif target.medicine_booking?
           name = target.medicine_order.orderable.name
+        elsif target.lab_booking?
+          name = target.bookable.name
         else
           name = target.hospital.name
           name = "#{name} - #{target.department.name}" if target.department
@@ -46,11 +51,7 @@ module DanvanthiriCore
             message = "Your appointment with #{name} has been finished."
         end
         update_column :message, message
-        unless owner.gcm_registration.blank?
-          serv = GcmService.new
-          data = {notification_id: id, book_type: target.book_type, appointment_id: target_id, status: target.status, message: message}
-          serv.notify(data, [owner.gcm_registration])
-        end
+        data = {notification_id: id, book_type: target.book_type, appointment_id: target_id, status: target.status, message: message}
       elsif obj_type=="Quotation"
         data = {notification_id: id, status: target.status}
         case act
@@ -78,15 +79,33 @@ module DanvanthiriCore
 
         update_column :message, message
         data[:message] = message
-        unless owner.gcm_registration.blank?
-          serv = GcmService.new
-          serv.notify(data, [owner.gcm_registration])
-        end
       end
+
+      unless owner.gcm_registration.blank?
+        serv = GcmService.new
+        serv.notify(data, [owner.gcm_registration])
+      end
+      push_ios(data) unless owner.ios_device_token.blank?
     end
 
     def read!
       update_column :read, true
+    end
+
+    def push_ios(data)
+      token = owner.ios_device_token
+      client = Houston::Client.development
+      if owner_type.include?("Doctor")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
+      else
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
+      end
+
+      notification = Houston::Notification.new(device: token)
+      notification.alert = data[:message]
+      notification.custom_data = data
+
+      client.push(notification)
     end
   end
 end

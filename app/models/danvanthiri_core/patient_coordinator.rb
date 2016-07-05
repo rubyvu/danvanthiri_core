@@ -1,7 +1,11 @@
 module DanvanthiriCore
   class PatientCoordinator < ActiveRecord::Base
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :trackable, :validatable
     mount_uploader :avatar, ImageUploader
-    
+
     has_many :patient_coordinator_categories_coordinators, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_many :patient_coordinator_categories, through: :patient_coordinator_categories_coordinators
     has_many :ratings, as: :rateable, dependent: :destroy
@@ -10,6 +14,11 @@ module DanvanthiriCore
     has_many :appointments, dependent: :destroy, foreign_key: "patient_coordinator_id"
     has_many :availables, as: :owner, dependent: :destroy
 
+    has_one :patient_coordinators_pcplan, foreign_key: "patient_coordinator_id", dependent: :destroy
+    has_one :pcplan, through: :patient_coordinators_pcplan
+
+    validates :first_name, :last_name, presence: true
+    validates :mobile_number, uniqueness: true, allow_blank: true
 
     def update_rating!
       update_column :rate, ratings.average(:rate)
@@ -22,5 +31,16 @@ module DanvanthiriCore
       end
       arr
     end
+
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
+    end
+
   end
 end

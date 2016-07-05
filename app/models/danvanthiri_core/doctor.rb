@@ -54,7 +54,7 @@ module DanvanthiriCore
     belongs_to :department
 
     validates :first_name, :last_name, presence: true
-    validates :mobile_number, uniqueness: true, allow_nil: true
+    validates :mobile_number, uniqueness: true, allow_blank: true
     include CustomValidation
 
     accepts_nested_attributes_for :availables, allow_destroy: true

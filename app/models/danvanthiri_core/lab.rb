@@ -7,6 +7,7 @@ module DanvanthiriCore
     has_many :certifications, -> { order(:created_at) }, as: :owner, dependent: :destroy
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
+    has_many :appointments, as: :bookable, dependent: :destroy
 
     accepts_nested_attributes_for :certifications, allow_destroy: true
 
@@ -23,7 +24,11 @@ module DanvanthiriCore
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
-              result = result.where(key => val)
+              if key.to_s=='city'
+                result = result.where("LOWER(danvanthiri_core_labs.addr_city) like ?", "%#{val.downcase}%")
+              else
+                result = result.where(key => val)
+              end
             end
           end
         end
