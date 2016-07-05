@@ -94,7 +94,7 @@ module DanvanthiriCore
 
     def push_ios(data)
       token = owner.ios_device_token
-      client = Houston::Client.development
+      client = Houston::Client.production
       if owner_type.include?("Doctor")
         client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-production.pem")
       else
