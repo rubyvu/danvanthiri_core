@@ -1,5 +1,6 @@
 module DanvanthiriCore
   class Pcplan < ActiveRecord::Base
+    mount_uploader :image, ImageUploader
     has_many :patient_coordinators_pcplans, foreign_key: "pcplan_id"
     has_many :patient_coordinators, through: :patient_coordinators_pcplans
     include CustomValidation

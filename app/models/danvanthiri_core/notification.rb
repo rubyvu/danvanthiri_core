@@ -27,6 +27,23 @@ module DanvanthiriCore
       push_ios(data) unless doctor.ios_device_token.blank?
     end
 
+    def push_pc(act)
+      patient = target.patient
+      
+      case act
+        when "book"
+          message = "#{patient.name} requested you for new appointment."
+        when "cancelled", "cancelled_by_patient"
+          message = "Your appointment with #{patient.name} has been cancelled."
+        when "update"
+          message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
+      end
+
+      update_column :message, message
+      data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+    end
+
+
     def push_patient(act, obj_type="Appointment")
       data = {}
       if obj_type=="Appointment"
@@ -94,11 +111,11 @@ module DanvanthiriCore
 
     def push_ios(data)
       token = owner.ios_device_token
-      client = Houston::Client.development
+      client = Houston::Client.production
       if owner_type.include?("Doctor")
-        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-development.pem")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-production.pem")
       else
-        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-development.pem")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-production.pem")
       end
 
       notification = Houston::Notification.new(device: token)

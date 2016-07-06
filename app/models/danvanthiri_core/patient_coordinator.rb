@@ -4,7 +4,12 @@ module DanvanthiriCore
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
+
     mount_uploader :avatar, ImageUploader
+
+    enum gender: [:Female, :Male]
+    enum payment_method: [:Online, :Offline]
+    enum payment_status: [:pending, :paid]
 
     has_many :patient_coordinator_categories_coordinators, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_many :patient_coordinator_categories, through: :patient_coordinator_categories_coordinators
@@ -13,6 +18,7 @@ module DanvanthiriCore
     has_many :working_locations, as: :owner, dependent: :destroy
     has_many :appointments, dependent: :destroy, foreign_key: "patient_coordinator_id"
     has_many :availables, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
 
     has_one :patient_coordinators_pcplan, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_one :pcplan, through: :patient_coordinators_pcplan
@@ -40,6 +46,10 @@ module DanvanthiriCore
 
     def clear_auth_token!
       update_column :auth_token, nil
+    end
+
+    def name
+      "#{first_name} #{last_name}"
     end
 
   end
