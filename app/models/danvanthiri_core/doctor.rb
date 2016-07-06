@@ -184,10 +184,6 @@ module DanvanthiriCore
       update_column :auth_token, nil
     end
 
-    def avatar_url
-      self.avatar.blank? ? "#{ActionMailer::Base.default_url_options[:host]}/assets/default-user.png" : avatar
-    end
-
     after_validation :set_verified
 
     protected

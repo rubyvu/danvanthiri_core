@@ -12,7 +12,7 @@ module DanvanthiriCore
     has_many :medicine_orders, as: :orderable, dependent: :destroy
 
     validates :name, presence: true, uniqueness: true
-    validates :email, :pharmacy_category_id, presence: true
+    validates :pharmacy_category_id, presence: true, on: :update
     validates :mobile_number, uniqueness: true, allow_blank: true
 
     accepts_nested_attributes_for :availables, allow_destroy: true
@@ -107,6 +107,16 @@ module DanvanthiriCore
         self.addr_state = g.state_name
       rescue
       end
+    end
+
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
     end
 
     before_validation :check_address_change
