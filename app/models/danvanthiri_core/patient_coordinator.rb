@@ -26,6 +26,9 @@ module DanvanthiriCore
     validates :first_name, :last_name, presence: true
     validates :mobile_number, uniqueness: true, allow_blank: true
 
+    accepts_nested_attributes_for :availables, allow_destroy: true
+    accepts_nested_attributes_for :working_locations, allow_destroy: true
+
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
