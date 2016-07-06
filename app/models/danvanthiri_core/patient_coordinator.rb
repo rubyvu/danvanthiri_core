@@ -28,6 +28,7 @@ module DanvanthiriCore
 
     accepts_nested_attributes_for :availables, allow_destroy: true
     accepts_nested_attributes_for :working_locations, allow_destroy: true
+    accepts_nested_attributes_for :pcplan, allow_destroy: true
 
     def update_rating!
       update_column :rate, ratings.average(:rate)
