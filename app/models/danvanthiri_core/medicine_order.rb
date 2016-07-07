@@ -16,7 +16,9 @@ module DanvanthiriCore
     after_validation :update_booktime
 
     def update_booktime
-      owner.update_column :booktime, delivery_time unless owner.blank?
+      if delivery_time_changed?
+        owner.update_column :booktime, delivery_time unless owner.blank?
+      end
     end
   end
 end
