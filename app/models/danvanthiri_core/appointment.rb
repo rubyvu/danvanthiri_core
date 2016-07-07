@@ -29,6 +29,9 @@ module DanvanthiriCore
 
     scope :history, -> {where("danvanthiri_core_appointments.status = 2 or (danvanthiri_core_appointments.booktime < ? and danvanthiri_core_appointments.status=1)", DateTime.now)}
     scope :upcoming, -> {where("danvanthiri_core_appointments.status IN (0,1) AND booktime > ?", DateTime.now)}
+    scope :past_pc, -> {where("danvanthiri_core_appointments.status = 2 AND booktime < ?", DateTime.now)} # past appointment for patient coordinator app
+    scope :upcoming_pc, -> {where("danvanthiri_core_appointments.status = 1 AND booktime > ?", DateTime.now)} # upcoming appointment for patient coordinator app
+    scope :pending_pc, -> {where("danvanthiri_core_appointments.status = 0 AND booktime > ?", DateTime.now)} # pending appointment for patient coordinator app
 
     class << self
       def filter(term, filter={})
