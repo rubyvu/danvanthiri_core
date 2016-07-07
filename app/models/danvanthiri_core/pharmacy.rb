@@ -11,6 +11,7 @@ module DanvanthiriCore
     has_many :quotations, as: :quoteable, dependent: :destroy
     has_many :medicine_orders, as: :orderable, dependent: :destroy
     has_many :activities, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
 
     validates :name, presence: true, uniqueness: true
     validates :pharmacy_category_id, presence: true, on: :update
