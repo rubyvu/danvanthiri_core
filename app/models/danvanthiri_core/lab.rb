@@ -16,7 +16,7 @@ module DanvanthiriCore
     scope :by_date, -> date {where "#{date.strftime("%A").downcase}" => true}
     scope :verified, -> {where verified: true}
 
-    validates :name, :phone_number, :lab_category_id, presence: true
+    validates :name, :email, :mobile_number, :lab_category_id, presence: true
 
     class << self
       def filter(term, filter={})
