@@ -13,5 +13,10 @@ module DanvanthiriCore
       owner && owner.accepted?
     end
 
+    after_validation :update_booktime
+
+    def update_booktime
+      owner.update_column :booktime, delivery_time unless owner.blank?
+    end
   end
 end
