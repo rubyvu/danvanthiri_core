@@ -54,6 +54,8 @@ module DanvanthiriCore
           obj_type = "Order"
         elsif target.lab_booking?
           name = target.bookable.name
+        elsif target.patient_coordinator_booking?
+          name = target.patient_coordinator.name
         else
           name = target.hospital.name
           name = "#{name} - #{target.department.name}" if target.department
