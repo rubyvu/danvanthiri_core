@@ -60,6 +60,10 @@ module DanvanthiriCore
       update_column :rate, ratings.average(:rate)
     end
 
+    def available_247?
+      available_247 == true
+    end
+
     def available_ranges(date=nil)
       avail_on_date = availables
       if date
