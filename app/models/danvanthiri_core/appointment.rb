@@ -1,5 +1,8 @@
 module DanvanthiriCore
   class Appointment < ActiveRecord::Base
+    @@status_for_dept_hospital_booking = {pending: :pending, accepted: :accepted,
+                                          finished: :finished, cancelled_by_doctor: :cancelled_by_doctor}
+
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
     belongs_to :patient
@@ -23,6 +26,8 @@ module DanvanthiriCore
     validates :hospital_id, presence: true, if: :department_booking?
 
     validates :patient_coordinator_id, presence: true, if: :patient_coordinator_booking?
+    validates :status, inclusion: {in: [:pending.to_s, :accepted.to_s, :finished.to_s, :cancelled_by_doctor.to_s], message: "%{value} is not a valid status"},
+              if: :dept_hospital_book_type?
     attr_accessor :date_str, :time_str
 
     scope :cancelled, -> {where status: [5,6]}
@@ -112,6 +117,13 @@ module DanvanthiriCore
     def cancelled_by_pharmacy!
       cancelled_by_doctor!
     end
-  end
 
+    def dept_hospital_book_type?
+      self.department_booking? || self.hospital_booking?
+    end
+
+    def self.status_for_dept_hospital_booking
+      @@status_for_dept_hospital_booking
+    end
+  end
 end
