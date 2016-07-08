@@ -29,7 +29,7 @@ module DanvanthiriCore
 
     def push_pc(act)
       patient = target.patient
-      
+
       case act
         when "book"
           message = "#{patient.name} requested you for new appointment."
@@ -51,21 +51,24 @@ module DanvanthiriCore
           name = target.doctor.name
         elsif target.medicine_booking?
           name = target.medicine_order.orderable.name
+          obj_type = "Order"
         elsif target.lab_booking?
           name = target.bookable.name
+        elsif target.patient_coordinator_booking?
+          name = target.patient_coordinator.name
         else
           name = target.hospital.name
           name = "#{name} - #{target.department.name}" if target.department
         end
         case act
           when "accepted"
-            message = "Your appointment with #{name} has been accepted."
+            message = "Your #{obj_type} with #{name} has been accepted."
           when "cancelled", "cancelled_by_doctor"
-            message = "Your appointment with #{name} has been cancelled."
+            message = "Your #{obj_type} with #{name} has been cancelled."
           when "rejected"
-            message = "Your appointment with #{name} has been rejected."
+            message = "Your #{obj_type} with #{name} has been rejected."
           when "finished"
-            message = "Your appointment with #{name} has been finished."
+            message = "Your #{obj_type} with #{name} has been finished."
         end
         update_column :message, message
         data = {notification_id: id, book_type: target.book_type, appointment_id: target_id, status: target.status, message: message}
