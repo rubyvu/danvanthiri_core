@@ -27,15 +27,19 @@ module DanvanthiriCore
     attr_accessor :update_location_field
 
     scope :banner_status, -> {where banner_status: true}
+    scope :premium, -> {where banner_statu: true}
     class << self
 
       def filter(term, filter={})
-        result = Pharmacy
-        result = Pharmacy.all if term.blank? && filter.blank?
+        result = where("1=1")
         unless filter.blank?
           filter.each do |key, val|
             unless val.blank?
-              result = result.where(key => val)
+              if key.to_s=='city'
+                result = result.where("LOWER(danvanthiri_core_pharmacies.addr_city) like ?", "%#{val.downcase}%")
+              else
+                result = result.where(key => val)
+              end
             end
           end
         end

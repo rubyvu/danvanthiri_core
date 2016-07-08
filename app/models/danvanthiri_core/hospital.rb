@@ -41,7 +41,7 @@ module DanvanthiriCore
                   result = result.joins(:hospitals_hospital_categories).group("danvanthiri_core_hospitals.id").having("count(hospital_id)=1")
                 end
               elsif key.to_s=='city'
-                  result = result.where("LOWER(danvanthiri_core_hospitals.addr_city) like ?", "%#{val.downcase}%")
+                result = result.where("LOWER(danvanthiri_core_hospitals.addr_city) like ?", "%#{val.downcase}%")
               else
                 key = "danvanthiri_core_hospitals.#{key.to_s}"
                 result = result.where(key => val)
