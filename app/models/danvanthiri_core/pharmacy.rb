@@ -10,6 +10,8 @@ module DanvanthiriCore
     has_many :availables, as: :owner, dependent: :destroy
     has_many :quotations, as: :quoteable, dependent: :destroy
     has_many :medicine_orders, as: :orderable, dependent: :destroy
+    has_many :appointments, as: :bookable, dependent: :destroy
+
     has_many :activities, as: :owner, dependent: :destroy
     has_many :notifications, as: :owner, dependent: :destroy
 
