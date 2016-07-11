@@ -2,7 +2,7 @@ class AddDeviseToDanvanthiriCoreLabs < ActiveRecord::Migration
   def self.up
     change_table :danvanthiri_core_labs do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
+      #t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
