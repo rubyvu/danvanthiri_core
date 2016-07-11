@@ -1,5 +1,9 @@
 module DanvanthiriCore
   class Lab < ActiveRecord::Base
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :trackable, :validatable
     mount_uploader :banner, ImageUploader
     mount_uploader :logo, ImageUploader
 
@@ -8,6 +12,10 @@ module DanvanthiriCore
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
     has_many :appointments, as: :bookable, dependent: :destroy
+    has_many :quotations, as: :quoteable, dependent: :destroy
+    
+    has_many :activities, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
 
     accepts_nested_attributes_for :certifications, allow_destroy: true
 
@@ -16,7 +24,7 @@ module DanvanthiriCore
     scope :by_date, -> date {where "#{date.strftime("%A").downcase}" => true}
     scope :verified, -> {where verified: true}
 
-    validates :name, :email, :mobile_number, :lab_category_id, presence: true
+    validates :name, :mobile_number, :lab_category_id, presence: true
 
     class << self
       def filter(term, filter={})
@@ -59,6 +67,16 @@ module DanvanthiriCore
     def year_ago
       return 0 unless built_year
       Date.today.year - built_year
+    end
+
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
     end
 
     def update_rating!
