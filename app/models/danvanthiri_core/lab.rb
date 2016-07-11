@@ -12,7 +12,8 @@ module DanvanthiriCore
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
     has_many :appointments, as: :bookable, dependent: :destroy
-
+    has_many :quotations, as: :quoteable, dependent: :destroy
+    
     has_many :activities, as: :owner, dependent: :destroy
     has_many :notifications, as: :owner, dependent: :destroy
 
