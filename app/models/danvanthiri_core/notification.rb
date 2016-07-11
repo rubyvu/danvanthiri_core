@@ -44,25 +44,9 @@ module DanvanthiriCore
         data = {notification_id: id, status: target.status}
         case act
         when "request"
-            patient = target.owner
-            message = "#{quoteable.name} has responded to your quotation request"
-            data[:quotation_id] = target_id
-            data[:quotation_target] = target.quoteable_type.split("::").last
-          when "response-quotes"
-            sample = target.quotations.last
-            type = sample.quoteable_type.split('::').last
-            quotes = target.quotations.responded
-            if quotes.blank?
-              message = "No #{type.downcase} respond to your quotation"
-            elsif quotes.count == 1
-              message = "#{type} #{sample.quoteable.name} have responded to your quote request"
-            else
-              others = quotes.count-1
-              service_name = others == 1 ? type.downcase : "#{type.downcase}s"
-              message = "#{type} #{sample.quoteable.name} and #{others} other #{service_name} have responded to your quote request"
-            end
-            data[:quote_thread_id] = target_id
-            data[:quotation_target] = sample.quoteable_type.split("::").last
+          patient = target.owner
+          message = "#{patient.name} has sent a quote request"
+          data[:quotation_id] = target_id
         end
 
         update_column :message, message
