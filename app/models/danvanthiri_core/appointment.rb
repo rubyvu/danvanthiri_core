@@ -3,7 +3,7 @@ module DanvanthiriCore
     @@status_for_dept_hospital_booking = {pending: :pending, accepted: :accepted,
                                           finished: :finished, cancelled_by_doctor: :cancelled_by_doctor}
 
-    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected]
+    enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected, :cancelled_by_pc]
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
     belongs_to :patient
     belongs_to :doctor

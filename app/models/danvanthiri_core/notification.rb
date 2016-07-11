@@ -74,6 +74,12 @@ module DanvanthiriCore
 
       update_column :message, message
       data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+      unless owner.gcm_registration.blank?
+        serv = GcmService.new
+        serv.notify(data, [owner.gcm_registration])
+      end
+      push_ios(data) unless owner.ios_device_token.blank?
+
     end
 
 
