@@ -28,9 +28,9 @@ module DanvanthiriCore
     end
 
     def push_pharmacy(act, obj_type="Appointment")
-      patient = target.patient
       data = {}
       if obj_type=='Appointment'
+        patient = target.patient
         case act
           when "book"
             message = "#{patient.name} requested you for new order."
