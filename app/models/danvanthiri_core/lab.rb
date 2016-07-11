@@ -1,5 +1,9 @@
 module DanvanthiriCore
   class Lab < ActiveRecord::Base
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :trackable, :validatable
     mount_uploader :banner, ImageUploader
     mount_uploader :logo, ImageUploader
 
@@ -61,6 +65,16 @@ module DanvanthiriCore
       Date.today.year - built_year
     end
 
+    def generate_auth_token!
+      begin
+        self.auth_token = Devise.friendly_token
+      end while self.class.exists?(auth_token: auth_token)
+    end
+
+    def clear_auth_token!
+      update_column :auth_token, nil
+    end
+    
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
