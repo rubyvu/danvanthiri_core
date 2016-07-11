@@ -27,7 +27,7 @@ module DanvanthiriCore
     attr_accessor :update_location_field
 
     scope :banner_status, -> {where banner_status: true}
-    scope :premium, -> {where banner_statu: true}
+    scope :premium, -> {where banner_status: true}
     class << self
 
       def filter(term, filter={})

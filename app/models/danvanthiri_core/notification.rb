@@ -27,6 +27,39 @@ module DanvanthiriCore
       push_ios(data) unless doctor.ios_device_token.blank?
     end
 
+    def push_pharmacy(act, obj_type="Appointment")
+      data = {}
+      if obj_type=='Appointment'
+        patient = target.patient
+        case act
+          when "book"
+            message = "#{patient.name} requested you for new order."
+          when "cancelled", "cancelled_by_patient"
+            message = "#{patient.name} has cancelled an order."
+        end
+        update_column :message, message
+        data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+
+      elsif obj_type=='Quotation'
+        data = {notification_id: id, status: target.status}
+        case act
+        when "request"
+          patient = target.owner
+          message = "#{patient.name} has sent a quote request"
+          data[:quotation_id] = target_id
+        end
+
+        update_column :message, message
+        data[:message] = message
+      end
+
+      unless owner.gcm_registration.blank?
+        serv = GcmService.new
+        serv.notify(data, [owner.gcm_registration])
+      end
+      push_ios(data) unless owner.ios_device_token.blank?
+    end
+
     def push_pc(act)
       patient = target.patient
 
