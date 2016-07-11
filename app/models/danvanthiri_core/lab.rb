@@ -13,6 +13,9 @@ module DanvanthiriCore
     has_many :ratings, as: :rateable, dependent: :destroy
     has_many :appointments, as: :bookable, dependent: :destroy
 
+    has_many :activities, as: :owner, dependent: :destroy
+    has_many :notifications, as: :owner, dependent: :destroy
+
     accepts_nested_attributes_for :certifications, allow_destroy: true
 
     scope :premium, -> {where premium: true}
@@ -20,7 +23,7 @@ module DanvanthiriCore
     scope :by_date, -> date {where "#{date.strftime("%A").downcase}" => true}
     scope :verified, -> {where verified: true}
 
-    validates :name, :email, :mobile_number, :lab_category_id, presence: true
+    validates :name, :mobile_number, :lab_category_id, presence: true
 
     class << self
       def filter(term, filter={})
@@ -74,7 +77,7 @@ module DanvanthiriCore
     def clear_auth_token!
       update_column :auth_token, nil
     end
-    
+
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
