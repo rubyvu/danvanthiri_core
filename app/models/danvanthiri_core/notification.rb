@@ -5,6 +5,22 @@ module DanvanthiriCore
 
     validates :owner_id, :target_id, presence: true
 
+    def push(act, obj_type="Appointment")
+      otype = owner_type.split("::").last
+      case otype
+      when "Doctor"
+        push_doctor(act)
+      when "Patient"
+        push_doctor(act, obj_type)
+      when "Pharmacy"
+        push_pharmacy(act, obj_type)
+      when "Lab"
+        push_lab(act, obj_type)
+      when "PatientCoordinator"
+        push_pc(act)
+      end
+    end
+
     def push_doctor(act)
       patient = target.patient
       doctor = target.doctor
@@ -59,6 +75,42 @@ module DanvanthiriCore
       end
       push_ios(data) unless owner.ios_device_token.blank?
     end
+
+    def push_lab(act, obj_type="Appointment")
+      data = {}
+      if obj_type=='Appointment'
+        patient = target.patient
+        case act
+          when "book"
+            message = "#{patient.name} requested you for new appointment."
+          when "cancelled", "cancelled_by_patient"
+            message = "#{patient.name} has cancelled an appointment."
+          when "update"
+            message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
+        end
+        update_column :message, message
+        data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
+
+      elsif obj_type=='Quotation'
+        data = {notification_id: id, status: target.status}
+        case act
+        when "request"
+          patient = target.owner
+          message = "#{patient.name} has sent a quote request"
+          data[:quotation_id] = target_id
+        end
+
+        update_column :message, message
+        data[:message] = message
+      end
+
+      unless owner.gcm_registration.blank?
+        serv = GcmService.new
+        serv.notify(data, [owner.gcm_registration])
+      end
+      push_ios(data) unle
+    end
+
 
     def push_pc(act)
       patient = target.patient
