@@ -38,12 +38,11 @@ module DanvanthiriCore
       self.quoteable_type.include?("Lab")
     end
 
-    validates :quote_items, presence: true
-
     mount_uploader :photo, ImageUploader
 
     def update_price!
       update_column :total_price, quote_items.sum(:price)
     end
+
   end
 end
