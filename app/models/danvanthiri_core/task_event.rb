@@ -17,7 +17,6 @@ module DanvanthiriCore
       if self.date_str
         begin
           start_datetime = DateTime.parse "#{date_str} #{time_str}"
-          binding.pry
           self.start_datetime = start_datetime - 5.5.hours
         rescue Exception => e
           puts e.message
