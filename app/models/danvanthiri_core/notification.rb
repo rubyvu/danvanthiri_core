@@ -81,16 +81,15 @@ module DanvanthiriCore
       if obj_type=='Appointment'
         patient = target.patient
         case act
-          when "book"
-            message = "#{patient.name} requested you for new appointment."
-          when "cancelled", "cancelled_by_patient"
-            message = "#{patient.name} has cancelled an appointment."
-          when "update"
-            message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
+        when "book"
+          message = "#{patient.name} requested you for new appointment."
+        when "cancelled", "cancelled_by_patient"
+          message = "#{patient.name} has cancelled an appointment."
+        when "update"
+          message = "#{patient.name} has rescheduled your appointment to #{target.booktime.strftime('%d %b, %Y')}"
         end
         update_column :message, message
         data = {notification_id: id, appointment_id: target_id, status: target.status, message: message}
-
       elsif obj_type=='Quotation'
         data = {notification_id: id, status: target.status}
         case act
@@ -99,7 +98,6 @@ module DanvanthiriCore
           message = "#{patient.name} has sent a quote request"
           data[:quotation_id] = target_id
         end
-
         update_column :message, message
         data[:message] = message
       end
@@ -108,9 +106,8 @@ module DanvanthiriCore
         serv = GcmService.new
         serv.notify(data, [owner.gcm_registration])
       end
-      push_ios(data) unle
+      push_ios(data) unless owner.ios_device_token.blank?
     end
-
 
     def push_pc(act)
       patient = target.patient
