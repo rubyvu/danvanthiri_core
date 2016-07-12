@@ -1,5 +1,6 @@
 module DanvanthiriCore
   class MedicineOrder < ActiveRecord::Base
+    mount_uploader :photo, ImageUploader
     belongs_to :owner, polymorphic: true
     belongs_to :orderable, polymorphic: true
     has_many :medicine_order_items, dependent: :destroy, foreign_key: "medicine_order_id"
