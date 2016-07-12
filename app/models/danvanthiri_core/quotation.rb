@@ -38,12 +38,19 @@ module DanvanthiriCore
       self.quoteable_type.include?("Lab")
     end
 
-    validates :quote_items, presence: true
+    validate :check_items
 
     mount_uploader :photo, ImageUploader
 
     def update_price!
       update_column :total_price, quote_items.sum(:price)
+    end
+
+    private
+    def check_items
+      if self.quote_items.blank? && self.photo.blank?
+        errors.add :quote_items, "can't  be blank."
+      end
     end
   end
 end
