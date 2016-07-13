@@ -10,7 +10,10 @@ module DanvanthiriCore
     has_many :ambulance_categories, through: :ambulance_services_categories
 
     validates :name, :area, :logo, :ambulance_categories, presence: true
-    validates :mobile, length: { is: 10 }, numericality: true, presence: true, uniqueness: true
+
+    # Client request display just one message, with content "Mobile number must be numbers of length 10 characters"
+    validates :mobile, length: {is: 10, message: "Mobile number must be numbers of length 10 characters"}
+    validates :mobile, numericality: {is: true, message: "Mobile number must be numbers of length 10 characters"}
     validates :year_of_establishment, numericality: {less_than_or_equal_to: Time.now.year}
 
     def update_rating!
