@@ -5,14 +5,6 @@ module DanvanthiriCore
 
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected, :cancelled_by_pc]
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
-    def self.inherited(child)
-      super
-
-      child.instance_eval do
-        include Elasticsearch::Model
-        include Elasticsearch::Model::Callbacks
-      end
-    end
     belongs_to :patient
     belongs_to :doctor
     belongs_to :patient_coordinator
@@ -73,6 +65,15 @@ module DanvanthiriCore
         end
 
         result
+      end
+
+      def inherited(child)
+        super
+
+        child.instance_eval do
+          include Elasticsearch::Model
+          include Elasticsearch::Model::Callbacks
+        end
       end
 
       def fulltext_search(term, options={})

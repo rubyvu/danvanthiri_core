@@ -29,6 +29,43 @@ module DanvanthiriCore
     accepts_nested_attributes_for :availables, allow_destroy: true
     accepts_nested_attributes_for :working_locations, allow_destroy: true
     scope :published, -> {where published: true}
+
+
+    class << self
+      def inherited(child)
+        super
+        child.instance_eval do
+          include Elasticsearch::Model
+          include Elasticsearch::Model::Callbacks
+        end
+      end
+
+      def fulltext_search(term, options={})
+        sort = {booktime: {name: 'asc'}}
+        sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
+        self.search("*#{term}*", size: 2000, sort: sort)
+      end
+
+      def by_city(city)
+        includes(:working_locations).where(addr_city: city).references(:working_locations)
+      end
+    end
+
+    def as_indexed_json(options={})
+      as_json(
+        only: [:id, :name, :cities, :categories],
+        methods: [:name, :cities, :categories]
+      )
+    end
+
+    def categories
+      patient_coordinator_categories.map(&:name).join(", ")
+    end
+
+    def cities
+      working_locations.map(&:addr_city).join(", ")
+    end
+
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
