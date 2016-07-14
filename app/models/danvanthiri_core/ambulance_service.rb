@@ -12,10 +12,9 @@ module DanvanthiriCore
     validates :name, :area, :logo, :ambulance_categories, presence: true
 
     # Client request display just one message, with content "Mobile number must be numbers of length 10 characters"
-    validates :mobile, length: {is: 10, message: "Mobile number must be numbers of length 10 characters"}
-    validates :mobile, numericality: {is: true, message: "Mobile number must be numbers of length 10 characters"}
-    validates :year_of_establishment, numericality: {less_than_or_equal_to: Time.now.year}
-
+    validates :mobile, length: {is: 10, message: "number must be numbers of length 10 characters"}
+    validates :mobile, numericality: {only_integer: true, is: true, message: "number must be numbers of length 10 characters"}
+    validates :year_of_establishment, numericality: {only_integer: true, less_than_or_equal_to: Time.now.year, greater_than: 0}
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end
