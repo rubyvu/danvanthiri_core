@@ -11,7 +11,7 @@ module DanvanthiriCore
 
     has_many :likes, as: :likeable, dependent: :destroy
     has_many :ratings, as: :rateable, dependent: :destroy
-    
+
     validates :donor_sub_categories, presence: true
 
 
@@ -44,5 +44,8 @@ module DanvanthiriCore
       bmi.value if bmi
     end
 
+    def update_rating!
+      update_column :rate, ratings.average(:rate)
+    end
   end
 end
