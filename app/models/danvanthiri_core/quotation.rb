@@ -7,9 +7,11 @@ module DanvanthiriCore
     belongs_to :patient, foreign_key: "owner_id"
     has_many :quote_items, dependent: :destroy, foreign_key: "quotation_id"
     has_one :case_history, dependent: :destroy, foreign_key: "quotation_id"
-
     has_many :notifications, as: :target, dependent: :destroy
 
+    scope :in_hospital, -> hospital {
+      where(quoteable_id: hospital.id, quoteable_type: "DanvanthiriCore::Hospital")
+    }
     accepts_nested_attributes_for :quote_items, allow_destroy: true
     accepts_nested_attributes_for :case_history, allow_destroy: true
 
@@ -58,5 +60,15 @@ module DanvanthiriCore
       end
       result
     end
+
+    def items
+      quote_items.map(&:name).join ", "
+    end
+
+    def quote_type
+      quoteable_type.split("::").last if quoteable_type
+    end
   end
+
+
 end
