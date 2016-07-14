@@ -5,9 +5,14 @@ module DanvanthiriCore
 
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected, :cancelled_by_pc]
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
-    include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+    def self.inherited(child)
+      super
 
+      child.instance_eval do
+        include Elasticsearch::Model
+        include Elasticsearch::Model::Callbacks
+      end
+    end
     belongs_to :patient
     belongs_to :doctor
     belongs_to :patient_coordinator
@@ -71,7 +76,7 @@ module DanvanthiriCore
       end
 
       def fulltext_search(term, options={})
-        sort = {first_name: {order: 'asc'}}
+        sort = {booktime: {order: 'desc'}}
         sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
         self.search("*#{term}*", size: 2000, sort: sort)
       end
@@ -79,7 +84,7 @@ module DanvanthiriCore
     end
     def as_indexed_json(options={})
       as_json(
-        only: [:id, :patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names],
+        only: [:id, :booktime, :patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names],
         methods: [:patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :bookable_name, :medicine_names]
       )
     end
