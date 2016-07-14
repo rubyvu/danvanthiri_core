@@ -80,7 +80,7 @@ module DanvanthiriCore
     def as_indexed_json(options={})
       as_json(
         only: [:id, :patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names],
-        methods: [:patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names]
+        methods: [:patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :bookable_name, :medicine_names]
       )
     end
 
@@ -104,12 +104,8 @@ module DanvanthiriCore
       patient_coordinator.name if patient_coordinator
     end
 
-    def lab_name
-      lab.name if lab
-    end
-
-    def pharmacy_name
-      pharmacy.name if pharmacy
+    def bookable_name
+      bookable.name if bookable
     end
 
     def medicine_names
