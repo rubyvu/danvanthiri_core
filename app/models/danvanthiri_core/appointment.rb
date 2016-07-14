@@ -114,7 +114,7 @@ module DanvanthiriCore
     end
 
     def medicine_names
-      medicine_order.medicine_names id medicine_order
+      medicine_order.medicine_names if medicine_order
     end
 
     before_validation :set_booking_time
