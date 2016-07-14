@@ -22,6 +22,8 @@ module DanvanthiriCore
     validates :booktime, presence: true, unless: :medicine_booking?
     validates :working_location, presence: true, if: :doctor_booking?
     validates :doctor_id, presence: true, if: :doctor_booking?
+    validates :doctor_id, presence: true, if: :hospital_booking?
+    validates :doctor_id, presence: true, on: :update, if: :department_booking?
     validates :hospital_id, presence: true, if: :hospital_booking?
     validates :hospital_id, presence: true, if: :department_booking?
 
