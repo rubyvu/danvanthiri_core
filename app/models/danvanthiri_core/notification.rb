@@ -199,6 +199,8 @@ module DanvanthiriCore
       client = Houston::Client.production
       if owner_type.include?("Doctor")
         client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-doctor-push-production.pem")
+      elsif owner_type.include?("PatientCoordinator")
+        client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-coordinator-push-production.pem")
       else
         client.certificate = File.read("#{Rails.root.to_s}/lib/danvanthiri-patient-push-production.pem")
       end
