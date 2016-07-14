@@ -14,6 +14,10 @@ module DanvanthiriCore
       owner && owner.accepted?
     end
 
+    def medicine_names
+      medicine_order_items.map(&:medicine_name).join ", "
+    end
+    
     after_validation :update_booktime
 
     def update_booktime

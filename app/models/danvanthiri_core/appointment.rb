@@ -5,6 +5,9 @@ module DanvanthiriCore
 
     enum status: [:pending, :accepted, :finished, :expired, :rescheduled, :cancelled_by_patient, :cancelled_by_doctor, :rejected, :cancelled_by_pc]
     enum book_type: [:doctor_booking, :department_booking, :hospital_booking, :patient_coordinator_booking, :medicine_booking, :lab_booking]
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
+
     belongs_to :patient
     belongs_to :doctor
     belongs_to :patient_coordinator
@@ -58,16 +61,60 @@ module DanvanthiriCore
         end
 
         unless term.blank?
-          result = result.joins(:patient, :doctor).where("
+          result = result.includes(:doctor, :patient).where("
             CONCAT(LOWER(danvanthiri_core_doctors.first_name), ' ', LOWER(danvanthiri_core_doctors.last_name)) like ?
             or CONCAT(LOWER(danvanthiri_core_patients.first_name), ' ', LOWER(danvanthiri_core_patients.last_name)) like ?",
-            "%#{term.downcase}%", "%#{term.downcase}%")
+            "%#{term.downcase}%", "%#{term.downcase}%").references(:patient)
         end
 
         result
       end
+
+      def fulltext_search(term, options={})
+        sort = {first_name: {order: 'asc'}}
+        sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
+        self.search("*#{term}*", size: 2000, sort: sort)
+      end
+
+    end
+    def as_indexed_json(options={})
+      as_json(
+        only: [:id, :patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names],
+        methods: [:patient_name, :doctor_name, :hospital_name, :department_name, :patient_coordinator_name, :lab_name, :pharmacy_name, :medicine_names]
+      )
     end
 
+    def patient_name
+      patient.name
+    end
+
+    def doctor_name
+      doctor.name if doctor
+    end
+
+    def hospital_name
+      hospital.name if hospital
+    end
+
+    def department_name
+      department.name if department
+    end
+
+    def patient_coordinator_name
+      patient_coordinator.name if patient_coordinator
+    end
+
+    def lab_name
+      lab.name if lab
+    end
+
+    def pharmacy_name
+      pharmacy.name if pharmacy
+    end
+
+    def medicine_names
+      medicine_order.medicine_names id medicine_order
+    end
 
     before_validation :set_booking_time
     after_create :set_status
