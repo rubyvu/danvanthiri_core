@@ -47,7 +47,7 @@ module DanvanthiriCore
       end
 
       def by_city(city)
-        includes(:working_locations).where("working_locations.addr_city=?", city).references(:working_locations)
+        includes(:working_locations).where("danvanthiri_core_working_locations.addr_city=?", city).references(:working_locations)
       end
     end
 
