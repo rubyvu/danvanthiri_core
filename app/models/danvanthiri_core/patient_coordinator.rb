@@ -47,7 +47,7 @@ module DanvanthiriCore
       end
 
       def by_city(city)
-        includes(:working_locations).where(addr_city: city).references(:working_locations)
+        includes(:working_locations).where("wooking_locations.addr_city=?", city).references(:working_locations)
       end
     end
 
