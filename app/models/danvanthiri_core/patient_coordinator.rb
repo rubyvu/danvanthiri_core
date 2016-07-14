@@ -6,6 +6,8 @@ module DanvanthiriCore
            :recoverable, :rememberable, :trackable, :validatable
 
     mount_uploader :avatar, ImageUploader
+    validates :first_name, :last_name, presence: true
+    validates :mobile_number, uniqueness: true, allow_blank: true
 
     enum gender: [:Female, :Male]
     enum payment_method: [:Online, :Offline]
@@ -23,13 +25,10 @@ module DanvanthiriCore
     has_one :patient_coordinators_pcplan, foreign_key: "patient_coordinator_id", dependent: :destroy
     has_one :pcplan, through: :patient_coordinators_pcplan
 
-    validates :first_name, :last_name, presence: true
-    validates :mobile_number, uniqueness: true, allow_blank: true
 
     accepts_nested_attributes_for :availables, allow_destroy: true
     accepts_nested_attributes_for :working_locations, allow_destroy: true
-    accepts_nested_attributes_for :pcplan, allow_destroy: true
-
+    scope :published, -> {where published: true}
     def update_rating!
       update_column :rate, ratings.average(:rate)
     end

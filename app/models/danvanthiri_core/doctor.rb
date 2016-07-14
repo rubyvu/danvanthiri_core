@@ -123,7 +123,7 @@ module DanvanthiriCore
         self.search("*#{term}*", size: 2000, sort: sort)
       end
     end
-
+    #Doctor.__elasticsearch__.create_index! force: true
     def as_indexed_json(options={})
       as_json(
         only: [:id, :first_name, :last_name, :addr_street, :addr_area, :addr_city, :addr_state, :mobile_number, :phone_number,
