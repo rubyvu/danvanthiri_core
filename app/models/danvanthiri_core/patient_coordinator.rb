@@ -41,7 +41,7 @@ module DanvanthiriCore
       end
 
       def fulltext_search(term, options={})
-        sort = {booktime: {name: 'asc'}}
+        sort = {name: {order: 'asc'}}
         sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
         self.search("*#{term}*", size: 2000, sort: sort)
       end

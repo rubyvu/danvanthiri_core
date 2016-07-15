@@ -5,8 +5,7 @@ module DanvanthiriCore
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable
-    include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+
     enum gender: [:Female, :Male]
     enum payment_method: [:Online, :Offline, :ESC, :Cheque]
     enum payment_status: [:pending, :paid]
@@ -69,6 +68,15 @@ module DanvanthiriCore
     scope :verified, -> {where verified: true}
 
     class << self
+      def inherited(child)
+        super
+
+        child.instance_eval do
+          include Elasticsearch::Model
+          include Elasticsearch::Model::Callbacks
+        end
+      end
+      
       def custom_search(opt={})
         results = self
         opt.each do |key,val|

@@ -61,6 +61,27 @@ module DanvanthiriCore
         result
       end
 
+      def inherited(child)
+        super
+
+        child.instance_eval do
+          include Elasticsearch::Model
+          include Elasticsearch::Model::Callbacks
+        end
+      end
+
+      def fulltext_search(term, options={})
+        sort = {name: {order: 'asc'}}
+        sort = {options[:sort] => {order: 'asc'}}  unless options[:sort].blank?
+        self.search("*#{term}*", size: 2000, sort: sort)
+      end
+
+    end
+
+    def as_indexed_json(options={})
+      as_json(
+        only: [:id, :name]
+      )
     end
 
     def update_rating!
