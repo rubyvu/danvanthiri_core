@@ -15,6 +15,7 @@ module DanvanthiriCore
     has_many :liked_ambulance_services, through: :likes, source: :likeable, source_type: "DanvanthiriCore::AmbulanceService"
     has_many :liked_patient_coordinators, through: :likes, source: :likeable, source_type: "DanvanthiriCore::PatientCoordinator"
     has_many :liked_labs, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Lab"
+    has_many :liked_donors, through: :likes, source: :likeable, source_type: "DanvanthiriCore::Donor"
 
     has_many :reviews, dependent: :destroy, foreign_key: "patient_id"
     has_many :ratings, as: :owner, dependent: :destroy
@@ -76,6 +77,8 @@ module DanvanthiriCore
           liked_patient_coordinators << obj
         elsif obj.is_a?(DanvanthiriCore::Lab)
           liked_labs << obj
+        elsif obj.is_a?(DanvanthiriCore::Donor)
+          liked_donors << obj
         end
       end
     end
